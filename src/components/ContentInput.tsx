@@ -55,108 +55,93 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
   const canPublish = content.trim().length > 0 && selectedPlatforms.length > 0 && !isProcessing;
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-6 mb-16">
-      <Card className="glass-card p-14 prism-nexus hover-elevate">
-        <div className="space-y-10">
-          {/* Revolutionary Content Input */}
-          <div className="space-y-6">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-aurora rounded-2xl flex items-center justify-center animate-aurora">
-                <Sparkles className="w-6 h-6 text-white" />
+    <div className="w-full max-w-5xl mx-auto px-6 mb-12">
+      <Card className="glass-card p-10 prism-light-effect hover-lift">
+        <div className="space-y-8">
+          {/* Content Input */}
+          <div className="space-y-4">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-prism rounded-lg flex items-center justify-center animate-pulse-glow">
+                <Sparkles className="w-4 h-4 text-white" />
               </div>
-              <h2 className="text-3xl font-bold text-gradient-aurora">Create Your Content</h2>
+              <h2 className="text-2xl font-semibold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">Create Your Content</h2>
             </div>
             <div className="relative group">
               <Textarea
-                placeholder="Enter your visionary content here... Our AI will intelligently refract it across platforms, optimizing engagement while preserving your unique voice and message authenticity."
+                placeholder="Enter your original content here... The AI will intelligently adapt it for each platform while maintaining your voice and message."
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                className="min-h-48 glass text-xl resize-none border-white/30 focus:border-accent/80 focus:ring-4 focus:ring-accent/30 transition-all duration-500 group-hover:border-white/40 backdrop-aurora"
+                className="min-h-40 glass text-lg resize-none border-white/20 focus:border-accent/60 focus:ring-2 focus:ring-accent/20 transition-all duration-300 group-hover:border-white/30"
                 disabled={isProcessing}
               />
-              <div className="absolute bottom-6 right-6 text-base text-muted-foreground bg-black/50 rounded-2xl px-4 py-2 backdrop-blur-xl">
+              <div className="absolute bottom-4 right-4 text-sm text-muted-foreground bg-black/30 rounded-lg px-2 py-1">
                 {content.length} characters
               </div>
-              <div className="absolute inset-0 rounded-2xl bg-aurora opacity-0 group-hover:opacity-5 transition-opacity duration-500 pointer-events-none"></div>
-              <div className="absolute top-0 left-0 right-0 h-1 bg-aurora opacity-0 group-focus-within:opacity-60 transition-opacity duration-300 rounded-t-2xl"></div>
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-400/5 to-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
             </div>
           </div>
 
-          {/* Ultra-Premium Platform Selection */}
-          <div className="space-y-8">
-            <h3 className="text-2xl font-bold text-cosmic bg-clip-text text-transparent">Select Target Platforms</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Platform Selection */}
+          <div className="space-y-6">
+            <h3 className="text-xl font-semibold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">Select Target Platforms</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {platforms.map((platform) => (
                 <div
                   key={platform.id}
                   onClick={() => !isProcessing && togglePlatform(platform.id)}
                   className={`
-                    relative p-8 rounded-3xl border-2 cursor-pointer transition-all duration-700 hover-elevate group
+                    relative p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 hover-lift
                     ${selectedPlatforms.includes(platform.id) 
-                      ? `platform-${platform.color} bg-white/8 backdrop-aurora` 
-                      : 'border-white/20 hover:border-white/50 glass group-hover:bg-white/5'
+                      ? `platform-${platform.color} bg-white/5` 
+                      : 'border-white/20 hover:border-white/40 glass'
                     }
                     ${isProcessing ? 'opacity-50 cursor-not-allowed' : ''}
                   `}
                 >
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-3">
                     <div className={`
-                      w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500
-                      ${selectedPlatforms.includes(platform.id) 
-                        ? 'bg-white/25 animate-aurora' 
-                        : 'bg-white/15 group-hover:bg-white/20'
-                      }
+                      w-10 h-10 rounded-lg flex items-center justify-center
+                      ${selectedPlatforms.includes(platform.id) ? 'bg-white/20' : 'bg-white/10'}
                     `}>
-                      <platform.icon className="w-7 h-7" />
+                      <platform.icon className="w-5 h-5" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-bold text-lg">{platform.name}</h4>
-                      <p className="text-sm text-muted-foreground">{platform.description}</p>
+                      <h4 className="font-medium">{platform.name}</h4>
+                      <p className="text-xs text-muted-foreground">{platform.description}</p>
                     </div>
                     {selectedPlatforms.includes(platform.id) && (
-                      <Badge variant="secondary" className="bg-white/20 text-white backdrop-blur-xl animate-aurora">
-                        ✓ Selected
+                      <Badge variant="secondary" className="bg-white/20 text-white">
+                        Selected
                       </Badge>
                     )}
                   </div>
-                  
-                  {/* Selection glow effect */}
-                  {selectedPlatforms.includes(platform.id) && (
-                    <div className="absolute inset-0 rounded-3xl bg-aurora opacity-10 animate-aurora pointer-events-none"></div>
-                  )}
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Revolutionary Publish Button */}
-          <div className="flex justify-center pt-8">
+          {/* Publish Button */}
+          <div className="flex justify-center pt-4">
             <Button
               onClick={handlePublish}
               disabled={!canPublish}
               className={`
-                btn-aurora px-16 py-8 text-xl font-black rounded-3xl
-                ${!canPublish ? 'opacity-50 cursor-not-allowed' : 'hover-elevate'}
+                btn-prism px-12 py-4 text-lg font-semibold
+                ${!canPublish ? 'opacity-50 cursor-not-allowed' : ''}
               `}
             >
-              <Send className="w-6 h-6 mr-4" />
-              {isProcessing ? 'Neural Processing...' : 'Initiate Prismatic Publishing'}
+              <Send className="w-5 h-5 mr-3" />
+              {isProcessing ? 'Processing...' : 'Start Prism Publishing'}
             </Button>
           </div>
 
-          {/* Premium Status Display */}
+          {/* Instructions */}
           {selectedPlatforms.length > 0 && (
-            <div className="glass rounded-2xl p-6 border border-aurora/40 bg-aurora/5 backdrop-aurora">
-              <div className="flex items-center justify-center space-x-3">
-                <div className="w-3 h-3 rounded-full bg-aurora animate-aurora"></div>
-                <p className="text-lg text-center text-cosmic font-semibold">
-                  Ready to refract across {selectedPlatforms.length} dimension{selectedPlatforms.length > 1 ? 's' : ''}. 
-                  <span className="block text-sm text-muted-foreground mt-1">
-                    Experience the future of AI automation in real-time.
-                  </span>
-                </p>
-                <div className="w-3 h-3 rounded-full bg-cosmic animate-cosmic-drift"></div>
-              </div>
+            <div className="glass rounded-lg p-4 border border-accent/30">
+              <p className="text-sm text-center text-accent">
+                Ready to refract your content across {selectedPlatforms.length} platform{selectedPlatforms.length > 1 ? 's' : ''}. 
+                Watch the AI agent work in real-time!
+              </p>
             </div>
           )}
         </div>
