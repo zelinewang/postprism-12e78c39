@@ -26,7 +26,7 @@ export function ThemeToggle() {
       
       {/* Hover glow effect */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-blue-400/20 animate-pulse"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-blue-400/20"></div>
       </div>
       
       <span className="sr-only">Toggle theme</span>
