@@ -116,49 +116,52 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
   if (!isActive) return null;
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-6 mb-12">
-      <Card className={`stream-container hover-lift ${isFullscreen ? 'fixed inset-4 z-50' : ''}`}>
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-prism rounded-lg flex items-center justify-center animate-pulse-glow">
-              <Monitor className="w-5 h-5 text-white" />
+    <div className="w-full max-w-7xl mx-auto px-6 mb-16">
+      <Card className={`stream-container hover-elevate prism-nexus ${isFullscreen ? 'fixed inset-6 z-50' : ''}`}>
+        {/* Revolutionary Header */}
+        <div className="flex items-center justify-between mb-10">
+          <div className="flex items-center space-x-6">
+            <div className="w-16 h-16 bg-cosmic rounded-2xl flex items-center justify-center animate-aurora">
+              <Monitor className="w-8 h-8 text-white" />
             </div>
-            <div>
-              <h2 className="text-xl font-semibold">AI Agent Live Stream</h2>
-              <p className="text-sm text-muted-foreground">
-                Watch the AI publish your content in real-time
+            <div className="space-y-1">
+              <h2 className="text-3xl font-bold text-gradient-aurora">Neural AI Agent Live Stream</h2>
+              <p className="text-lg text-muted-foreground">
+                Witness the future of artificial intelligence in motion
               </p>
             </div>
           </div>
           
-          <div className="flex items-center space-x-3">
-            <Badge variant="secondary" className="bg-green-500/20 text-green-400">
-              <Zap className="w-3 h-3 mr-1" />
-              Live
+          <div className="flex items-center space-x-4">
+            <Badge variant="secondary" className="bg-emerald-500/20 text-emerald-400 px-4 py-2 text-base backdrop-aurora">
+              <Zap className="w-4 h-4 mr-2 animate-pulse" />
+              Neural Active
             </Badge>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setIsFullscreen(!isFullscreen)}
-              className="text-muted-foreground hover:text-white"
+              className="text-muted-foreground hover:text-white hover-elevate bg-white/10 rounded-2xl px-4 py-2"
             >
-              {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+              {isFullscreen ? <Minimize2 className="w-5 h-5" /> : <Maximize2 className="w-5 h-5" />}
             </Button>
           </div>
         </div>
 
-        {/* Overall Progress */}
-        <div className="mb-6 space-y-2">
-          <div className="flex justify-between text-sm">
-            <span>Overall Progress</span>
-            <span>{Math.round(overallProgress)}%</span>
+        {/* Ultra-Premium Progress Display */}
+        <div className="mb-10 space-y-4">
+          <div className="flex justify-between text-lg font-semibold">
+            <span className="text-cosmic">Neural Processing Progress</span>
+            <span className="text-aurora">{Math.round(overallProgress)}%</span>
           </div>
-          <Progress value={overallProgress} className="h-2" />
+          <div className="relative">
+            <Progress value={overallProgress} className="h-4 bg-black/30 rounded-full overflow-hidden" />
+            <div className="absolute inset-0 bg-aurora opacity-20 rounded-full animate-aurora pointer-events-none"></div>
+          </div>
         </div>
 
-        {/* Platform Streams Grid */}
-        <div className={`grid gap-6 ${selectedPlatforms.length === 1 ? 'grid-cols-1' : 
+        {/* Revolutionary Platform Streams Grid */}
+        <div className={`grid gap-8 ${selectedPlatforms.length === 1 ? 'grid-cols-1' : 
           selectedPlatforms.length === 2 ? 'grid-cols-1 lg:grid-cols-2' : 
           'grid-cols-1 lg:grid-cols-3'}`}>
           {selectedPlatforms.map((platform) => {
@@ -167,68 +170,81 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
             const colorClass = platformColors[platform as keyof typeof platformColors];
             
             return (
-              <div key={platform} className="space-y-4">
-                {/* Platform Header */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <PlatformIcon className={`w-5 h-5 ${colorClass}`} />
-                    <span className="font-medium capitalize">{platform}</span>
+              <div key={platform} className="space-y-6 group">
+                {/* Premium Platform Header */}
+                <div className="flex items-center justify-between p-4 glass rounded-2xl hover-elevate">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-aurora rounded-xl flex items-center justify-center animate-aurora">
+                      <PlatformIcon className={`w-6 h-6 ${colorClass}`} />
+                    </div>
+                    <span className="font-bold text-xl capitalize text-gradient-aurora">{platform}</span>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-3">
                     {data?.status === 'completed' ? (
-                      <CheckCircle className="w-4 h-4 text-green-400" />
+                      <CheckCircle className="w-6 h-6 text-emerald-400 animate-pulse" />
                     ) : (
-                      <Clock className="w-4 h-4 text-yellow-400" />
+                      <Clock className="w-6 h-6 text-amber-400 animate-pulse" />
                     )}
-                    <span className="text-xs">
-                      {data?.status === 'completed' ? 'Complete' : 'Publishing'}
+                    <span className="text-sm font-semibold">
+                      {data?.status === 'completed' ? 'Neural Complete' : 'Processing'}
                     </span>
                   </div>
                 </div>
 
-                {/* Stream Window */}
-                <div className="stream-window aspect-video bg-black/50 flex items-center justify-center relative">
+                {/* Ultra-Advanced Stream Window */}
+                <div className="stream-window aspect-video bg-black/60 flex items-center justify-center relative group-hover:scale-[1.02] transition-all duration-500">
                   {data?.videoFrame ? (
                     <img 
                       src={data.videoFrame} 
-                      alt={`${platform} stream`}
+                      alt={`${platform} neural stream`}
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <div className="text-center space-y-2">
-                      <Monitor className="w-12 h-12 text-muted-foreground mx-auto animate-pulse" />
-                      <p className="text-sm text-muted-foreground">
-                        Streaming {platform} automation...
+                    <div className="text-center space-y-4">
+                      <Monitor className="w-20 h-20 text-muted-foreground mx-auto animate-cosmic-float" />
+                      <p className="text-lg text-muted-foreground font-medium">
+                        Neural streaming {platform} automation...
                       </p>
+                      <div className="flex space-x-2 justify-center">
+                        {[...Array(3)].map((_, i) => (
+                          <div key={i} className="w-2 h-2 rounded-full bg-aurora animate-aurora" style={{ animationDelay: `${i * 0.2}s` }}></div>
+                        ))}
+                      </div>
                     </div>
                   )}
                   
-                  {/* Status Overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-black/70 p-3">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-white">{data?.currentAction}</span>
-                      <span className="text-accent">{Math.round(data?.progress || 0)}%</span>
+                  {/* Advanced Status Overlay */}
+                  <div className="absolute bottom-0 left-0 right-0 bg-black/80 p-4 backdrop-blur-xl">
+                    <div className="flex items-center justify-between text-base">
+                      <span className="text-white font-medium">{data?.currentAction}</span>
+                      <span className="text-aurora font-bold">{Math.round(data?.progress || 0)}%</span>
                     </div>
-                    <Progress 
-                      value={data?.progress || 0} 
-                      className="h-1 mt-2" 
-                    />
+                    <div className="relative mt-2">
+                      <Progress 
+                        value={data?.progress || 0} 
+                        className="h-2 bg-black/50" 
+                      />
+                      <div className="absolute inset-0 bg-aurora opacity-30 rounded-full animate-aurora pointer-events-none"></div>
+                    </div>
                   </div>
+                  
+                  {/* Neural activity indicator */}
+                  <div className="absolute top-4 right-4 w-4 h-4 rounded-full bg-emerald-400 animate-pulse"></div>
                 </div>
 
-                {/* Platform Status */}
-                <div className="glass rounded-lg p-3">
-                  <div className="flex items-center justify-between text-sm">
-                    <span>Status:</span>
+                {/* Premium Platform Status */}
+                <div className="glass rounded-2xl p-4 hover-elevate">
+                  <div className="flex items-center justify-between text-base">
+                    <span className="font-semibold">Neural Status:</span>
                     <Badge 
                       variant={data?.status === 'completed' ? 'default' : 'secondary'}
-                      className={
+                      className={`px-4 py-2 text-sm font-bold ${
                         data?.status === 'completed' 
-                          ? 'bg-green-500/20 text-green-400' 
-                          : 'bg-yellow-500/20 text-yellow-400'
-                      }
+                          ? 'bg-emerald-500/20 text-emerald-400 animate-pulse' 
+                          : 'bg-amber-500/20 text-amber-400 animate-aurora'
+                      }`}
                     >
-                      {data?.status === 'completed' ? 'Published' : 'In Progress'}
+                      {data?.status === 'completed' ? '✓ Neural Published' : '⚡ Processing'}
                     </Badge>
                   </div>
                 </div>
@@ -237,16 +253,16 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
           })}
         </div>
 
-        {/* Live Controls */}
-        <div className="flex justify-center mt-6 pt-6 border-t border-white/10">
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="text-muted-foreground">
-              <Play className="w-4 h-4 mr-2" />
-              Resume
+        {/* Revolutionary Live Controls */}
+        <div className="flex justify-center mt-12 pt-8 border-t border-white/10">
+          <div className="flex items-center space-x-6">
+            <Button variant="ghost" size="lg" className="text-muted-foreground hover:text-white hover-elevate bg-white/10 rounded-2xl px-6 py-3">
+              <Play className="w-5 h-5 mr-3" />
+              Neural Resume
             </Button>
-            <Button variant="ghost" size="sm" className="text-muted-foreground">
-              <Pause className="w-4 h-4 mr-2" />
-              Pause
+            <Button variant="ghost" size="lg" className="text-muted-foreground hover:text-white hover-elevate bg-white/10 rounded-2xl px-6 py-3">
+              <Pause className="w-5 h-5 mr-3" />
+              Neural Pause
             </Button>
           </div>
         </div>

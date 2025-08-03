@@ -8,91 +8,109 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Dark prism background theme */
-    --background: 240 10% 8%;
+    /* Sophisticated Dark Prism Theme */
+    --background: 220 15% 6%;
     --foreground: 0 0% 98%;
 
-    --card: 240 8% 12%;
-    --card-foreground: 0 0% 95%;
+    --card: 220 12% 8%;
+    --card-foreground: 0 0% 96%;
 
-    --popover: 240 8% 12%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 220 12% 8%;
+    --popover-foreground: 0 0% 96%;
 
-    /* Prism spectrum primary */
-    --primary: 270 100% 70%;
+    /* Advanced Prism Spectrum */
+    --primary: 270 100% 75%;
     --primary-foreground: 0 0% 98%;
+    --primary-glow: 270 100% 85%;
 
-    --secondary: 240 8% 15%;
-    --secondary-foreground: 0 0% 90%;
+    --secondary: 220 10% 12%;
+    --secondary-foreground: 0 0% 92%;
 
-    --muted: 240 6% 18%;
-    --muted-foreground: 240 5% 65%;
+    --muted: 220 8% 14%;
+    --muted-foreground: 220 6% 70%;
 
-    --accent: 200 100% 60%;
+    --accent: 200 100% 65%;
     --accent-foreground: 0 0% 98%;
+    --accent-glow: 200 100% 75%;
 
-    --destructive: 0 75% 60%;
+    --destructive: 0 75% 65%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 6% 20%;
-    --input: 240 6% 16%;
-    --ring: 270 100% 70%;
+    --border: 220 8% 18%;
+    --input: 220 8% 12%;
+    --ring: 270 100% 75%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
-    /* Prism spectrum gradients */
-    --gradient-rainbow: linear-gradient(135deg, 
-      hsl(0 100% 65%) 0%,
-      hsl(30 100% 60%) 16.67%,
-      hsl(60 100% 55%) 33.33%,
-      hsl(120 100% 50%) 50%,
-      hsl(240 100% 60%) 66.67%,
-      hsl(270 100% 70%) 83.33%,
-      hsl(300 100% 65%) 100%);
+    /* Sophisticated Gradient System */
+    --gradient-aurora: linear-gradient(135deg, 
+      hsl(315 100% 70% / 0.9) 0%,
+      hsl(270 100% 75% / 0.8) 25%,
+      hsl(200 100% 70% / 0.7) 50%,
+      hsl(160 100% 65% / 0.8) 75%,
+      hsl(315 100% 70% / 0.9) 100%);
     
-    --gradient-prism: linear-gradient(135deg, 
-      hsl(240 100% 60% / 0.9) 0%,
-      hsl(270 100% 70% / 0.8) 50%,
-      hsl(300 100% 65% / 0.9) 100%);
+    --gradient-cosmic: linear-gradient(135deg, 
+      hsl(240 100% 65% / 0.9) 0%,
+      hsl(280 100% 70% / 0.8) 30%,
+      hsl(320 100% 75% / 0.7) 60%,
+      hsl(200 100% 70% / 0.8) 100%);
 
-    --gradient-glass: linear-gradient(135deg,
-      hsl(240 10% 15% / 0.8) 0%,
-      hsl(240 8% 18% / 0.6) 100%);
+    --gradient-prismatic: conic-gradient(from 0deg at 50% 50%,
+      hsl(0 100% 70%) 0deg,
+      hsl(60 100% 65%) 60deg,
+      hsl(120 100% 60%) 120deg,
+      hsl(180 100% 65%) 180deg,
+      hsl(240 100% 70%) 240deg,
+      hsl(300 100% 70%) 300deg,
+      hsl(0 100% 70%) 360deg);
 
-    /* Platform colors */
-    --linkedin: 200 100% 50%;
-    --twitter: 200 100% 60%;
-    --instagram: linear-gradient(45deg, 
-      hsl(320 100% 60%) 0%,
-      hsl(30 100% 55%) 50%,
-      hsl(270 100% 70%) 100%);
+    --gradient-neural: linear-gradient(135deg,
+      hsl(220 15% 8% / 0.95) 0%,
+      hsl(240 20% 12% / 0.9) 25%,
+      hsl(260 25% 10% / 0.95) 50%,
+      hsl(280 20% 12% / 0.9) 75%,
+      hsl(220 15% 8% / 0.95) 100%);
 
-    /* Glass morphism effects */
-    --glass-border: hsl(240 10% 30% / 0.3);
-    --glass-bg: hsl(240 8% 12% / 0.7);
-    --glass-backdrop: blur(20px);
+    /* Platform Enhancement */
+    --linkedin: 200 100% 55%;
+    --linkedin-glow: 200 100% 70%;
+    --twitter: 200 100% 65%;
+    --twitter-glow: 200 100% 80%;
+    --instagram-start: 320 100% 65%;
+    --instagram-mid: 30 100% 60%;
+    --instagram-end: 270 100% 70%;
 
-    /* Animation variables */
-    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-spring: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-    --glow-primary: 0 0 30px hsl(270 100% 70% / 0.4);
-    --glow-accent: 0 0 20px hsl(200 100% 60% / 0.3);
+    /* Advanced Glass System */
+    --glass-ultra: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.03) 50%,
+      rgba(255, 255, 255, 0.08) 100%);
+    
+    --glass-border: rgba(255, 255, 255, 0.18);
+    --glass-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    --glass-backdrop: blur(24px) saturate(200%);
 
-    --sidebar-background: 0 0% 98%;
+    /* Sophisticated Animation System */
+    --transition-silk: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    --transition-bounce: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-float: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    
+    /* Glow Effects */
+    --glow-aurora: 0 0 40px hsl(270 100% 75% / 0.6);
+    --glow-cosmic: 0 0 60px hsl(200 100% 70% / 0.4);
+    --glow-prismatic: 0 0 80px hsl(315 100% 70% / 0.3);
 
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
+    /* Sidebar tokens */
+    --sidebar-background: 220 15% 6%;
+    --sidebar-foreground: 220 8% 85%;
+    --sidebar-primary: 270 100% 75%;
     --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 220 10% 12%;
+    --sidebar-accent-foreground: 220 8% 85%;
+    --sidebar-border: 220 8% 18%;
+    --sidebar-ring: 270 100% 75%;
+  }
   }
 
   .dark {
@@ -142,10 +160,15 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground font-sans antialiased;
     background: 
-      radial-gradient(ellipse at 20% 80%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
-      radial-gradient(ellipse at 40% 40%, rgba(120, 219, 255, 0.1) 0%, transparent 50%),
-      linear-gradient(135deg, hsl(240 10% 8%) 0%, hsl(240 12% 10%) 50%, hsl(240 8% 6%) 100%);
+      radial-gradient(ellipse at 15% 85%, rgba(147, 51, 234, 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 85% 15%, rgba(59, 130, 246, 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 50% 50%, rgba(168, 85, 247, 0.08) 0%, transparent 70%),
+      linear-gradient(135deg, 
+        hsl(220 15% 6%) 0%, 
+        hsl(230 18% 8%) 25%,
+        hsl(240 20% 7%) 50%,
+        hsl(250 18% 8%) 75%,
+        hsl(220 15% 6%) 100%);
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
@@ -158,360 +181,533 @@ All colors MUST be HSL.
     left: 0;
     right: 0;
     bottom: 0;
-    background: 
-      conic-gradient(from 45deg at 50% 50%, 
-        rgba(255, 0, 150, 0.03) 0deg,
-        rgba(0, 255, 255, 0.03) 60deg,
-        rgba(255, 255, 0, 0.03) 120deg,
-        rgba(255, 0, 150, 0.03) 180deg,
-        rgba(0, 255, 255, 0.03) 240deg,
-        rgba(255, 255, 0, 0.03) 300deg,
-        rgba(255, 0, 150, 0.03) 360deg
-      );
+    background: var(--gradient-prismatic);
+    opacity: 0.02;
     pointer-events: none;
     z-index: -1;
+    animation: prismatic-flow 20s linear infinite;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(147, 51, 234, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(168, 85, 247, 0.06) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: atmospheric-shift 15s ease-in-out infinite;
   }
 }
 
 @layer components {
-  /* Advanced Glass morphism utilities */
+  /* Ultra-Advanced Glass Morphism */
   .glass {
-    @apply backdrop-blur-2xl border;
-    background: linear-gradient(135deg, 
-      rgba(255, 255, 255, 0.08) 0%, 
-      rgba(255, 255, 255, 0.02) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    @apply backdrop-blur-3xl border;
+    background: var(--glass-ultra);
+    border: 1px solid var(--glass-border);
     box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+      var(--glass-shadow),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+    backdrop-filter: var(--glass-backdrop);
   }
 
   .glass-card {
-    @apply glass rounded-3xl;
-    background: linear-gradient(135deg,
-      rgba(30, 30, 50, 0.4) 0%,
-      rgba(20, 20, 40, 0.6) 50%,
-      rgba(25, 25, 45, 0.3) 100%);
-    backdrop-filter: blur(20px) saturate(180%);
+    @apply glass rounded-3xl relative overflow-hidden;
+    background: var(--gradient-neural);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow: 
-      0 25px 50px -12px rgba(0, 0, 0, 0.4),
-      0 0 0 1px rgba(255, 255, 255, 0.05),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      0 32px 64px -12px rgba(0, 0, 0, 0.6),
+      0 0 0 1px rgba(255, 255, 255, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(32px) saturate(200%) brightness(120%);
   }
 
-  /* Enhanced Prism gradients */
-  .bg-rainbow {
-    background: var(--gradient-rainbow);
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(255, 255, 255, 0.4) 50%, 
+      transparent 100%);
+    pointer-events: none;
+  }
+
+  /* Revolutionary Gradient System */
+  .bg-aurora {
+    background: var(--gradient-aurora);
     background-size: 400% 400%;
-    animation: rainbow-flow 8s ease infinite;
+    animation: aurora-flow 12s ease infinite;
   }
 
-  .bg-prism {
-    background: var(--gradient-prism);
+  .bg-cosmic {
+    background: var(--gradient-cosmic);
+    background-size: 300% 300%;
+    animation: cosmic-drift 10s ease infinite;
+  }
+
+  .bg-prismatic {
+    background: var(--gradient-prismatic);
     background-size: 200% 200%;
-    animation: prism-shift 6s ease infinite;
+    animation: prismatic-rotation 8s linear infinite;
   }
 
-  .text-rainbow {
-    background: var(--gradient-rainbow);
+  .text-aurora {
+    background: var(--gradient-aurora);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: rainbow-text 4s ease infinite;
+    animation: aurora-text 6s ease infinite;
   }
 
-  /* Enhanced Platform specific styles */
+  .text-cosmic {
+    background: var(--gradient-cosmic);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: cosmic-text 5s ease infinite;
+  }
+
+  /* Ultra-Enhanced Platform Styles */
   .platform-linkedin {
     @apply border-2 relative overflow-hidden;
     border-color: hsl(var(--linkedin));
-    background: linear-gradient(135deg, 
-      rgba(0, 119, 181, 0.05) 0%, 
-      rgba(0, 119, 181, 0.02) 100%);
+    background: 
+      radial-gradient(ellipse at top left, rgba(0, 119, 181, 0.08) 0%, transparent 60%),
+      linear-gradient(135deg, rgba(0, 119, 181, 0.03) 0%, rgba(0, 119, 181, 0.01) 100%);
     box-shadow: 
-      0 0 30px hsl(var(--linkedin) / 0.4),
-      inset 0 1px 0 rgba(0, 119, 181, 0.2);
+      0 0 40px hsl(var(--linkedin) / 0.5),
+      inset 0 1px 0 rgba(0, 119, 181, 0.25),
+      inset 0 -1px 0 rgba(0, 119, 181, 0.1);
   }
 
   .platform-twitter {
     @apply border-2 relative overflow-hidden;
     border-color: hsl(var(--twitter));
-    background: linear-gradient(135deg, 
-      rgba(29, 161, 242, 0.05) 0%, 
-      rgba(29, 161, 242, 0.02) 100%);
+    background: 
+      radial-gradient(ellipse at top left, rgba(29, 161, 242, 0.08) 0%, transparent 60%),
+      linear-gradient(135deg, rgba(29, 161, 242, 0.03) 0%, rgba(29, 161, 242, 0.01) 100%);
     box-shadow: 
-      0 0 30px hsl(var(--twitter) / 0.4),
-      inset 0 1px 0 rgba(29, 161, 242, 0.2);
+      0 0 40px hsl(var(--twitter) / 0.5),
+      inset 0 1px 0 rgba(29, 161, 242, 0.25),
+      inset 0 -1px 0 rgba(29, 161, 242, 0.1);
   }
 
   .platform-instagram {
     @apply border-2 relative overflow-hidden;
     border: 2px solid transparent;
     background: 
-      linear-gradient(135deg, rgba(225, 48, 108, 0.05) 0%, rgba(255, 214, 0, 0.02) 50%, rgba(131, 58, 180, 0.05) 100%),
+      radial-gradient(ellipse at top left, rgba(225, 48, 108, 0.08) 0%, transparent 60%),
+      linear-gradient(135deg, rgba(225, 48, 108, 0.03) 0%, rgba(255, 214, 0, 0.02) 50%, rgba(131, 58, 180, 0.03) 100%),
       linear-gradient(45deg, #e1306c, #fd1d1d, #fcb045, #833ab4);
-    background-clip: padding-box, border-box;
-    background-origin: padding-box, border-box;
+    background-clip: padding-box, padding-box, border-box;
+    background-origin: padding-box, padding-box, border-box;
     box-shadow: 
-      0 0 30px rgba(225, 48, 108, 0.4),
-      inset 0 1px 0 rgba(225, 48, 108, 0.2);
+      0 0 40px rgba(225, 48, 108, 0.5),
+      inset 0 1px 0 rgba(225, 48, 108, 0.25),
+      inset 0 -1px 0 rgba(225, 48, 108, 0.1);
   }
 
-  /* Enhanced Animation utilities */
-  .animate-glow {
-    animation: enhanced-glow 3s ease-in-out infinite alternate;
+  /* Ultimate Animation System */
+  .animate-aurora {
+    animation: aurora-pulse 4s ease-in-out infinite;
   }
 
-  .animate-float {
-    animation: enhanced-float 8s ease-in-out infinite;
+  .animate-cosmic-float {
+    animation: cosmic-float 12s ease-in-out infinite;
   }
 
-  .animate-pulse-glow {
-    animation: pulse-glow 4s ease-in-out infinite;
+  .animate-prismatic-glow {
+    animation: prismatic-glow 6s ease-in-out infinite;
   }
 
-  .animate-prism-rotate {
-    animation: prism-rotate 20s linear infinite;
+  .animate-neural-flow {
+    animation: neural-flow 8s linear infinite;
   }
 
-  .animate-light-ray {
-    animation: light-ray 3s linear infinite;
+  .hover-elevate {
+    @apply transition-all duration-700;
+    transition: var(--transition-silk);
   }
 
-  .hover-lift {
-    @apply transition-all duration-500;
-    transition: var(--transition-spring);
-  }
-
-  .hover-lift:hover {
-    @apply -translate-y-2;
-    transform: translateY(-8px) scale(1.02);
+  .hover-elevate:hover {
+    transform: translateY(-12px) scale(1.02) rotateX(2deg);
     box-shadow: 
-      0 25px 50px rgba(0, 0, 0, 0.4),
-      0 0 50px hsl(270 100% 70% / 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      0 40px 80px rgba(0, 0, 0, 0.5),
+      0 0 80px hsl(270 100% 75% / 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(40px) saturate(250%) brightness(130%);
   }
 
-  /* Enhanced Button variants */
-  .btn-prism {
-    @apply relative overflow-hidden rounded-2xl px-10 py-5 font-bold text-white;
-    background: 
-      linear-gradient(135deg, 
-        rgba(147, 51, 234, 0.8) 0%, 
-        rgba(79, 70, 229, 0.8) 25%,
-        rgba(59, 130, 246, 0.8) 50%,
-        rgba(16, 185, 129, 0.8) 75%,
-        rgba(245, 158, 11, 0.8) 100%);
+  /* Revolutionary Button System */
+  .btn-aurora {
+    @apply relative overflow-hidden rounded-3xl px-12 py-6 font-bold text-white;
+    background: var(--gradient-aurora);
     background-size: 300% 300%;
-    animation: btn-prism-flow 3s ease infinite;
+    animation: aurora-btn-flow 4s ease infinite;
     box-shadow: 
-      0 10px 30px rgba(147, 51, 234, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    transition: var(--transition-spring);
+      0 15px 35px rgba(147, 51, 234, 0.4),
+      0 5px 15px rgba(147, 51, 234, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transition: var(--transition-bounce);
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
-  .btn-prism:hover {
-    transform: translateY(-2px) scale(1.05);
-    animation-duration: 1s;
+  .btn-aurora:hover {
+    transform: translateY(-4px) scale(1.05);
+    animation-duration: 2s;
     box-shadow: 
-      0 20px 40px rgba(147, 51, 234, 0.4),
-      0 0 50px rgba(147, 51, 234, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      0 25px 50px rgba(147, 51, 234, 0.6),
+      0 0 80px rgba(147, 51, 234, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
   }
 
-  .btn-prism::before {
-    @apply absolute inset-0 opacity-0 transition-opacity duration-500;
+  .btn-aurora::before {
+    @apply absolute inset-0 opacity-0 transition-all duration-700;
     content: '';
     background: linear-gradient(45deg, 
-      transparent 20%, 
-      rgba(255, 255, 255, 0.4) 50%, 
-      transparent 80%);
-    transform: translateX(-100%) skewX(-15deg);
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transparent 10%, 
+      rgba(255, 255, 255, 0.6) 50%, 
+      transparent 90%);
+    transform: translateX(-100%) skewX(-20deg);
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .btn-prism:hover::before {
+  .btn-aurora:hover::before {
     @apply opacity-100;
-    transform: translateX(100%) skewX(-15deg);
+    transform: translateX(100%) skewX(-20deg);
   }
 
-  /* Enhanced Live stream styles */
+  .btn-aurora::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-aurora);
+    background-size: 300% 300%;
+    border-radius: inherit;
+    z-index: -1;
+    filter: blur(20px);
+    opacity: 0.7;
+    animation: aurora-btn-glow 4s ease infinite;
+  }
+
+  /* Ultra-Advanced Stream Interface */
   .stream-container {
-    @apply glass-card p-8;
+    @apply glass-card p-12 relative;
     background: 
-      radial-gradient(ellipse at top left, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
-      radial-gradient(ellipse at bottom right, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-      linear-gradient(135deg,
-        rgba(15, 15, 25, 0.9) 0%,
-        rgba(20, 20, 35, 0.8) 50%,
-        rgba(10, 10, 20, 0.9) 100%);
-    border: 1px solid rgba(147, 51, 234, 0.2);
+      radial-gradient(ellipse at top left, rgba(147, 51, 234, 0.12) 0%, transparent 70%),
+      radial-gradient(ellipse at bottom right, rgba(59, 130, 246, 0.12) 0%, transparent 70%),
+      var(--gradient-neural);
+    border: 1px solid rgba(147, 51, 234, 0.25);
+    box-shadow: 
+      0 40px 80px -20px rgba(0, 0, 0, 0.7),
+      0 0 0 1px rgba(147, 51, 234, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
   }
 
   .stream-window {
-    @apply rounded-2xl overflow-hidden border-2;
+    @apply rounded-3xl overflow-hidden border-2 relative;
     background: 
-      radial-gradient(ellipse at center, rgba(20, 20, 30, 0.8) 0%, rgba(5, 5, 10, 1) 100%);
-    border-color: rgba(147, 51, 234, 0.3);
+      radial-gradient(ellipse at center, rgba(20, 20, 35, 0.9) 0%, rgba(5, 5, 15, 1) 100%);
+    border: 2px solid rgba(147, 51, 234, 0.4);
     box-shadow: 
-      inset 0 0 50px rgba(0, 0, 0, 0.8),
-      0 8px 32px rgba(0, 0, 0, 0.4),
-      0 0 0 1px rgba(147, 51, 234, 0.1);
+      inset 0 0 80px rgba(0, 0, 0, 0.9),
+      0 15px 50px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(147, 51, 234, 0.2);
+    backdrop-filter: blur(20px) saturate(150%);
   }
 
-  /* Prism Light Effects */
-  .prism-light-effect {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .prism-light-effect::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(
-      from 0deg at 50% 50%,
-      transparent 0deg,
-      rgba(255, 0, 150, 0.1) 60deg,
-      rgba(0, 255, 255, 0.1) 120deg,
-      rgba(255, 255, 0, 0.1) 180deg,
-      rgba(255, 0, 150, 0.1) 240deg,
-      rgba(0, 255, 255, 0.1) 300deg,
-      transparent 360deg
-    );
-    animation: prism-rotate 15s linear infinite;
-    pointer-events: none;
-  }
-
-  .prism-light-effect::after {
+  .stream-window::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
-    background: 
-      radial-gradient(ellipse at 30% 70%, rgba(147, 51, 234, 0.05) 0%, transparent 50%),
-      radial-gradient(ellipse at 70% 30%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+    height: 2px;
+    background: var(--gradient-aurora);
+    opacity: 0.6;
+    animation: stream-activity 2s ease-in-out infinite;
+  }
+
+  /* Advanced Prism Light System */
+  .prism-nexus {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .prism-nexus::before {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    background: var(--gradient-prismatic);
+    opacity: 0.08;
+    animation: nexus-rotation 25s linear infinite;
     pointer-events: none;
+  }
+
+  .prism-nexus::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 25% 75%, rgba(147, 51, 234, 0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 75% 25%, rgba(59, 130, 246, 0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 50% 50%, rgba(168, 85, 247, 0.04) 0%, transparent 70%);
+    pointer-events: none;
+    animation: nexus-pulse 8s ease-in-out infinite;
+  }
+
+  /* Typography Enhancement */
+  .text-gradient-aurora {
+    background: var(--gradient-aurora);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: text-aurora-flow 6s ease infinite;
+  }
+
+  .text-hero {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+  }
+
+  .text-subtitle {
+    font-size: clamp(1rem, 3vw, 1.25rem);
+    font-weight: 500;
+    line-height: 1.6;
+    opacity: 0.9;
   }
 }
 
 @layer utilities {
-  /* Enhanced Custom keyframes */
-  @keyframes enhanced-glow {
-    0% { 
-      box-shadow: 
-        0 0 20px hsl(270 100% 70% / 0.4),
-        0 0 40px hsl(270 100% 70% / 0.2);
-    }
-    50% {
-      box-shadow: 
-        0 0 40px hsl(270 100% 70% / 0.8),
-        0 0 80px hsl(200 100% 60% / 0.4),
-        0 0 120px hsl(300 100% 65% / 0.2);
-    }
-    100% { 
-      box-shadow: 
-        0 0 20px hsl(270 100% 70% / 0.4),
-        0 0 40px hsl(270 100% 70% / 0.2);
-    }
+  /* Revolutionary Animation Keyframes */
+  @keyframes aurora-flow {
+    0%, 100% { background-position: 0% 50%; filter: hue-rotate(0deg); }
+    33% { background-position: 100% 80%; filter: hue-rotate(60deg); }
+    66% { background-position: 80% 20%; filter: hue-rotate(-60deg); }
   }
 
-  @keyframes enhanced-float {
+  @keyframes cosmic-drift {
     0%, 100% { 
-      transform: translateY(0px) rotate(0deg);
-    }
-    33% { 
-      transform: translateY(-15px) rotate(1deg);
-    }
-    66% { 
-      transform: translateY(-8px) rotate(-1deg);
-    }
-  }
-
-  @keyframes pulse-glow {
-    0%, 100% { 
-      opacity: 1;
-      filter: brightness(1) saturate(1);
+      background-position: 0% 50%; 
+      filter: brightness(1) contrast(1);
     }
     50% { 
-      opacity: 0.8;
-      filter: brightness(1.2) saturate(1.3);
+      background-position: 100% 50%; 
+      filter: brightness(1.1) contrast(1.2);
     }
   }
 
-  @keyframes prism-rotate {
+  @keyframes prismatic-rotation {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
 
-  @keyframes light-ray {
-    0% { 
-      transform: translateX(-100%) skewX(-15deg);
-      opacity: 0;
+  @keyframes prismatic-flow {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.1); }
+  }
+
+  @keyframes atmospheric-shift {
+    0%, 100% { 
+      opacity: 0.8; 
+      transform: scale(1) rotate(0deg);
     }
-    50% {
-      opacity: 1;
-    }
-    100% { 
-      transform: translateX(100%) skewX(-15deg);
-      opacity: 0;
+    50% { 
+      opacity: 1; 
+      transform: scale(1.05) rotate(2deg);
     }
   }
 
-  @keyframes rainbow-flow {
+  @keyframes aurora-pulse {
+    0%, 100% { 
+      opacity: 1;
+      filter: brightness(1) saturate(1);
+      box-shadow: 0 0 40px hsl(270 100% 75% / 0.4);
+    }
+    50% { 
+      opacity: 0.8;
+      filter: brightness(1.3) saturate(1.5);
+      box-shadow: 
+        0 0 80px hsl(270 100% 75% / 0.8),
+        0 0 120px hsl(200 100% 70% / 0.4);
+    }
+  }
+
+  @keyframes cosmic-float {
+    0%, 100% { 
+      transform: translateY(0px) rotate(0deg) scale(1);
+    }
+    25% { 
+      transform: translateY(-20px) rotate(2deg) scale(1.05);
+    }
+    50% { 
+      transform: translateY(-10px) rotate(-1deg) scale(1.02);
+    }
+    75% { 
+      transform: translateY(-25px) rotate(1deg) scale(1.08);
+    }
+  }
+
+  @keyframes prismatic-glow {
+    0%, 100% { 
+      opacity: 1;
+      filter: hue-rotate(0deg) brightness(1);
+    }
+    33% {
+      opacity: 0.8;
+      filter: hue-rotate(120deg) brightness(1.2);
+    }
+    66% {
+      opacity: 0.9;
+      filter: hue-rotate(240deg) brightness(1.1);
+    }
+  }
+
+  @keyframes neural-flow {
+    0%, 100% { 
+      background-position: 0% 50%;
+      filter: contrast(1) brightness(1);
+    }
+    50% { 
+      background-position: 100% 50%;
+      filter: contrast(1.1) brightness(1.05);
+    }
+  }
+
+  @keyframes aurora-btn-flow {
+    0%, 100% { 
+      background-position: 0% 50%;
+      filter: brightness(1) saturate(1);
+    }
+    50% { 
+      background-position: 100% 50%;
+      filter: brightness(1.2) saturate(1.3);
+    }
+  }
+
+  @keyframes aurora-btn-glow {
+    0%, 100% { 
+      background-position: 0% 50%;
+      opacity: 0.7;
+    }
+    50% { 
+      background-position: 100% 50%;
+      opacity: 1;
+    }
+  }
+
+  @keyframes aurora-text {
     0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
   }
 
-  @keyframes prism-shift {
+  @keyframes cosmic-text {
     0%, 100% { 
       background-position: 0% 50%;
       filter: hue-rotate(0deg);
     }
     50% { 
       background-position: 100% 50%;
-      filter: hue-rotate(180deg);
+      filter: hue-rotate(90deg);
     }
   }
 
-  @keyframes rainbow-text {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
-
-  @keyframes btn-prism-flow {
+  @keyframes text-aurora-flow {
     0%, 100% { 
       background-position: 0% 50%;
       filter: brightness(1);
     }
     50% { 
       background-position: 100% 50%;
-      filter: brightness(1.1);
+      filter: brightness(1.2);
     }
   }
 
-  .animate-shimmer {
-    animation: light-ray 2s infinite;
+  @keyframes stream-activity {
+    0%, 100% { 
+      opacity: 0.6;
+      transform: scaleX(1);
+    }
+    50% { 
+      opacity: 1;
+      transform: scaleX(1.02);
+    }
   }
 
-  /* Utility classes for prism effects */
-  .prism-bg {
-    background: 
-      conic-gradient(from 0deg at 50% 50%, 
-        rgba(255, 0, 150, 0.1) 0deg,
-        rgba(0, 255, 255, 0.1) 120deg,
-        rgba(255, 255, 0, 0.1) 240deg,
-        rgba(255, 0, 150, 0.1) 360deg);
+  @keyframes nexus-rotation {
+    0% { transform: rotate(0deg) scale(1); }
+    100% { transform: rotate(360deg) scale(1.1); }
   }
 
-  .light-refraction {
-    background: 
-      linear-gradient(45deg, transparent 0%, rgba(255, 255, 255, 0.03) 25%, transparent 50%, rgba(255, 255, 255, 0.03) 75%, transparent 100%);
+  @keyframes nexus-pulse {
+    0%, 100% { 
+      opacity: 0.6;
+      filter: brightness(1);
+    }
+    50% { 
+      opacity: 1;
+      filter: brightness(1.3);
+    }
+  }
+
+  /* Revolutionary Utility Classes */
+  .animate-shimmer-aurora {
+    animation: aurora-flow 3s infinite;
+  }
+
+  .text-shadow-glow {
+    text-shadow: 
+      0 0 10px currentColor,
+      0 0 20px currentColor,
+      0 0 40px currentColor;
+  }
+
+  .box-shadow-aurora {
+    box-shadow: 
+      0 0 40px hsl(270 100% 75% / 0.4),
+      0 0 80px hsl(200 100% 70% / 0.2),
+      0 0 120px hsl(315 100% 70% / 0.1);
+  }
+
+  .backdrop-aurora {
+    backdrop-filter: 
+      blur(32px) 
+      saturate(200%) 
+      brightness(120%) 
+      hue-rotate(10deg);
+  }
+
+  /* Sophisticated Grid Patterns */
+  .grid-prismatic {
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .dots-prismatic {
+    background-image: 
+      radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 15px 15px;
   }
 }

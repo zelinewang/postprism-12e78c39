@@ -51,10 +51,10 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background prism-light-effect">
+    <div className="min-h-screen bg-background prism-nexus">
       <Header />
       
-      <main className="space-y-8 relative z-10">
+      <main className="space-y-12 relative z-10">
         {/* Content Input Section */}
         {(appState === 'input' || appState === 'processing') && (
           <ContentInput 
