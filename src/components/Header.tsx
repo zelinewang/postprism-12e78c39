@@ -15,11 +15,11 @@ const Header = () => {
             {/* Logo and Brand */}
             <div className="flex items-center space-x-6">
               <div className="relative group">
-                <div className="w-16 h-16 bg-aurora rounded-2xl flex items-center justify-center animate-enhanced-glow hover-lift">
-                  <Triangle className="w-8 h-8 text-foreground transform transition-transform group-hover:rotate-180 duration-700" />
+                <div className="w-16 h-16 bg-gradient-to-br from-primary via-accent to-primary rounded-2xl flex items-center justify-center animate-enhanced-glow hover-lift border border-primary/30 shadow-lg">
+                  <Triangle className="w-8 h-8 text-primary-foreground transform transition-transform group-hover:rotate-180 duration-700 drop-shadow-sm" />
                 </div>
-                <div className="absolute inset-0 bg-aurora opacity-30 rounded-2xl blur-md animate-pulse-glow"></div>
-                <div className="absolute -inset-2 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 rounded-3xl opacity-20 blur-xl animate-pulse"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/40 via-accent/40 to-primary/40 rounded-2xl blur-md animate-pulse-glow"></div>
+                <div className="absolute -inset-2 bg-gradient-to-r from-primary/50 via-accent/60 to-primary/50 rounded-3xl opacity-40 blur-xl animate-pulse"></div>
               </div>
             <div className="space-y-1">
                 <h1 className="text-4xl font-bold text-foreground tracking-tight">PostPrism AI</h1>
