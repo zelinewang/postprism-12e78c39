@@ -3,7 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Linkedin, Twitter, Instagram, Sparkles, Send } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Linkedin, Twitter, Instagram, Sparkles, Send, AlertTriangle } from "lucide-react";
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
 
 interface ContentInputProps {
   onPublish: (content: string, platforms: string[]) => void;
@@ -11,8 +14,12 @@ interface ContentInputProps {
 }
 
 const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
+  const { user } = useAuth();
   const [content, setContent] = useState("");
   const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
+  const [validationError, setValidationError] = useState<string | null>(null);
+  const [publishCount, setPublishCount] = useState(0);
+  const [lastPublishTime, setLastPublishTime] = useState<Date | null>(null);
 
   const platforms = [
     {
@@ -46,10 +53,98 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
     );
   };
 
-  const handlePublish = () => {
-    if (content.trim() && selectedPlatforms.length > 0) {
-      onPublish(content, selectedPlatforms);
+  const validateContent = (text: string): string | null => {
+    // Content length validation
+    if (text.length === 0) {
+      return 'Content cannot be empty';
     }
+    if (text.length > 2000) {
+      return 'Content exceeds maximum length of 2000 characters';
+    }
+    
+    // Basic malicious content filtering
+    const suspiciousPatterns = [
+      /<script/i,
+      /javascript:/i,
+      /data:text\/html/i,
+      /vbscript:/i
+    ];
+    
+    if (suspiciousPatterns.some(pattern => pattern.test(text))) {
+      return 'Content contains potentially malicious code';
+    }
+    
+    // Platform-specific validation
+    if (selectedPlatforms.includes('twitter') && text.length > 280) {
+      return 'Content is too long for Twitter (max 280 characters)';
+    }
+    
+    return null;
+  };
+
+  const checkRateLimit = (): string | null => {
+    const now = new Date();
+    const oneHour = 60 * 60 * 1000; // 1 hour in milliseconds
+    
+    if (lastPublishTime && (now.getTime() - lastPublishTime.getTime()) < oneHour) {
+      if (publishCount >= 10) {
+        return 'Rate limit exceeded. You can publish up to 10 posts per hour.';
+      }
+    } else {
+      // Reset counter if more than an hour has passed
+      setPublishCount(0);
+    }
+    
+    return null;
+  };
+
+  const logContentPublish = async (content: string, platforms: string[]) => {
+    if (!user) return;
+    
+    try {
+      await supabase
+        .from('content_logs')
+        .insert({
+          user_id: user.id,
+          original_content: content,
+          platforms: platforms,
+          status: 'initiated'
+        });
+    } catch (error) {
+      console.error('Failed to log content publish:', error);
+    }
+  };
+
+  const handlePublish = async () => {
+    setValidationError(null);
+    
+    // Validate content
+    const contentError = validateContent(content);
+    if (contentError) {
+      setValidationError(contentError);
+      return;
+    }
+    
+    // Check rate limiting
+    const rateLimitError = checkRateLimit();
+    if (rateLimitError) {
+      setValidationError(rateLimitError);
+      return;
+    }
+    
+    // Log the publish attempt
+    await logContentPublish(content, selectedPlatforms);
+    
+    // Update rate limiting counters
+    const now = new Date();
+    if (!lastPublishTime || (now.getTime() - lastPublishTime.getTime()) >= 60 * 60 * 1000) {
+      setPublishCount(1);
+    } else {
+      setPublishCount(prev => prev + 1);
+    }
+    setLastPublishTime(now);
+    
+    onPublish(content, selectedPlatforms);
   };
 
   const canPublish = content.trim().length > 0 && selectedPlatforms.length > 0 && !isProcessing;
@@ -70,12 +165,16 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
               <Textarea
                 placeholder="Enter your original content here... The AI will intelligently adapt it for each platform while maintaining your voice and message."
                 value={content}
-                onChange={(e) => setContent(e.target.value)}
+                onChange={(e) => {
+                  setContent(e.target.value);
+                  setValidationError(null);
+                }}
                 className="min-h-40 glass text-lg resize-none border-white/20 focus:border-accent/60 focus:ring-2 focus:ring-accent/20 transition-all duration-300 group-hover:border-white/30"
                 disabled={isProcessing}
+                maxLength={2000}
               />
               <div className="absolute bottom-4 right-4 text-sm text-muted-foreground bg-black/30 rounded-lg px-2 py-1">
-                {content.length} characters
+                {content.length}/2000 characters
               </div>
               <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-400/5 to-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
             </div>
@@ -119,6 +218,14 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
               ))}
             </div>
           </div>
+
+          {/* Validation Error Alert */}
+          {validationError && (
+            <Alert variant="destructive" className="glass border-red-500/50">
+              <AlertTriangle className="h-4 w-4" />
+              <AlertDescription>{validationError}</AlertDescription>
+            </Alert>
+          )}
 
           {/* Publish Button */}
           <div className="flex justify-center pt-4">

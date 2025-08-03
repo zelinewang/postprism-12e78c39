@@ -1,6 +1,11 @@
-import { Zap, Triangle } from "lucide-react";
+import { Zap, Triangle, LogOut, User } from "lucide-react";
+import { Button } from './ui/button';
+import { Avatar, AvatarFallback } from './ui/avatar';
+import { useAuth } from '@/hooks/useAuth';
 
 const Header = () => {
+  const { user, signOut } = useAuth();
+
   return (
     <header className="w-full py-8 px-6 mb-12 relative">
       <div className="max-w-7xl mx-auto">
@@ -23,14 +28,41 @@ const Header = () => {
               </div>
             </div>
 
-            {/* Value Proposition */}
-            <div className="hidden lg:flex items-center space-x-3 glass rounded-2xl px-6 py-4 hover-lift">
-              <div className="w-10 h-10 bg-prism rounded-xl flex items-center justify-center animate-pulse-glow">
-                <Zap className="w-5 h-5 text-white" />
+            {/* User Profile and Actions */}
+            <div className="flex items-center space-x-6">
+              {/* Value Proposition */}
+              <div className="hidden lg:flex items-center space-x-3 glass rounded-2xl px-6 py-4 hover-lift">
+                <div className="w-10 h-10 bg-prism rounded-xl flex items-center justify-center animate-pulse-glow">
+                  <Zap className="w-5 h-5 text-white" />
+                </div>
+                <div className="text-left">
+                  <div className="text-sm font-semibold text-white">Real-Time AI Agent</div>
+                  <div className="text-xs text-muted-foreground">Watch automation in action</div>
+                </div>
               </div>
-              <div className="text-left">
-                <div className="text-sm font-semibold text-white">Real-Time AI Agent</div>
-                <div className="text-xs text-muted-foreground">Watch automation in action</div>
+
+              {/* User Profile */}
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3 glass rounded-2xl px-4 py-3">
+                  <Avatar className="h-8 w-8">
+                    <AvatarFallback className="bg-prism text-white">
+                      <User className="h-4 w-4" />
+                    </AvatarFallback>
+                  </Avatar>
+                  <span className="text-sm font-medium text-white">
+                    {user?.email?.split('@')[0] || 'User'}
+                  </span>
+                </div>
+                
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={signOut}
+                  className="glass border-white/20 hover:border-white/40 text-white hover:bg-white/10"
+                >
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Sign Out
+                </Button>
               </div>
             </div>
           </div>
