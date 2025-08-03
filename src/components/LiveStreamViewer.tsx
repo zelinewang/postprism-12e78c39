@@ -116,8 +116,8 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
   if (!isActive) return null;
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-6 mb-8">
-      <Card className={`stream-container ${isFullscreen ? 'fixed inset-4 z-50' : ''}`}>
+    <div className="w-full max-w-7xl mx-auto px-6 mb-12">
+      <Card className={`stream-container hover-lift ${isFullscreen ? 'fixed inset-4 z-50' : ''}`}>
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-3">

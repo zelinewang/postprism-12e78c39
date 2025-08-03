@@ -2,32 +2,36 @@ import { Zap, Triangle } from "lucide-react";
 
 const Header = () => {
   return (
-    <header className="w-full py-6 px-6 mb-8">
+    <header className="w-full py-8 px-6 mb-12 relative">
       <div className="max-w-7xl mx-auto">
-        <div className="glass-card p-6">
+        <div className="glass-card p-8 prism-light-effect">
           <div className="flex items-center justify-between">
             {/* Logo and Brand */}
-            <div className="flex items-center space-x-4">
-              <div className="relative">
-                <div className="w-12 h-12 bg-prism rounded-xl flex items-center justify-center animate-glow">
-                  <Triangle className="w-6 h-6 text-white" />
+            <div className="flex items-center space-x-6">
+              <div className="relative group">
+                <div className="w-16 h-16 bg-prism rounded-2xl flex items-center justify-center animate-enhanced-glow hover-lift">
+                  <Triangle className="w-8 h-8 text-white transform transition-transform group-hover:rotate-180 duration-700" />
                 </div>
-                <div className="absolute inset-0 bg-rainbow opacity-20 rounded-xl blur-sm"></div>
+                <div className="absolute inset-0 bg-rainbow opacity-30 rounded-2xl blur-md animate-pulse-glow"></div>
+                <div className="absolute -inset-2 bg-gradient-conic from-purple-400 via-pink-400 to-purple-400 rounded-3xl opacity-20 blur-xl animate-prism-rotate"></div>
               </div>
-              <div>
-                <h1 className="text-3xl font-bold text-rainbow">PostPrism AI</h1>
-                <p className="text-muted-foreground text-sm">
-                  Intelligent Social Media Publishing Through AI Prism Technology
+              <div className="space-y-1">
+                <h1 className="text-4xl font-bold text-rainbow tracking-tight">PostPrism AI</h1>
+                <p className="text-muted-foreground text-base max-w-md">
+                  Intelligent Social Media Publishing Through Advanced AI Prism Technology
                 </p>
               </div>
             </div>
 
             {/* Value Proposition */}
-            <div className="hidden lg:flex items-center space-x-2 glass rounded-xl px-4 py-2">
-              <Zap className="w-5 h-5 text-accent" />
-              <span className="text-sm font-medium">
-                Watch AI Agent Work in Real-Time
-              </span>
+            <div className="hidden lg:flex items-center space-x-3 glass rounded-2xl px-6 py-4 hover-lift">
+              <div className="w-10 h-10 bg-prism rounded-xl flex items-center justify-center animate-pulse-glow">
+                <Zap className="w-5 h-5 text-white" />
+              </div>
+              <div className="text-left">
+                <div className="text-sm font-semibold text-white">Real-Time AI Agent</div>
+                <div className="text-xs text-muted-foreground">Watch automation in action</div>
+              </div>
             </div>
           </div>
         </div>

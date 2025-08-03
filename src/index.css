@@ -141,152 +141,377 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    background: radial-gradient(ellipse at top, hsl(240 10% 12%) 0%, hsl(240 10% 8%) 50%);
+    background: 
+      radial-gradient(ellipse at 20% 80%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 40% 40%, rgba(120, 219, 255, 0.1) 0%, transparent 50%),
+      linear-gradient(135deg, hsl(240 10% 8%) 0%, hsl(240 12% 10%) 50%, hsl(240 8% 6%) 100%);
     min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      conic-gradient(from 45deg at 50% 50%, 
+        rgba(255, 0, 150, 0.03) 0deg,
+        rgba(0, 255, 255, 0.03) 60deg,
+        rgba(255, 255, 0, 0.03) 120deg,
+        rgba(255, 0, 150, 0.03) 180deg,
+        rgba(0, 255, 255, 0.03) 240deg,
+        rgba(255, 255, 0, 0.03) 300deg,
+        rgba(255, 0, 150, 0.03) 360deg
+      );
+    pointer-events: none;
+    z-index: -1;
   }
 }
 
 @layer components {
-  /* Glass morphism utilities */
+  /* Advanced Glass morphism utilities */
   .glass {
-    @apply backdrop-blur-xl border border-white/10;
+    @apply backdrop-blur-2xl border;
     background: linear-gradient(135deg, 
-      hsl(240 8% 12% / 0.8) 0%, 
-      hsl(240 6% 15% / 0.6) 100%);
+      rgba(255, 255, 255, 0.08) 0%, 
+      rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.05);
   }
 
   .glass-card {
-    @apply glass rounded-2xl shadow-2xl;
+    @apply glass rounded-3xl;
+    background: linear-gradient(135deg,
+      rgba(30, 30, 50, 0.4) 0%,
+      rgba(20, 20, 40, 0.6) 50%,
+      rgba(25, 25, 45, 0.3) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
     box-shadow: 
-      0 8px 32px hsl(0 0% 0% / 0.3),
-      inset 0 1px 0 hsl(255 255% 255% / 0.1);
+      0 25px 50px -12px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
-  /* Prism gradients */
+  /* Enhanced Prism gradients */
   .bg-rainbow {
     background: var(--gradient-rainbow);
+    background-size: 400% 400%;
+    animation: rainbow-flow 8s ease infinite;
   }
 
   .bg-prism {
     background: var(--gradient-prism);
+    background-size: 200% 200%;
+    animation: prism-shift 6s ease infinite;
   }
 
   .text-rainbow {
     background: var(--gradient-rainbow);
+    background-size: 200% 200%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: rainbow-text 4s ease infinite;
   }
 
-  /* Platform specific styles */
+  /* Enhanced Platform specific styles */
   .platform-linkedin {
-    @apply border-2;
+    @apply border-2 relative overflow-hidden;
     border-color: hsl(var(--linkedin));
-    box-shadow: 0 0 20px hsl(var(--linkedin) / 0.3);
+    background: linear-gradient(135deg, 
+      rgba(0, 119, 181, 0.05) 0%, 
+      rgba(0, 119, 181, 0.02) 100%);
+    box-shadow: 
+      0 0 30px hsl(var(--linkedin) / 0.4),
+      inset 0 1px 0 rgba(0, 119, 181, 0.2);
   }
 
   .platform-twitter {
-    @apply border-2;
+    @apply border-2 relative overflow-hidden;
     border-color: hsl(var(--twitter));
-    box-shadow: 0 0 20px hsl(var(--twitter) / 0.3);
+    background: linear-gradient(135deg, 
+      rgba(29, 161, 242, 0.05) 0%, 
+      rgba(29, 161, 242, 0.02) 100%);
+    box-shadow: 
+      0 0 30px hsl(var(--twitter) / 0.4),
+      inset 0 1px 0 rgba(29, 161, 242, 0.2);
   }
 
   .platform-instagram {
-    @apply border-2;
-    border-image: var(--instagram) 1;
-    box-shadow: 0 0 20px hsl(320 100% 60% / 0.3);
+    @apply border-2 relative overflow-hidden;
+    border: 2px solid transparent;
+    background: 
+      linear-gradient(135deg, rgba(225, 48, 108, 0.05) 0%, rgba(255, 214, 0, 0.02) 50%, rgba(131, 58, 180, 0.05) 100%),
+      linear-gradient(45deg, #e1306c, #fd1d1d, #fcb045, #833ab4);
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    box-shadow: 
+      0 0 30px rgba(225, 48, 108, 0.4),
+      inset 0 1px 0 rgba(225, 48, 108, 0.2);
   }
 
-  /* Animation utilities */
+  /* Enhanced Animation utilities */
   .animate-glow {
-    animation: glow 2s ease-in-out infinite alternate;
+    animation: enhanced-glow 3s ease-in-out infinite alternate;
   }
 
   .animate-float {
-    animation: float 6s ease-in-out infinite;
+    animation: enhanced-float 8s ease-in-out infinite;
   }
 
   .animate-pulse-glow {
-    animation: pulseGlow 3s ease-in-out infinite;
+    animation: pulse-glow 4s ease-in-out infinite;
+  }
+
+  .animate-prism-rotate {
+    animation: prism-rotate 20s linear infinite;
+  }
+
+  .animate-light-ray {
+    animation: light-ray 3s linear infinite;
   }
 
   .hover-lift {
-    @apply transition-all duration-300;
-    transition: var(--transition-smooth);
+    @apply transition-all duration-500;
+    transition: var(--transition-spring);
   }
 
   .hover-lift:hover {
-    @apply -translate-y-1;
+    @apply -translate-y-2;
+    transform: translateY(-8px) scale(1.02);
     box-shadow: 
-      0 12px 40px hsl(0 0% 0% / 0.4),
-      0 0 30px hsl(270 100% 70% / 0.3);
+      0 25px 50px rgba(0, 0, 0, 0.4),
+      0 0 50px hsl(270 100% 70% / 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
 
-  /* Button variants */
+  /* Enhanced Button variants */
   .btn-prism {
-    @apply relative overflow-hidden rounded-xl px-8 py-4 font-semibold text-white;
-    background: var(--gradient-prism);
-    transition: var(--transition-smooth);
+    @apply relative overflow-hidden rounded-2xl px-10 py-5 font-bold text-white;
+    background: 
+      linear-gradient(135deg, 
+        rgba(147, 51, 234, 0.8) 0%, 
+        rgba(79, 70, 229, 0.8) 25%,
+        rgba(59, 130, 246, 0.8) 50%,
+        rgba(16, 185, 129, 0.8) 75%,
+        rgba(245, 158, 11, 0.8) 100%);
+    background-size: 300% 300%;
+    animation: btn-prism-flow 3s ease infinite;
+    box-shadow: 
+      0 10px 30px rgba(147, 51, 234, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: var(--transition-spring);
   }
 
   .btn-prism:hover {
-    @apply scale-105;
-    box-shadow: var(--glow-primary);
+    transform: translateY(-2px) scale(1.05);
+    animation-duration: 1s;
+    box-shadow: 
+      0 20px 40px rgba(147, 51, 234, 0.4),
+      0 0 50px rgba(147, 51, 234, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
   }
 
   .btn-prism::before {
-    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    @apply absolute inset-0 opacity-0 transition-opacity duration-500;
     content: '';
-    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
-    transform: translateX(-100%);
-    transition: transform 0.6s;
+    background: linear-gradient(45deg, 
+      transparent 20%, 
+      rgba(255, 255, 255, 0.4) 50%, 
+      transparent 80%);
+    transform: translateX(-100%) skewX(-15deg);
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .btn-prism:hover::before {
     @apply opacity-100;
-    transform: translateX(100%);
+    transform: translateX(100%) skewX(-15deg);
   }
 
-  /* Live stream styles */
+  /* Enhanced Live stream styles */
   .stream-container {
-    @apply glass-card p-6;
-    background: linear-gradient(135deg,
-      hsl(240 8% 10% / 0.9) 0%,
-      hsl(240 6% 12% / 0.8) 100%);
+    @apply glass-card p-8;
+    background: 
+      radial-gradient(ellipse at top left, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+      linear-gradient(135deg,
+        rgba(15, 15, 25, 0.9) 0%,
+        rgba(20, 20, 35, 0.8) 50%,
+        rgba(10, 10, 20, 0.9) 100%);
+    border: 1px solid rgba(147, 51, 234, 0.2);
   }
 
   .stream-window {
-    @apply rounded-lg overflow-hidden border border-white/20;
-    background: hsl(240 5% 5%);
+    @apply rounded-2xl overflow-hidden border-2;
+    background: 
+      radial-gradient(ellipse at center, rgba(20, 20, 30, 0.8) 0%, rgba(5, 5, 10, 1) 100%);
+    border-color: rgba(147, 51, 234, 0.3);
     box-shadow: 
-      inset 0 0 20px hsl(0 0% 0% / 0.5),
-      0 4px 20px hsl(0 0% 0% / 0.3);
+      inset 0 0 50px rgba(0, 0, 0, 0.8),
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(147, 51, 234, 0.1);
+  }
+
+  /* Prism Light Effects */
+  .prism-light-effect {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .prism-light-effect::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+      from 0deg at 50% 50%,
+      transparent 0deg,
+      rgba(255, 0, 150, 0.1) 60deg,
+      rgba(0, 255, 255, 0.1) 120deg,
+      rgba(255, 255, 0, 0.1) 180deg,
+      rgba(255, 0, 150, 0.1) 240deg,
+      rgba(0, 255, 255, 0.1) 300deg,
+      transparent 360deg
+    );
+    animation: prism-rotate 15s linear infinite;
+    pointer-events: none;
+  }
+
+  .prism-light-effect::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(ellipse at 30% 70%, rgba(147, 51, 234, 0.05) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 30%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+    pointer-events: none;
   }
 }
 
 @layer utilities {
-  /* Custom keyframes */
-  @keyframes glow {
-    0% { box-shadow: 0 0 20px hsl(270 100% 70% / 0.4); }
-    100% { box-shadow: 0 0 30px hsl(270 100% 70% / 0.8), 0 0 40px hsl(200 100% 60% / 0.4); }
+  /* Enhanced Custom keyframes */
+  @keyframes enhanced-glow {
+    0% { 
+      box-shadow: 
+        0 0 20px hsl(270 100% 70% / 0.4),
+        0 0 40px hsl(270 100% 70% / 0.2);
+    }
+    50% {
+      box-shadow: 
+        0 0 40px hsl(270 100% 70% / 0.8),
+        0 0 80px hsl(200 100% 60% / 0.4),
+        0 0 120px hsl(300 100% 65% / 0.2);
+    }
+    100% { 
+      box-shadow: 
+        0 0 20px hsl(270 100% 70% / 0.4),
+        0 0 40px hsl(270 100% 70% / 0.2);
+    }
   }
 
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+  @keyframes enhanced-float {
+    0%, 100% { 
+      transform: translateY(0px) rotate(0deg);
+    }
+    33% { 
+      transform: translateY(-15px) rotate(1deg);
+    }
+    66% { 
+      transform: translateY(-8px) rotate(-1deg);
+    }
   }
 
-  @keyframes pulseGlow {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
+  @keyframes pulse-glow {
+    0%, 100% { 
+      opacity: 1;
+      filter: brightness(1) saturate(1);
+    }
+    50% { 
+      opacity: 0.8;
+      filter: brightness(1.2) saturate(1.3);
+    }
   }
 
-  @keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+  @keyframes prism-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes light-ray {
+    0% { 
+      transform: translateX(-100%) skewX(-15deg);
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% { 
+      transform: translateX(100%) skewX(-15deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes rainbow-flow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  @keyframes prism-shift {
+    0%, 100% { 
+      background-position: 0% 50%;
+      filter: hue-rotate(0deg);
+    }
+    50% { 
+      background-position: 100% 50%;
+      filter: hue-rotate(180deg);
+    }
+  }
+
+  @keyframes rainbow-text {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  @keyframes btn-prism-flow {
+    0%, 100% { 
+      background-position: 0% 50%;
+      filter: brightness(1);
+    }
+    50% { 
+      background-position: 100% 50%;
+      filter: brightness(1.1);
+    }
   }
 
   .animate-shimmer {
-    animation: shimmer 2s infinite;
+    animation: light-ray 2s infinite;
+  }
+
+  /* Utility classes for prism effects */
+  .prism-bg {
+    background: 
+      conic-gradient(from 0deg at 50% 50%, 
+        rgba(255, 0, 150, 0.1) 0deg,
+        rgba(0, 255, 255, 0.1) 120deg,
+        rgba(255, 255, 0, 0.1) 240deg,
+        rgba(255, 0, 150, 0.1) 360deg);
+  }
+
+  .light-refraction {
+    background: 
+      linear-gradient(45deg, transparent 0%, rgba(255, 255, 255, 0.03) 25%, transparent 50%, rgba(255, 255, 255, 0.03) 75%, transparent 100%);
   }
 }

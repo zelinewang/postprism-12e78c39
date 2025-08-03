@@ -55,33 +55,36 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
   const canPublish = content.trim().length > 0 && selectedPlatforms.length > 0 && !isProcessing;
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-6 mb-8">
-      <Card className="glass-card p-8">
-        <div className="space-y-6">
+    <div className="w-full max-w-5xl mx-auto px-6 mb-12">
+      <Card className="glass-card p-10 prism-light-effect hover-lift">
+        <div className="space-y-8">
           {/* Content Input */}
-          <div className="space-y-3">
-            <div className="flex items-center space-x-2">
-              <Sparkles className="w-5 h-5 text-accent" />
-              <h2 className="text-xl font-semibold">Create Your Content</h2>
+          <div className="space-y-4">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-prism rounded-lg flex items-center justify-center animate-pulse-glow">
+                <Sparkles className="w-4 h-4 text-white" />
+              </div>
+              <h2 className="text-2xl font-semibold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">Create Your Content</h2>
             </div>
-            <div className="relative">
+            <div className="relative group">
               <Textarea
                 placeholder="Enter your original content here... The AI will intelligently adapt it for each platform while maintaining your voice and message."
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                className="min-h-32 glass text-base resize-none border-white/20 focus:border-accent/50 transition-colors"
+                className="min-h-40 glass text-lg resize-none border-white/20 focus:border-accent/60 focus:ring-2 focus:ring-accent/20 transition-all duration-300 group-hover:border-white/30"
                 disabled={isProcessing}
               />
-              <div className="absolute bottom-3 right-3 text-xs text-muted-foreground">
+              <div className="absolute bottom-4 right-4 text-sm text-muted-foreground bg-black/30 rounded-lg px-2 py-1">
                 {content.length} characters
               </div>
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-400/5 to-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
             </div>
           </div>
 
           {/* Platform Selection */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium">Select Target Platforms</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="space-y-6">
+            <h3 className="text-xl font-semibold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">Select Target Platforms</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {platforms.map((platform) => (
                 <div
                   key={platform.id}
