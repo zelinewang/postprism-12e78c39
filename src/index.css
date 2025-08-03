@@ -141,35 +141,9 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    background: 
-      radial-gradient(ellipse at 20% 80%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
-      radial-gradient(ellipse at 40% 40%, rgba(120, 219, 255, 0.1) 0%, transparent 50%),
-      linear-gradient(135deg, hsl(240 10% 8%) 0%, hsl(240 12% 10%) 50%, hsl(240 8% 6%) 100%);
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      conic-gradient(from 45deg at 50% 50%, 
-        rgba(255, 0, 150, 0.03) 0deg,
-        rgba(0, 255, 255, 0.03) 60deg,
-        rgba(255, 255, 0, 0.03) 120deg,
-        rgba(255, 0, 150, 0.03) 180deg,
-        rgba(0, 255, 255, 0.03) 240deg,
-        rgba(255, 255, 0, 0.03) 300deg,
-        rgba(255, 0, 150, 0.03) 360deg
-      );
-    pointer-events: none;
-    z-index: -1;
   }
 }
 
@@ -513,5 +487,164 @@ All colors MUST be HSL.
   .light-refraction {
     background: 
       linear-gradient(45deg, transparent 0%, rgba(255, 255, 255, 0.03) 25%, transparent 50%, rgba(255, 255, 255, 0.03) 75%, transparent 100%);
+  }
+
+  /* Aurora Background Effects */
+  .aurora-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background: hsl(var(--background));
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+  }
+
+  .aurora-rays {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: var(--aurora-stripes), var(--aurora-rainbow);
+    background-size: 300%, 200%;
+    background-position: 50% 50%, 50% 50%;
+    filter: blur(10px) invert(100%);
+    mask-image: radial-gradient(ellipse at 100% 0%, black 40%, transparent 70%);
+    pointer-events: none;
+    
+    --aurora-stripes: repeating-linear-gradient(
+      100deg,
+      #fff 0%,
+      #fff 7%,
+      transparent 10%,
+      transparent 12%,
+      #fff 16%
+    );
+    --aurora-stripes-dark: repeating-linear-gradient(
+      100deg,
+      #000 0%,
+      #000 7%,
+      transparent 10%,
+      transparent 12%,
+      #000 16%
+    );
+    --aurora-rainbow: repeating-linear-gradient(
+      100deg,
+      hsl(var(--primary)) 10%,
+      hsl(var(--accent)) 15%,
+      hsl(var(--primary)) 20%,
+      hsl(var(--secondary)) 25%,
+      hsl(var(--primary)) 30%
+    );
+  }
+
+  .aurora-rays::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: var(--aurora-stripes), var(--aurora-rainbow);
+    background-size: 200%, 100%;
+    animation: aurora-flow 60s linear infinite;
+    background-attachment: fixed;
+    mix-blend-mode: difference;
+  }
+
+  .dark .aurora-rays {
+    background-image: var(--aurora-stripes-dark), var(--aurora-rainbow);
+    filter: blur(10px) opacity(50%) saturate(200%);
+  }
+
+  .dark .aurora-rays::after {
+    background-image: var(--aurora-stripes-dark), var(--aurora-rainbow);
+  }
+
+  /* Theme Toggle Styles */
+  .theme-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 50;
+  }
+
+  .theme-switch {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .theme-checkbox {
+    opacity: 0;
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  .switch-label {
+    display: flex;
+    align-items: center;
+    position: relative;
+    background: hsl(var(--muted));
+    border-radius: 25px;
+    padding: 8px 16px;
+    min-width: 120px;
+    height: 50px;
+    transition: all 0.3s ease;
+    z-index: 1;
+    backdrop-filter: blur(10px);
+    border: 1px solid hsl(var(--border));
+  }
+
+  .switch-option {
+    flex: 1;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: hsl(var(--muted-foreground));
+    transition: color 0.3s ease;
+    z-index: 3;
+    position: relative;
+  }
+
+  .switch-slider {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: calc(50% - 4px);
+    height: calc(100% - 8px);
+    background: hsl(var(--background));
+    border-radius: 20px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 8px hsl(var(--foreground) / 0.1);
+    z-index: 2;
+  }
+
+  .theme-checkbox:checked + .switch-label .switch-slider {
+    transform: translateX(100%);
+  }
+
+  .theme-checkbox:checked + .switch-label .switch-option:first-child {
+    color: hsl(var(--muted-foreground));
+  }
+
+  .theme-checkbox:checked + .switch-label .switch-option:last-child {
+    color: hsl(var(--foreground));
+  }
+
+  .switch-label .switch-option:first-child {
+    color: hsl(var(--foreground));
+  }
+
+  @keyframes aurora-flow {
+    from {
+      background-position: 50% 50%, 50% 50%;
+    }
+    to {
+      background-position: 350% 50%, 350% 50%;
+    }
   }
 }
