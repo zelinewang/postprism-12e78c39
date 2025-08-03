@@ -8,25 +8,25 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Light aurora theme */
-    --background: 0 0% 98%;
-    --foreground: 240 10% 15%;
+    /* Dark prism background theme */
+    --background: 240 10% 8%;
+    --foreground: 0 0% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 15%;
+    --card: 240 8% 12%;
+    --card-foreground: 0 0% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 15%;
+    --popover: 240 8% 12%;
+    --popover-foreground: 0 0% 95%;
 
     /* Prism spectrum primary */
     --primary: 270 100% 70%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 240 10% 92%;
-    --secondary-foreground: 240 10% 20%;
+    --secondary: 240 8% 15%;
+    --secondary-foreground: 0 0% 90%;
 
-    --muted: 240 6% 95%;
-    --muted-foreground: 240 5% 45%;
+    --muted: 240 6% 18%;
+    --muted-foreground: 240 5% 65%;
 
     --accent: 200 100% 60%;
     --accent-foreground: 0 0% 98%;
@@ -34,57 +34,64 @@ All colors MUST be HSL.
     --destructive: 0 75% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 6% 88%;
-    --input: 240 6% 94%;
+    --border: 240 6% 20%;
+    --input: 240 6% 16%;
     --ring: 270 100% 70%;
 
     --radius: 0.75rem;
 
-    /* Enhanced prism spectrum gradients for light mode */
+    /* Prism spectrum gradients */
     --gradient-rainbow: linear-gradient(135deg, 
-      hsl(0 80% 70%) 0%,
-      hsl(30 85% 65%) 16.67%,
-      hsl(60 90% 60%) 33.33%,
-      hsl(120 70% 55%) 50%,
-      hsl(240 80% 65%) 66.67%,
-      hsl(270 85% 70%) 83.33%,
-      hsl(300 80% 65%) 100%);
+      hsl(0 100% 65%) 0%,
+      hsl(30 100% 60%) 16.67%,
+      hsl(60 100% 55%) 33.33%,
+      hsl(120 100% 50%) 50%,
+      hsl(240 100% 60%) 66.67%,
+      hsl(270 100% 70%) 83.33%,
+      hsl(300 100% 65%) 100%);
     
     --gradient-prism: linear-gradient(135deg, 
-      hsl(240 70% 85% / 0.8) 0%,
-      hsl(270 80% 80% / 0.9) 50%,
-      hsl(300 75% 85% / 0.8) 100%);
+      hsl(240 100% 60% / 0.9) 0%,
+      hsl(270 100% 70% / 0.8) 50%,
+      hsl(300 100% 65% / 0.9) 100%);
 
     --gradient-glass: linear-gradient(135deg,
-      hsl(0 0% 100% / 0.9) 0%,
-      hsl(240 10% 96% / 0.8) 100%);
+      hsl(240 10% 15% / 0.8) 0%,
+      hsl(240 8% 18% / 0.6) 100%);
 
     /* Platform colors */
-    --linkedin: 200 100% 45%;
-    --twitter: 200 100% 55%;
+    --linkedin: 200 100% 50%;
+    --twitter: 200 100% 60%;
     --instagram: linear-gradient(45deg, 
-      hsl(320 80% 65%) 0%,
-      hsl(30 85% 60%) 50%,
-      hsl(270 80% 70%) 100%);
+      hsl(320 100% 60%) 0%,
+      hsl(30 100% 55%) 50%,
+      hsl(270 100% 70%) 100%);
 
-    /* Glass morphism effects for light mode */
-    --glass-border: hsl(240 10% 80% / 0.5);
-    --glass-bg: hsl(0 0% 100% / 0.8);
+    /* Glass morphism effects */
+    --glass-border: hsl(240 10% 30% / 0.3);
+    --glass-bg: hsl(240 8% 12% / 0.7);
     --glass-backdrop: blur(20px);
 
     /* Animation variables */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-spring: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-    --glow-primary: 0 0 30px hsl(270 80% 70% / 0.6);
-    --glow-accent: 0 0 20px hsl(200 80% 60% / 0.5);
+    --glow-primary: 0 0 30px hsl(270 100% 70% / 0.4);
+    --glow-accent: 0 0 20px hsl(200 100% 60% / 0.3);
 
     --sidebar-background: 0 0% 98%;
+
     --sidebar-foreground: 240 5.3% 26.1%;
+
     --sidebar-primary: 240 5.9% 10%;
+
     --sidebar-primary-foreground: 0 0% 98%;
+
     --sidebar-accent: 240 4.8% 95.9%;
+
     --sidebar-accent-foreground: 240 5.9% 10%;
+
     --sidebar-border: 220 13% 91%;
+
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -134,37 +141,63 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    background: 
+      radial-gradient(ellipse at 20% 80%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 40% 40%, rgba(120, 219, 255, 0.1) 0%, transparent 50%),
+      linear-gradient(135deg, hsl(240 10% 8%) 0%, hsl(240 12% 10%) 50%, hsl(240 8% 6%) 100%);
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
   }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      conic-gradient(from 45deg at 50% 50%, 
+        rgba(255, 0, 150, 0.03) 0deg,
+        rgba(0, 255, 255, 0.03) 60deg,
+        rgba(255, 255, 0, 0.03) 120deg,
+        rgba(255, 0, 150, 0.03) 180deg,
+        rgba(0, 255, 255, 0.03) 240deg,
+        rgba(255, 255, 0, 0.03) 300deg,
+        rgba(255, 0, 150, 0.03) 360deg
+      );
+    pointer-events: none;
+    z-index: -1;
+  }
 }
 
 @layer components {
-  /* Light mode glass morphism utilities */
+  /* Advanced Glass morphism utilities */
   .glass {
     @apply backdrop-blur-2xl border;
     background: linear-gradient(135deg, 
-      rgba(255, 255, 255, 0.7) 0%, 
-      rgba(255, 255, 255, 0.5) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.8);
+      rgba(255, 255, 255, 0.08) 0%, 
+      rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.9),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.7);
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.05);
   }
 
   .glass-card {
     @apply glass rounded-3xl;
     background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.8) 0%,
-      rgba(255, 255, 255, 0.6) 50%,
-      rgba(255, 255, 255, 0.9) 100%);
+      rgba(30, 30, 50, 0.4) 0%,
+      rgba(20, 20, 40, 0.6) 50%,
+      rgba(25, 25, 45, 0.3) 100%);
     backdrop-filter: blur(20px) saturate(180%);
     box-shadow: 
-      0 25px 50px -12px rgba(0, 0, 0, 0.1),
-      0 0 0 1px rgba(255, 255, 255, 0.8),
-      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      0 25px 50px -12px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
   /* Enhanced Prism gradients */
@@ -303,27 +336,27 @@ All colors MUST be HSL.
     transform: translateX(100%) skewX(-15deg);
   }
 
-  /* Light theme live stream styles */
+  /* Enhanced Live stream styles */
   .stream-container {
     @apply glass-card p-8;
     background: 
-      radial-gradient(ellipse at top left, rgba(147, 51, 234, 0.08) 0%, transparent 50%),
-      radial-gradient(ellipse at bottom right, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at top left, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
       linear-gradient(135deg,
-        rgba(255, 255, 255, 0.9) 0%,
-        rgba(255, 255, 255, 0.7) 50%,
-        rgba(255, 255, 255, 0.95) 100%);
-    border: 1px solid rgba(147, 51, 234, 0.15);
+        rgba(15, 15, 25, 0.9) 0%,
+        rgba(20, 20, 35, 0.8) 50%,
+        rgba(10, 10, 20, 0.9) 100%);
+    border: 1px solid rgba(147, 51, 234, 0.2);
   }
 
   .stream-window {
     @apply rounded-2xl overflow-hidden border-2;
     background: 
-      radial-gradient(ellipse at center, rgba(255, 255, 255, 0.9) 0%, rgba(250, 250, 250, 1) 100%);
-    border-color: rgba(147, 51, 234, 0.2);
+      radial-gradient(ellipse at center, rgba(20, 20, 30, 0.8) 0%, rgba(5, 5, 10, 1) 100%);
+    border-color: rgba(147, 51, 234, 0.3);
     box-shadow: 
-      inset 0 0 30px rgba(0, 0, 0, 0.03),
-      0 8px 32px rgba(0, 0, 0, 0.08),
+      inset 0 0 50px rgba(0, 0, 0, 0.8),
+      0 8px 32px rgba(0, 0, 0, 0.4),
       0 0 0 1px rgba(147, 51, 234, 0.1);
   }
 
@@ -480,168 +513,5 @@ All colors MUST be HSL.
   .light-refraction {
     background: 
       linear-gradient(45deg, transparent 0%, rgba(255, 255, 255, 0.03) 25%, transparent 50%, rgba(255, 255, 255, 0.03) 75%, transparent 100%);
-  }
-
-  /* Aurora Background Effects */
-  .aurora-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
-    background: hsl(var(--background));
-    overflow: hidden;
-    transition: background-color 0.3s ease;
-  }
-
-  .aurora-rays {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: var(--aurora-stripes), var(--aurora-rainbow);
-    background-size: 300%, 200%;
-    background-position: 50% 50%, 50% 50%;
-    filter: blur(8px) opacity(70%) saturate(180%) brightness(1.1);
-    mask-image: radial-gradient(ellipse at 100% 0%, white 60%, transparent 85%);
-    pointer-events: none;
-    
-    --aurora-stripes: repeating-linear-gradient(
-      100deg,
-      rgba(255, 255, 255, 0.8) 0%,
-      rgba(255, 255, 255, 0.4) 7%,
-      transparent 10%,
-      transparent 12%,
-      rgba(255, 255, 255, 0.6) 16%
-    );
-    --aurora-stripes-light: repeating-linear-gradient(
-      100deg,
-      rgba(255, 255, 255, 0.3) 0%,
-      rgba(255, 255, 255, 0.1) 7%,
-      transparent 10%,
-      transparent 12%,
-      rgba(255, 255, 255, 0.2) 16%
-    );
-    --aurora-rainbow: repeating-linear-gradient(
-      100deg,
-      hsl(270 80% 70%) 10%,
-      hsl(320 85% 65%) 15%,
-      hsl(200 90% 60%) 20%,
-      hsl(120 70% 55%) 25%,
-      hsl(60 85% 65%) 30%
-    );
-  }
-
-  .aurora-rays::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: var(--aurora-stripes), var(--aurora-rainbow);
-    background-size: 200%, 100%;
-    animation: aurora-flow 60s linear infinite;
-    background-attachment: fixed;
-    mix-blend-mode: difference;
-  }
-
-  .dark .aurora-rays {
-    background-image: var(--aurora-stripes-light), var(--aurora-rainbow);
-    filter: blur(10px) opacity(30%) saturate(200%);
-  }
-
-  .dark .aurora-rays::after {
-    background-image: var(--aurora-stripes-light), var(--aurora-rainbow);
-  }
-
-  /* Theme Toggle Styles */
-  .theme-toggle {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    z-index: 50;
-  }
-
-  .theme-switch {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-  }
-
-  .theme-checkbox {
-    opacity: 0;
-    position: absolute;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-  }
-
-  .switch-label {
-    display: flex;
-    align-items: center;
-    position: relative;
-    background: hsl(var(--muted));
-    border-radius: 25px;
-    padding: 8px 16px;
-    min-width: 120px;
-    height: 50px;
-    transition: all 0.3s ease;
-    z-index: 1;
-    backdrop-filter: blur(10px);
-    border: 1px solid hsl(var(--border));
-  }
-
-  .switch-option {
-    flex: 1;
-    text-align: center;
-    font-size: 14px;
-    font-weight: 500;
-    color: hsl(var(--muted-foreground));
-    transition: color 0.3s ease;
-    z-index: 3;
-    position: relative;
-  }
-
-  .switch-slider {
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    width: calc(50% - 4px);
-    height: calc(100% - 8px);
-    background: hsl(var(--background));
-    border-radius: 20px;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 8px hsl(var(--foreground) / 0.1);
-    z-index: 2;
-  }
-
-  .theme-checkbox:checked ~ .switch-slider {
-    transform: translateX(100%);
-  }
-
-  .theme-checkbox:checked ~ .switch-label .switch-option:first-child {
-    color: hsl(var(--muted-foreground));
-  }
-
-  .theme-checkbox:checked ~ .switch-label .switch-option:last-child {
-    color: hsl(var(--foreground));
-  }
-
-  .switch-label .switch-option:first-child {
-    color: hsl(var(--foreground));
-  }
-
-  .switch-label .switch-option:last-child {
-    color: hsl(var(--muted-foreground));
-  }
-
-  @keyframes aurora-flow {
-    from {
-      background-position: 50% 50%, 50% 50%;
-    }
-    to {
-      background-position: 350% 50%, 350% 50%;
-    }
   }
 }

@@ -36,7 +36,7 @@ const Header = () => {
                   <Zap className="w-5 h-5 text-white" />
                 </div>
                 <div className="text-left">
-                  <div className="text-sm font-semibold text-foreground">Real-Time AI Agent</div>
+                  <div className="text-sm font-semibold text-white">Real-Time AI Agent</div>
                   <div className="text-xs text-muted-foreground">Watch automation in action</div>
                 </div>
               </div>
@@ -49,7 +49,7 @@ const Header = () => {
                       <User className="h-4 w-4" />
                     </AvatarFallback>
                   </Avatar>
-                  <span className="text-sm font-medium text-foreground">
+                  <span className="text-sm font-medium text-white">
                     {user?.email?.split('@')[0] || 'User'}
                   </span>
                 </div>
@@ -58,7 +58,7 @@ const Header = () => {
                   variant="outline"
                   size="sm"
                   onClick={signOut}
-                  className="glass border-border hover:border-primary text-foreground hover:bg-muted/50"
+                  className="glass border-white/20 hover:border-white/40 text-white hover:bg-white/10"
                 >
                   <LogOut className="h-4 w-4 mr-2" />
                   Sign Out
