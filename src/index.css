@@ -8,35 +8,75 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Dark prism background theme */
+    --background: 240 10% 8%;
+    --foreground: 0 0% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 240 8% 12%;
+    --card-foreground: 0 0% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 240 8% 12%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Prism spectrum primary */
+    --primary: 270 100% 70%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 240 8% 15%;
+    --secondary-foreground: 0 0% 90%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 240 6% 18%;
+    --muted-foreground: 240 5% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 200 100% 60%;
+    --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 240 6% 20%;
+    --input: 240 6% 16%;
+    --ring: 270 100% 70%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Prism spectrum gradients */
+    --gradient-rainbow: linear-gradient(135deg, 
+      hsl(0 100% 65%) 0%,
+      hsl(30 100% 60%) 16.67%,
+      hsl(60 100% 55%) 33.33%,
+      hsl(120 100% 50%) 50%,
+      hsl(240 100% 60%) 66.67%,
+      hsl(270 100% 70%) 83.33%,
+      hsl(300 100% 65%) 100%);
+    
+    --gradient-prism: linear-gradient(135deg, 
+      hsl(240 100% 60% / 0.9) 0%,
+      hsl(270 100% 70% / 0.8) 50%,
+      hsl(300 100% 65% / 0.9) 100%);
+
+    --gradient-glass: linear-gradient(135deg,
+      hsl(240 10% 15% / 0.8) 0%,
+      hsl(240 8% 18% / 0.6) 100%);
+
+    /* Platform colors */
+    --linkedin: 200 100% 50%;
+    --twitter: 200 100% 60%;
+    --instagram: linear-gradient(45deg, 
+      hsl(320 100% 60%) 0%,
+      hsl(30 100% 55%) 50%,
+      hsl(270 100% 70%) 100%);
+
+    /* Glass morphism effects */
+    --glass-border: hsl(240 10% 30% / 0.3);
+    --glass-bg: hsl(240 8% 12% / 0.7);
+    --glass-backdrop: blur(20px);
+
+    /* Animation variables */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    --glow-primary: 0 0 30px hsl(270 100% 70% / 0.4);
+    --glow-accent: 0 0 20px hsl(200 100% 60% / 0.3);
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +140,153 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    background: radial-gradient(ellipse at top, hsl(240 10% 12%) 0%, hsl(240 10% 8%) 50%);
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  /* Glass morphism utilities */
+  .glass {
+    @apply backdrop-blur-xl border border-white/10;
+    background: linear-gradient(135deg, 
+      hsl(240 8% 12% / 0.8) 0%, 
+      hsl(240 6% 15% / 0.6) 100%);
+  }
+
+  .glass-card {
+    @apply glass rounded-2xl shadow-2xl;
+    box-shadow: 
+      0 8px 32px hsl(0 0% 0% / 0.3),
+      inset 0 1px 0 hsl(255 255% 255% / 0.1);
+  }
+
+  /* Prism gradients */
+  .bg-rainbow {
+    background: var(--gradient-rainbow);
+  }
+
+  .bg-prism {
+    background: var(--gradient-prism);
+  }
+
+  .text-rainbow {
+    background: var(--gradient-rainbow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Platform specific styles */
+  .platform-linkedin {
+    @apply border-2;
+    border-color: hsl(var(--linkedin));
+    box-shadow: 0 0 20px hsl(var(--linkedin) / 0.3);
+  }
+
+  .platform-twitter {
+    @apply border-2;
+    border-color: hsl(var(--twitter));
+    box-shadow: 0 0 20px hsl(var(--twitter) / 0.3);
+  }
+
+  .platform-instagram {
+    @apply border-2;
+    border-image: var(--instagram) 1;
+    box-shadow: 0 0 20px hsl(320 100% 60% / 0.3);
+  }
+
+  /* Animation utilities */
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulseGlow 3s ease-in-out infinite;
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300;
+    transition: var(--transition-smooth);
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-1;
+    box-shadow: 
+      0 12px 40px hsl(0 0% 0% / 0.4),
+      0 0 30px hsl(270 100% 70% / 0.3);
+  }
+
+  /* Button variants */
+  .btn-prism {
+    @apply relative overflow-hidden rounded-xl px-8 py-4 font-semibold text-white;
+    background: var(--gradient-prism);
+    transition: var(--transition-smooth);
+  }
+
+  .btn-prism:hover {
+    @apply scale-105;
+    box-shadow: var(--glow-primary);
+  }
+
+  .btn-prism::before {
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    content: '';
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+  }
+
+  .btn-prism:hover::before {
+    @apply opacity-100;
+    transform: translateX(100%);
+  }
+
+  /* Live stream styles */
+  .stream-container {
+    @apply glass-card p-6;
+    background: linear-gradient(135deg,
+      hsl(240 8% 10% / 0.9) 0%,
+      hsl(240 6% 12% / 0.8) 100%);
+  }
+
+  .stream-window {
+    @apply rounded-lg overflow-hidden border border-white/20;
+    background: hsl(240 5% 5%);
+    box-shadow: 
+      inset 0 0 20px hsl(0 0% 0% / 0.5),
+      0 4px 20px hsl(0 0% 0% / 0.3);
+  }
+}
+
+@layer utilities {
+  /* Custom keyframes */
+  @keyframes glow {
+    0% { box-shadow: 0 0 20px hsl(270 100% 70% / 0.4); }
+    100% { box-shadow: 0 0 30px hsl(270 100% 70% / 0.8), 0 0 40px hsl(200 100% 60% / 0.4); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
   }
 }
