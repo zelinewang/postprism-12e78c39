@@ -510,19 +510,19 @@ All colors MUST be HSL.
     
     --aurora-stripes: repeating-linear-gradient(
       100deg,
-      #fff 0%,
-      #fff 7%,
+      rgba(255, 255, 255, 0.8) 0%,
+      rgba(255, 255, 255, 0.4) 7%,
       transparent 10%,
       transparent 12%,
-      #fff 16%
+      rgba(255, 255, 255, 0.6) 16%
     );
-    --aurora-stripes-dark: repeating-linear-gradient(
+    --aurora-stripes-light: repeating-linear-gradient(
       100deg,
-      #000 0%,
-      #000 7%,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0.1) 7%,
       transparent 10%,
       transparent 12%,
-      #000 16%
+      rgba(255, 255, 255, 0.2) 16%
     );
     --aurora-rainbow: repeating-linear-gradient(
       100deg,
@@ -546,12 +546,12 @@ All colors MUST be HSL.
   }
 
   .dark .aurora-rays {
-    background-image: var(--aurora-stripes-dark), var(--aurora-rainbow);
-    filter: blur(10px) opacity(50%) saturate(200%);
+    background-image: var(--aurora-stripes-light), var(--aurora-rainbow);
+    filter: blur(10px) opacity(30%) saturate(200%);
   }
 
   .dark .aurora-rays::after {
-    background-image: var(--aurora-stripes-dark), var(--aurora-rainbow);
+    background-image: var(--aurora-stripes-light), var(--aurora-rainbow);
   }
 
   /* Theme Toggle Styles */
