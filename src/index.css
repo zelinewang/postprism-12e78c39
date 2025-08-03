@@ -618,25 +618,29 @@ All colors MUST be HSL.
     height: calc(100% - 8px);
     background: hsl(var(--background));
     border-radius: 20px;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 2px 8px hsl(var(--foreground) / 0.1);
     z-index: 2;
   }
 
-  .theme-checkbox:checked + .switch-label .switch-slider {
+  .theme-checkbox:checked ~ .switch-slider {
     transform: translateX(100%);
   }
 
-  .theme-checkbox:checked + .switch-label .switch-option:first-child {
+  .theme-checkbox:checked ~ .switch-label .switch-option:first-child {
     color: hsl(var(--muted-foreground));
   }
 
-  .theme-checkbox:checked + .switch-label .switch-option:last-child {
+  .theme-checkbox:checked ~ .switch-label .switch-option:last-child {
     color: hsl(var(--foreground));
   }
 
   .switch-label .switch-option:first-child {
     color: hsl(var(--foreground));
+  }
+
+  .switch-label .switch-option:last-child {
+    color: hsl(var(--muted-foreground));
   }
 
   @keyframes aurora-flow {

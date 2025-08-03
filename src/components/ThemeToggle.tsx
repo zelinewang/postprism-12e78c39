@@ -15,11 +15,11 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({ isDark, onToggle }) => {
           onChange={onToggle}
           className="theme-checkbox"
         />
+        <div className="switch-slider"></div>
         <span className="switch-label">
           <span className="switch-option">Light</span>
           <span className="switch-option">Dark</span>
         </span>
-        <div className="switch-slider"></div>
       </label>
     </div>
   );
