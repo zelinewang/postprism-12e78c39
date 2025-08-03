@@ -159,7 +159,7 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
               <div className="w-8 h-8 bg-prism rounded-lg flex items-center justify-center animate-pulse-glow">
                 <Sparkles className="w-4 h-4 text-white" />
               </div>
-              <h2 className="text-2xl font-semibold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">Create Your Content</h2>
+              <h2 className="text-2xl font-semibold text-foreground">Create Your Content</h2>
             </div>
             <div className="relative group">
               <Textarea
@@ -182,7 +182,7 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
 
           {/* Platform Selection */}
           <div className="space-y-6">
-            <h3 className="text-xl font-semibold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">Select Target Platforms</h3>
+            <h3 className="text-xl font-semibold text-foreground">Select Target Platforms</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {platforms.map((platform) => (
                 <div
@@ -205,11 +205,11 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
                       <platform.icon className="w-5 h-5" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-medium">{platform.name}</h4>
+                      <h4 className="font-medium text-foreground">{platform.name}</h4>
                       <p className="text-xs text-muted-foreground">{platform.description}</p>
                     </div>
                     {selectedPlatforms.includes(platform.id) && (
-                      <Badge variant="secondary" className="bg-white/20 text-white">
+                      <Badge variant="secondary" className="bg-white/20 text-foreground">
                         Selected
                       </Badge>
                     )}

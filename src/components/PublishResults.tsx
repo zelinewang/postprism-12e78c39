@@ -74,7 +74,7 @@ const PublishResults = ({
           <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse-glow">
             <CheckCircle className="w-8 h-8 text-green-400" />
           </div>
-          <h2 className="text-3xl font-bold text-rainbow mb-2">
+          <h2 className="text-3xl font-bold text-foreground mb-2">
             Prism Publishing Complete!
           </h2>
           <p className="text-muted-foreground text-lg">
@@ -116,7 +116,7 @@ const PublishResults = ({
 
           {/* Platform Results */}
           <div className="space-y-6">
-            <h3 className="text-xl font-semibold">Platform-Optimized Results</h3>
+            <h3 className="text-xl font-semibold text-foreground">Platform-Optimized Results</h3>
             
             {results.map((result) => {
               const PlatformIcon = platformIcons[result.platform as keyof typeof platformIcons];
@@ -132,7 +132,7 @@ const PublishResults = ({
                           <PlatformIcon className="w-5 h-5" />
                         </div>
                         <div>
-                          <h4 className="font-semibold capitalize text-lg">{result.platform}</h4>
+                          <h4 className="font-semibold capitalize text-lg text-foreground">{result.platform}</h4>
                           <Badge 
                             variant={result.publishStatus === 'success' ? 'default' : 'destructive'}
                             className={result.publishStatus === 'success' ? 'bg-green-500/20 text-green-400' : ''}
@@ -169,7 +169,7 @@ const PublishResults = ({
                     {/* Adapted Content */}
                     <div className="space-y-4">
                       <div className="glass rounded-lg p-4">
-                        <h5 className="font-medium mb-2">Optimized Content</h5>
+                        <h5 className="font-medium mb-2 text-foreground">Optimized Content</h5>
                         <p className="text-muted-foreground leading-relaxed">
                           {result.adaptedContent}
                         </p>
@@ -178,7 +178,7 @@ const PublishResults = ({
                       {/* Hashtags */}
                       {result.hashtags.length > 0 && (
                         <div className="glass rounded-lg p-4">
-                          <h5 className="font-medium mb-2 flex items-center">
+                          <h5 className="font-medium mb-2 flex items-center text-foreground">
                             <Hash className="w-4 h-4 mr-1" />
                             Hashtags
                           </h5>
@@ -194,7 +194,7 @@ const PublishResults = ({
 
                       {/* AI Insights */}
                       <div className="glass rounded-lg p-4">
-                        <h5 className="font-medium mb-2 flex items-center">
+                        <h5 className="font-medium mb-2 flex items-center text-foreground">
                           <Sparkles className="w-4 h-4 mr-1 text-purple-400" />
                           AI Optimization Insights
                         </h5>

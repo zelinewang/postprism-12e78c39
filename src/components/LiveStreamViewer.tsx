@@ -125,7 +125,7 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
               <Monitor className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h2 className="text-xl font-semibold">AI Agent Live Stream</h2>
+              <h2 className="text-xl font-semibold text-foreground">AI Agent Live Stream</h2>
               <p className="text-sm text-muted-foreground">
                 Watch the AI publish your content in real-time
               </p>
@@ -172,7 +172,7 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
                     <PlatformIcon className={`w-5 h-5 ${colorClass}`} />
-                    <span className="font-medium capitalize">{platform}</span>
+                    <span className="font-medium capitalize text-foreground">{platform}</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     {data?.status === 'completed' ? (
@@ -206,7 +206,7 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
                   {/* Status Overlay */}
                   <div className="absolute bottom-0 left-0 right-0 bg-black/70 p-3">
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-white">{data?.currentAction}</span>
+                      <span className="text-foreground">{data?.currentAction}</span>
                       <span className="text-accent">{Math.round(data?.progress || 0)}%</span>
                     </div>
                     <Progress 

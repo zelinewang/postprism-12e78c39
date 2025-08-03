@@ -22,7 +22,7 @@ const Header = () => {
                 <div className="absolute -inset-2 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 rounded-3xl opacity-20 blur-xl animate-pulse"></div>
               </div>
             <div className="space-y-1">
-                <h1 className="text-4xl font-bold text-aurora tracking-tight">PostPrism AI</h1>
+                <h1 className="text-4xl font-bold text-foreground tracking-tight">PostPrism AI</h1>
                 <p className="text-muted-foreground text-base max-w-md">
                   Intelligent Social Media Publishing Through Advanced Aurora AI Technology
                 </p>
