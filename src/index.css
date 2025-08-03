@@ -159,62 +159,28 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground font-sans antialiased;
     background: 
-      radial-gradient(ellipse at 15% 85%, rgba(147, 51, 234, 0.12) 0%, transparent 60%),
-      radial-gradient(ellipse at 85% 15%, rgba(59, 130, 246, 0.12) 0%, transparent 60%),
-      radial-gradient(ellipse at 50% 50%, rgba(168, 85, 247, 0.08) 0%, transparent 70%),
+      radial-gradient(ellipse at 15% 85%, rgba(147, 51, 234, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 15%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
       linear-gradient(135deg, 
         hsl(220 15% 6%) 0%, 
-        hsl(230 18% 8%) 25%,
-        hsl(240 20% 7%) 50%,
-        hsl(250 18% 8%) 75%,
+        hsl(230 18% 8%) 50%,
         hsl(220 15% 6%) 100%);
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--gradient-prismatic);
-    opacity: 0.02;
-    pointer-events: none;
-    z-index: -1;
-    animation: prismatic-flow 20s linear infinite;
-  }
-
-  body::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      radial-gradient(circle at 20% 80%, rgba(147, 51, 234, 0.08) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-      radial-gradient(circle at 40% 40%, rgba(168, 85, 247, 0.06) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: -1;
-    animation: atmospheric-shift 15s ease-in-out infinite;
   }
 }
 
 @layer components {
   /* Ultra-Advanced Glass Morphism */
   .glass {
-    @apply backdrop-blur-3xl border;
+    @apply backdrop-blur-xl border;
     background: var(--glass-ultra);
     border: 1px solid var(--glass-border);
     box-shadow: 
-      var(--glass-shadow),
-      inset 0 1px 0 rgba(255, 255, 255, 0.12),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.06);
-    backdrop-filter: var(--glass-backdrop);
+      0 8px 32px -8px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
   }
 
   .glass-card {
@@ -222,11 +188,9 @@ All colors MUST be HSL.
     background: var(--gradient-neural);
     border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow: 
-      0 32px 64px -12px rgba(0, 0, 0, 0.6),
-      0 0 0 1px rgba(255, 255, 255, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(32px) saturate(200%) brightness(120%);
+      0 16px 32px -8px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
   }
 
   .glass-card::before {
@@ -338,17 +302,15 @@ All colors MUST be HSL.
   }
 
   .hover-elevate {
-    @apply transition-all duration-700;
-    transition: var(--transition-silk);
+    @apply transition-all duration-300;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
   .hover-elevate:hover {
-    transform: translateY(-12px) scale(1.02) rotateX(2deg);
+    transform: translateY(-4px) scale(1.02);
     box-shadow: 
-      0 40px 80px rgba(0, 0, 0, 0.5),
-      0 0 80px hsl(270 100% 75% / 0.6),
-      inset 0 1px 0 rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(40px) saturate(250%) brightness(130%);
+      0 16px 32px rgba(0, 0, 0, 0.3),
+      0 0 40px hsl(270 100% 75% / 0.3);
   }
 
   /* Revolutionary Button System */
