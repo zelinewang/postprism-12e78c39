@@ -63,8 +63,14 @@ except ImportError as e:
 
 echo ""
 echo "🎉 Installation complete!"
+echo ""
+echo "------------------------------------------------"
+echo "🚀 Now running interactive environment setup..."
+echo "------------------------------------------------"
+python3 setup_env.py
+
+echo ""
+echo "✅ Environment setup complete."
 echo "💡 Next steps:"
-echo "   1. Copy .env.example to .env and configure your API keys"
-echo "   2. Set ORGO_API_KEY, OPENAI_API_KEY, ANTHROPIC_API_KEY"
-echo "   3. Configure platform-specific ORGO project IDs"
-echo "   4. Run: python run_fixed.py"
+echo "   1. Review the generated .env file and ensure all values are correct."
+echo "   2. Run 'python run_fixed.py' to start the PostPrism backend."
