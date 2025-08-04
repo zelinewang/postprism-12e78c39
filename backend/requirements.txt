@@ -1,49 +1,46 @@
 # PostPrism Backend Dependencies - Core Production Requirements
+# Based on actual code analysis and import statements
 
-# Flask Web Framework
-Flask==2.3.3
+# ===== CORE WEB FRAMEWORK =====
+# Flask web application framework
+Flask==3.0.0
 Flask-CORS==4.0.0
 Flask-SocketIO==5.3.6
 
-# WebSocket Support
+# WebSocket real-time communication
 python-socketio==5.9.0
 
-# AI/LLM Integration
-openai==1.10.0
-anthropic==0.21.3
+# ===== AI/LLM INTEGRATION =====
+# OpenAI GPT models integration
+openai==1.12.0
 
-# Environment Management
-python-dotenv==1.0.0
+# Anthropic Claude models integration  
+anthropic==0.18.0
 
-# Image Processing
-Pillow==10.0.1
-
-# Async Support
-asyncio-mqtt==0.13.0
-
-# HTTP Requests
-requests==2.31.0
-
-# Logging and Monitoring
-loguru==0.7.2
-
-# Data Validation
-pydantic==2.5.0
-
-# GUI Agents S2.5 (install via git)
+# ===== CORE AUTOMATION ENGINES =====
+# GUI Agents S2.5 - Install via git (REQUIRED for automation)
 # pip install git+https://github.com/computer-agents/gui-agents.git
 
-# ORGO API Client
+# ORGO Virtual Environment API (REQUIRED for GUI automation)
 # pip install orgo
 
-# Date/Time Utilities
-python-dateutil==2.8.2
+# ===== ESSENTIAL UTILITIES =====
+# Environment variable management
+python-dotenv==1.0.0
 
-# JSON Processing
-ijson==3.2.3
+# Image processing for screenshots and media
+Pillow==10.2.0
 
-# Process Management
-psutil==5.9.6
+# HTTP requests for health checks and API calls
+requests==2.31.0
 
-# Configuration Management
-configparser==6.0.0
+# ===== PYTHON STANDARD LIBRARY =====
+# The following are built-in modules (no installation needed):
+# - json (JSON processing)
+# - datetime (date/time handling) 
+# - logging (application logging)
+# - asyncio (async programming)
+# - typing, dataclasses (type hints)
+# - os, sys, time, uuid, base64, io
+# - collections, threading, enum, abc
+# - pathlib, argparse
