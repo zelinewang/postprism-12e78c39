@@ -115,4 +115,7 @@ backend/*_diagnostic*.txt
 
 # OS generated files
 Thumbs.db
-ehthumbs.db
+ehthumbs.db.vscode/settings.json
+
+# Archived development documents
+docs/archive/
