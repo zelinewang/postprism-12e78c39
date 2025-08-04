@@ -1,0 +1,31 @@
+# Core Flask Dependencies
+Flask==2.3.3
+Flask-CORS==4.0.0
+Flask-SocketIO==5.3.6
+python-socketio==5.8.0
+
+# AI Model APIs (versions managed by gui-agents)
+anthropic
+openai
+
+# AgentS2.5 and ORGO Dependencies
+orgo
+gui-agents
+pyautogui==0.9.54
+
+# Environment and Configuration
+python-dotenv==1.0.0
+pydantic==2.5.0
+
+# Image and Media Processing
+Pillow==10.0.1
+opencv-python==4.8.1.78
+numpy==1.24.3
+
+# Database and Caching
+redis==5.0.1
+
+# Utilities
+requests==2.31.0
+python-json-logger==2.0.7
+uuid==1.30

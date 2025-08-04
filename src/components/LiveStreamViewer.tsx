@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,7 @@ import {
   Clock,
   Zap
 } from "lucide-react";
+import { io, Socket } from 'socket.io-client';
 
 interface StreamData {
   platform: string;
@@ -34,6 +35,9 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [streamData, setStreamData] = useState<Record<string, StreamData>>({});
   const [overallProgress, setOverallProgress] = useState(0);
+  const [sessionId, setSessionId] = useState<string>('');
+  const [actionLog, setActionLog] = useState<Array<{id: string, message: string, type: string, timestamp: string}>>([]);
+  const socketRef = useRef<Socket | null>(null);
 
   const platformIcons = {
     linkedin: Linkedin,
@@ -47,9 +51,14 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
     instagram: "text-pink-400"
   };
 
-  // Initialize stream data for selected platforms
+  // Initialize WebSocket connection for real-time streaming
   useEffect(() => {
-    if (isActive) {
+    if (isActive && selectedPlatforms.length > 0) {
+      // Generate unique session ID
+      const newSessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      setSessionId(newSessionId);
+      
+      // Initialize stream data for selected platforms
       const initialData: Record<string, StreamData> = {};
       selectedPlatforms.forEach(platform => {
         initialData[platform] = {
@@ -61,56 +70,163 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
       });
       setStreamData(initialData);
       
-      // Simulate streaming progress
-      simulateStreaming(initialData);
+      // Connect to WebSocket server
+      const socket = io('http://localhost:8000', {
+        transports: ['websocket', 'polling'],
+        autoConnect: true
+      });
+      
+      socketRef.current = socket;
+      
+      // Join the specific streaming session
+      socket.emit('join_stream', { session_id: newSessionId });
+      
+      // Listen for connection events
+      socket.on('connect', () => {
+        console.log('Connected to PostPrism real-time streaming');
+        addToActionLog('Connected to live streaming server', 'info');
+      });
+      
+      socket.on('joined_stream', (data) => {
+        console.log('Joined streaming session:', data.session_id);
+        addToActionLog(`Joined streaming session ${data.session_id}`, 'info');
+      });
+      
+      // Listen for publishing events
+      socket.on('publish_started', (data) => {
+        console.log('Publishing started:', data);
+        addToActionLog('AI content adaptation started...', 'info');
+      });
+      
+      socket.on('adaptation_complete', (data) => {
+        console.log('Adaptation complete:', data);
+        addToActionLog('AI content adaptation complete. Starting AgentS2 automation...', 'info');
+      });
+      
+      // Listen for platform events
+      socket.on('platform_started', (data) => {
+        console.log('Platform started:', data);
+        setStreamData(prev => ({
+          ...prev,
+          [data.platform]: {
+            ...prev[data.platform],
+            status: 'active',
+            currentAction: `Starting ${data.platform} automation...`
+          }
+        }));
+        addToActionLog(`Started ${data.platform} automation`, 'info');
+      });
+      
+      socket.on('platform_completed', (data) => {
+        console.log('Platform completed:', data);
+        setStreamData(prev => ({
+          ...prev,
+          [data.platform]: {
+            ...prev[data.platform],
+            status: 'completed',
+            progress: 100,
+            currentAction: 'Publishing completed!'
+          }
+        }));
+        addToActionLog(`✅ ${data.platform} publishing completed`, 'success');
+        updateOverallProgress();
+      });
+      
+      // Listen for video frames
+      socket.on('video_frame', (data) => {
+        console.log('Received video frame for:', data.platform);
+        setStreamData(prev => ({
+          ...prev,
+          [data.platform]: {
+            ...prev[data.platform],
+            videoFrame: data.data
+          }
+        }));
+      });
+      
+      // Listen for agent actions
+      socket.on('agent_action', (data) => {
+        console.log('Agent action:', data);
+        setStreamData(prev => ({
+          ...prev,
+          [data.platform]: {
+            ...prev[data.platform],
+            currentAction: data.action
+          }
+        }));
+        addToActionLog(`${data.platform}: ${data.action}`, 'action');
+      });
+      
+      socket.on('agent_thinking', (data) => {
+        console.log('Agent thinking:', data);
+        addToActionLog(`${data.platform}: 💭 ${data.thinking}`, 'thinking');
+      });
+      
+      socket.on('agent_success', (data) => {
+        console.log('Agent success:', data);
+        addToActionLog(`✅ ${data.platform}: ${data.message}`, 'success');
+      });
+      
+      socket.on('agent_error', (data) => {
+        console.log('Agent error:', data);
+        setStreamData(prev => ({
+          ...prev,
+          [data.platform]: {
+            ...prev[data.platform],
+            status: 'error',
+            currentAction: `Error: ${data.error}`
+          }
+        }));
+        addToActionLog(`❌ ${data.platform}: ${data.error}`, 'error');
+      });
+      
+      // Listen for completion
+      socket.on('all_platforms_completed', (data) => {
+        console.log('All platforms completed:', data);
+        addToActionLog('🎉 All platforms completed successfully!', 'success');
+        setOverallProgress(100);
+      });
+      
+      // Listen for errors
+      socket.on('error_occurred', (data) => {
+        console.log('Error occurred:', data);
+        addToActionLog(`❌ Error: ${data.error}`, 'error');
+      });
+      
+      socket.on('disconnect', () => {
+        console.log('Disconnected from streaming server');
+        addToActionLog('Disconnected from streaming server', 'info');
+      });
+      
+      // Cleanup on unmount
+      return () => {
+        if (socketRef.current) {
+          socketRef.current.emit('leave_stream', { session_id: newSessionId });
+          socketRef.current.disconnect();
+          socketRef.current = null;
+        }
+      };
     }
   }, [isActive, selectedPlatforms]);
-
-  const simulateStreaming = (initialData: Record<string, StreamData>) => {
-    const platforms = Object.keys(initialData);
-    let completedCount = 0;
-
-    platforms.forEach((platform, index) => {
-      // Simulate realistic publishing steps
-      const steps = [
-        'Opening browser...',
-        'Navigating to platform...',
-        'Logging in...',
-        'Creating new post...',
-        'Adapting content...',
-        'Adding hashtags...',
-        'Uploading media...',
-        'Reviewing post...',
-        'Publishing...',
-        'Confirming success...'
-      ];
-
-      let currentStep = 0;
-      const stepInterval = setInterval(() => {
-        if (currentStep < steps.length) {
-          setStreamData(prev => ({
-            ...prev,
-            [platform]: {
-              ...prev[platform],
-              progress: ((currentStep + 1) / steps.length) * 100,
-              status: currentStep === steps.length - 1 ? 'completed' : 'active',
-              currentAction: steps[currentStep]
-            }
-          }));
-
-          if (currentStep === steps.length - 1) {
-            completedCount++;
-            if (completedCount === platforms.length) {
-              setOverallProgress(100);
-            } else {
-              setOverallProgress((completedCount / platforms.length) * 100);
-            }
-            clearInterval(stepInterval);
-          }
-          currentStep++;
-        }
-      }, 1000 + Math.random() * 1000); // Vary timing for realism
-    });
+  
+  const addToActionLog = (message: string, type: string) => {
+    setActionLog(prev => [...prev, {
+      id: Date.now().toString(),
+      message,
+      type,
+      timestamp: new Date().toLocaleTimeString()
+    }]);
+  };
+  
+  const updateOverallProgress = () => {
+    // Calculate overall progress based on completed platforms
+    const platforms = Object.values(streamData);
+    const completedCount = platforms.filter(p => p.status === 'completed').length;
+    const totalCount = platforms.length;
+    
+    if (totalCount > 0) {
+      setOverallProgress((completedCount / totalCount) * 100);
+    }
   };
 
   if (!isActive) return null;
@@ -190,15 +306,15 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
                 <div className="stream-window aspect-video bg-black/50 flex items-center justify-center relative">
                   {data?.videoFrame ? (
                     <img 
-                      src={data.videoFrame} 
+                      src={`data:image/png;base64,${data.videoFrame}`} 
                       alt={`${platform} stream`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover rounded"
                     />
                   ) : (
                     <div className="text-center space-y-2">
                       <Monitor className="w-12 h-12 text-muted-foreground mx-auto animate-pulse" />
                       <p className="text-sm text-muted-foreground">
-                        Streaming {platform} automation...
+                        {data?.status === 'active' ? `Streaming ${platform} automation...` : `Waiting for ${platform} stream...`}
                       </p>
                     </div>
                   )}
@@ -237,17 +353,42 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
           })}
         </div>
 
+        {/* Action Log */}
+        <div className="mt-6 pt-6 border-t border-white/10">
+          <h3 className="text-lg font-semibold mb-4">Live Action Log</h3>
+          <div className="glass rounded-lg p-4 max-h-64 overflow-y-auto">
+            {actionLog.length > 0 ? (
+              <div className="space-y-2">
+                {actionLog.slice(-10).map((log) => (
+                  <div key={log.id} className="flex items-center justify-between text-sm">
+                    <span className={`flex-1 ${
+                      log.type === 'error' ? 'text-red-400' :
+                      log.type === 'success' ? 'text-green-400' :
+                      log.type === 'thinking' ? 'text-purple-400' :
+                      log.type === 'action' ? 'text-blue-400' :
+                      'text-white'
+                    }`}>
+                      {log.message}
+                    </span>
+                    <span className="text-xs text-muted-foreground ml-2">
+                      {log.timestamp}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-muted-foreground text-center">Waiting for automation to start...</p>
+            )}
+          </div>
+        </div>
+
         {/* Live Controls */}
         <div className="flex justify-center mt-6 pt-6 border-t border-white/10">
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="text-muted-foreground">
-              <Play className="w-4 h-4 mr-2" />
-              Resume
-            </Button>
-            <Button variant="ghost" size="sm" className="text-muted-foreground">
-              <Pause className="w-4 h-4 mr-2" />
-              Pause
-            </Button>
+            <Badge variant="secondary" className="bg-green-500/20 text-green-400">
+              <Zap className="w-3 h-3 mr-1" />
+              Session: {sessionId.split('_')[1] || 'Connecting...'}
+            </Badge>
           </div>
         </div>
       </Card>

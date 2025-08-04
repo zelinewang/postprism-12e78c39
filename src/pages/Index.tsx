@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Header from "@/components/Header";
 import ContentInput from "@/components/ContentInput";
-import LiveStreamViewer from "@/components/LiveStreamViewer";
+import SimplifiedLiveStreamViewer from "@/components/SimplifiedLiveStreamViewer";
 import PublishResults from "@/components/PublishResults";
 
 type AppState = 'input' | 'processing' | 'streaming' | 'results';
@@ -11,36 +11,80 @@ const Index = () => {
   const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
   const [originalContent, setOriginalContent] = useState('');
   const [publishResults, setPublishResults] = useState<any[]>([]);
+  const [currentSessionId, setCurrentSessionId] = useState<string>('');
 
-  const handlePublish = (content: string, platforms: string[]) => {
+  const handlePublish = async (content: string, platforms: string[]) => {
     setOriginalContent(content);
     setSelectedPlatforms(platforms);
-    setAppState('processing');
     
-    // Simulate processing delay then start streaming
-    setTimeout(() => {
-      setAppState('streaming');
+    // 生成session_id用于WebSocket连接
+    const sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    setCurrentSessionId(sessionId);
+    
+    // 立即跳转到直播界面（不等API响应）
+    setAppState('streaming');
+    
+    try {
+      // Call real backend API with session_id
+      const response = await fetch('http://localhost:8000/api/publish-content', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          content,
+          platforms,
+          session_id: sessionId  // 传递给后端
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
       
-      // Simulate completion after streaming
-      setTimeout(() => {
-        // Mock results for demo
-        const mockResults = platforms.map(platform => ({
+      if (result.success) {
+        // Get session_id from backend response
+        const sessionId = result.data?.stream_session_id || 'unknown';
+        setCurrentSessionId(sessionId);
+        
+        // Process results from backend
+        const processedResults = Object.entries(result.data.publish_results).map(([platform, data]: [string, any]) => ({
           platform,
-          adaptedContent: `${content} - Optimized for ${platform} with platform-specific tone and formatting.`,
-          hashtags: platform === 'linkedin' ? ['professional', 'networking'] : 
-                   platform === 'twitter' ? ['trending', 'tech'] : 
-                   ['visual', 'inspiration'],
-          publishStatus: 'success' as const,
-          postUrl: `https://${platform}.com/post/123`,
-          aiInsights: `Content optimized for ${platform}'s audience with improved engagement potential.`,
-          stepsTaken: 10,
-          errorCount: 0
+          adaptedContent: data.adapted_content || data.content,
+          hashtags: data.hashtags || [],
+          publishStatus: data.publish_status === 'success' ? 'success' as const : 'failed' as const,
+          postUrl: data.post_url,
+          aiInsights: data.ai_insights,
+          stepsTaken: data.steps_taken || 0,
+          errorCount: data.error_count || 0
         }));
         
-        setPublishResults(mockResults);
-        setAppState('results');
-      }, 8000); // 8 seconds of streaming
-    }, 2000); // 2 seconds processing
+        setPublishResults(processedResults);
+        
+        // Don't auto-transition - let SimplifiedLiveStreamViewer handle completion
+      } else {
+        throw new Error(result.error || 'Publishing failed');
+      }
+      
+    } catch (error) {
+      console.error('Publishing error:', error);
+      // Show error state or fallback
+      const errorResults = platforms.map(platform => ({
+        platform,
+        adaptedContent: `Error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        hashtags: [],
+        publishStatus: 'failed' as const,
+        postUrl: '',
+        aiInsights: 'Publishing failed due to system error',
+        stepsTaken: 0,
+        errorCount: 1
+      }));
+      
+      setPublishResults(errorResults);
+      setAppState('results');
+    }
   };
 
   const handleNewPublish = () => {
@@ -48,11 +92,47 @@ const Index = () => {
     setSelectedPlatforms([]);
     setOriginalContent('');
     setPublishResults([]);
+    setCurrentSessionId('');
+  };
+
+  const handleWorkflowCompleted = (results?: any) => {
+    // Transition to results page when live stream workflow completes
+    console.log('🎯 handleWorkflowCompleted called, transitioning to results...');
+    console.log('📊 Received results from WebSocket:', results);
+    console.log('📊 Current publishResults:', publishResults);
+    
+    // If we have results from WebSocket, use them
+    if (results && results.platforms) {
+      console.log('🔄 Processing WebSocket results...');
+      const processedResults = Object.entries(results.platforms).map(([platform, data]: [string, any]) => ({
+        platform,
+        adaptedContent: data.adapted_content || data.content,
+        hashtags: data.hashtags || [],
+        publishStatus: data.publish_status === 'success' ? 'success' as const : 'failed' as const,
+        postUrl: data.post_url,
+        aiInsights: data.ai_insights,
+        stepsTaken: data.steps_taken || 0,
+        errorCount: data.error_count || 0
+      }));
+      setPublishResults(processedResults);
+    }
+    
+    setTimeout(() => {
+      console.log('🔄 Setting appState to results');
+      setAppState('results');
+    }, 1500); // Brief delay to show completion
   };
 
   return (
     <div className="min-h-screen bg-background prism-light-effect">
       <Header />
+      
+      {/* Debug Status - Remove in production */}
+      <div className="fixed top-20 right-4 z-50 bg-black/50 text-white p-2 rounded text-xs">
+        <div>State: {appState}</div>
+        <div>Results: {publishResults.length}</div>
+        <div>Session: {currentSessionId.slice(-8)}</div>
+      </div>
       
       <main className="space-y-8 relative z-10">
         {/* Content Input Section */}
@@ -64,12 +144,15 @@ const Index = () => {
         )}
 
         {/* Live Stream Viewer */}
-        <LiveStreamViewer 
+        <SimplifiedLiveStreamViewer 
           isActive={appState === 'streaming'}
           selectedPlatforms={selectedPlatforms}
+          sessionId={currentSessionId}
+          onWorkflowCompleted={handleWorkflowCompleted}
         />
 
         {/* Results Display */}
+        {console.log(`🔍 Render - appState: ${appState}, publishResults length: ${publishResults.length}`)}
         <PublishResults
           isVisible={appState === 'results'}
           originalContent={originalContent}

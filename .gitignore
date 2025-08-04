@@ -1,4 +1,18 @@
-# Logs
+# === CORE PROJECT FILES TO KEEP ===
+# backend/run_fixed.py (main entry point)
+# backend/app_fixed.py (main flask app)
+# backend/config/ (configuration)
+# backend/agent_s2_controller/ (core agent logic)
+# backend/content_adapters/ (platform adapters)
+# backend/streaming/ (websocket streaming)
+# backend/requirements.txt (python dependencies)
+# src/ (entire frontend app)
+# package.json (frontend dependencies)
+# vite.config.ts, tailwind.config.ts, tsconfig.json (build configs)
+
+# === IGNORED FILES ===
+
+# Logs and runtime files
 logs
 *.log
 npm-debug.log*
@@ -7,10 +21,15 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies and build outputs
 node_modules
 dist
 dist-ssr
 *.local
+bun.lockb
+
+# Environment files
+.env*
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +41,69 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Development and testing files
+backend/test_*
+backend/debug_*
+backend/demo_*
+backend/fix_*
+backend/quick_*
+backend/parallel_*
+backend/setup_env.py
+backend/tests/
+backend/run_tests.py
+backend/test_*.py
+
+# Alternative/redundant implementations (not used in production)
+# Production uses: run_fixed.py -> app_fixed.py -> official_agent_manager.py
+backend/app.py                              # Old version using agent_s2_manager.py
+backend/run.py                              # Old startup script
+backend/app_simplified.py                   # Simplified version implementation
+backend/app_complete_workflow.py            # Complete workflow version implementation
+backend/agent_s2_controller/agent_s2_manager.py          # Complex 1491-line manager (unused)
+backend/agent_s2_controller/simplified_agent_manager.py  # Simplified manager (unused)
+backend/agent_s2_controller/complete_workflow_manager.py # Complete workflow manager (unused)
+
+# Development documentation (keep only essential docs)
+backend/*.md
+COMPLETE_WORKFLOW_GUIDE.md
+CORE_FUNCTIONALITY_FIX.md
+FINAL_FIXES_SUMMARY.md
+FRONTEND_RESULTS_TRANSITION_FIX.md
+LINKEDIN_VM_FIX_GUIDE.md
+LIVE_STREAM_FIX_GUIDE.md
+LIVE_STREAM_SESSION_SYNC_FIX.md
+PARALLEL_EXECUTION_IMPLEMENTATION_GUIDE.md
+PNG_FIX_GUIDE.md
+POSTPRISM_FIXED_USAGE_GUIDE.md
+POSTPRISM_PROBLEM_ANALYSIS_AND_SOLUTIONS.md
+QUICK_FIX_SUMMARY.md
+QUICK_START.md
+SIMPLE_ANTI_LOOP_FIX.md
+SMART_ANTI_REWRITE_SYSTEM.md
+TIMEOUT_FIX_SUMMARY.md
+designdoc.md
+
+# Diagnostic and validation reports
+backend/*_report.txt
+backend/*_diagnostic*.txt
+
+# Temporary and backup files
+*.tmp
+*.bak
+*.swp
+*~
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
