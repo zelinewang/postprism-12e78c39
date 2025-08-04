@@ -66,13 +66,22 @@ backend/test_*.py
 
 # Alternative/redundant implementations (not used in production)
 # Production uses: run_fixed.py -> app_fixed.py -> official_agent_manager.py
-backend/app.py                              # Old version using agent_s2_manager.py
-backend/run.py                              # Old startup script
-backend/app_simplified.py                   # Simplified version implementation
-backend/app_complete_workflow.py            # Complete workflow version implementation
-backend/agent_s2_controller/agent_s2_manager.py          # Complex 1491-line manager (unused)
-backend/agent_s2_controller/simplified_agent_manager.py  # Simplified manager (unused)
-backend/agent_s2_controller/complete_workflow_manager.py # Complete workflow manager (unused)
+backend/app.py                              
+backend/run.py                              
+backend/app_simplified.py                   
+backend/app_complete_workflow.py            
+backend/agent_s2_controller/agent_s2_manager.py
+backend/agent_s2_controller/simplified_agent_manager.py
+backend/agent_s2_controller/complete_workflow_manager.py
+
+# Alternative patterns for redundant files
+app.py
+run.py
+app_simplified.py  
+app_complete_workflow.py
+agent_s2_manager.py
+simplified_agent_manager.py
+complete_workflow_manager.py
 
 # Development documentation (keep only essential docs)
 backend/*.md
