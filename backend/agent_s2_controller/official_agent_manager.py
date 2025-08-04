@@ -163,11 +163,10 @@ class OfficialAgentManager:
                 logger.info("✅ UI-TARS grounding agent initialized")
             
             # Step 4: Create AgentS2_5 instance (official pattern)
-            max_trajectory = getattr(self.agents2_5_config, 'max_trajectory_length', 6)  # Reduced for speed
-            # Disable reflection to avoid timeouts (固定配置)
-            enable_reflection = False  
+            max_trajectory = getattr(self.agents2_5_config, 'max_trajectory_length', 8)  # Official default
+            enable_reflection = True  # Enable reflection for better decision making
             
-            logger.info(f"🔧 Agent S2.5 config: trajectory_length={max_trajectory}, reflection={enable_reflection} (固定优化配置)")
+            logger.info(f"🔧 Agent S2.5 config: trajectory_length={max_trajectory}, reflection={enable_reflection}")
             
             agent = AgentS2_5(
                 engine_params,
@@ -330,15 +329,16 @@ class OfficialAgentManager:
         socketio=None,
         max_steps: int = 12
     ) -> Tuple[bool, int]:
-        """
-        Run the official Agent S2.5 automation loop
+        """        
+        Run the official Agent S2.5 automation loop with enhanced intelligence
         
-        This follows the exact pattern from official cli_app.py:
-        1. Take screenshot
-        2. Agent analyzes and decides action
-        3. Execute action
-        4. Check for completion
-        5. Repeat until done
+        This follows the exact pattern from official cli_app.py with improvements:
+        1. Take screenshot (scaled for UI-TARS)
+        2. Agent analyzes and decides action with reflection
+        3. Execute action with enhanced error handling
+        4. Frequent WebSocket updates for better UX
+        5. Handle special commands (done, fail, wait, next)
+        6. Repeat until completion
         
         Args:
             agent: AgentS2_5 instance
@@ -372,7 +372,7 @@ class OfficialAgentManager:
                 # Fix screenshot format for UI-TARS
                 screenshot_bytes = self._fix_screenshot_format(screenshot_base64)
                 
-                # Emit video frame for live streaming
+                # Emit video frame for live streaming (more frequent updates)
                 if socketio:
                     socketio.emit('video_frame', {
                         'session_id': session_id,

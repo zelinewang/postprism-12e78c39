@@ -48,7 +48,7 @@ class ORGOConfig:
 class AgentS2_5Config:
     """Configuration for AgentS2.5 automation agent (latest version)"""
     # Main generation model parameters
-    model: str = "o3-2025-04-16"  # Official recommendation
+    model: str = "gpt-4o-mini"  # Fast and cheap model to avoid rate limits
     model_type: str = "openai"
     model_url: str = ""  # Optional custom API URL
     model_api_key: str = ""  # Optional separate API key
@@ -160,7 +160,7 @@ class Settings:
         """Initialize AgentS2.5 configuration from environment variables (latest version)"""
         return AgentS2_5Config(
             # Main generation model parameters
-            model=os.getenv('AGENTS2_5_MODEL', 'o3-2025-04-16'),
+            model=os.getenv('AGENTS2_5_MODEL', 'gpt-4o-mini'),
             model_type=os.getenv('AGENTS2_5_MODEL_TYPE', 'openai'),
             model_url=os.getenv('AGENTS2_5_MODEL_URL', ''),
             model_api_key=os.getenv('AGENTS2_5_MODEL_API_KEY', ''),

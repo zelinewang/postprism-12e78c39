@@ -96,31 +96,56 @@ const Index = () => {
   };
 
   const handleWorkflowCompleted = (results?: any) => {
-    // Transition to results page when live stream workflow completes
+    // Enhanced workflow completion handling - fix blank page issue
     console.log('🎯 handleWorkflowCompleted called, transitioning to results...');
     console.log('📊 Received results from WebSocket:', results);
     console.log('📊 Current publishResults:', publishResults);
+    console.log('📊 Results type:', typeof results);
+    console.log('📊 Results keys:', results ? Object.keys(results) : 'No results');
     
-    // If we have results from WebSocket, use them
-    if (results && results.platforms) {
-      console.log('🔄 Processing WebSocket results...');
-      const processedResults = Object.entries(results.platforms).map(([platform, data]: [string, any]) => ({
-        platform,
-        adaptedContent: data.adapted_content || data.content,
-        hashtags: data.hashtags || [],
-        publishStatus: data.publish_status === 'success' ? 'success' as const : 'failed' as const,
-        postUrl: data.post_url,
-        aiInsights: data.ai_insights,
-        stepsTaken: data.steps_taken || 0,
-        errorCount: data.error_count || 0
-      }));
-      setPublishResults(processedResults);
+    // ENHANCED: Handle different result formats from enhanced agent manager
+    if (results) {
+      console.log('🔄 Processing enhanced WebSocket results...');
+      let processedResults = [];
+      
+      // Handle different result structures
+      if (results.platforms) {
+        // Standard structure - FIXED: Match OptimizedPublishResult format
+        processedResults = Object.entries(results.platforms).map(([platform, data]: [string, any]) => ({
+          platform,
+          adaptedContent: data.content || data.adapted_content || `Content for ${platform}`, // FIXED: Use 'content' field
+          hashtags: data.hashtags || [],
+          publishStatus: data.success ? 'success' as const : 'failed' as const, // FIXED: Use 'success' field
+          postUrl: data.post_url || '',
+          aiInsights: data.completion_reason || data.ai_insights || `Published to ${platform} successfully`, // FIXED: Use completion_reason
+          stepsTaken: data.steps_taken || 0,
+          errorCount: data.rate_limit_hits || data.error_count || 0, // FIXED: Use rate_limit_hits as error indicator
+          intelligenceScore: data.intelligence_score || 0
+        }));
+      } else if (Array.isArray(results)) {
+        // Array format
+        processedResults = results.map((result: any) => ({
+          platform: result.platform,
+          adaptedContent: result.content,
+          hashtags: result.hashtags || [],
+          publishStatus: result.success ? 'success' as const : 'failed' as const,
+          postUrl: result.post_url,
+          aiInsights: result.ai_insights || '',
+          stepsTaken: result.steps_taken || 0,
+          errorCount: result.error_count || 0,
+          intelligenceScore: result.intelligence_score || 0
+        }));
+      }
+      
+      if (processedResults.length > 0) {
+        setPublishResults(processedResults);
+        console.log('✅ Results processed and set:', processedResults);
+      }
     }
     
-    setTimeout(() => {
-      console.log('🔄 Setting appState to results');
-      setAppState('results');
-    }, 1500); // Brief delay to show completion
+    // FIXED: Ensure immediate transition to avoid blank page
+    console.log('🔄 Immediately setting appState to results');
+    setAppState('results');
   };
 
   return (

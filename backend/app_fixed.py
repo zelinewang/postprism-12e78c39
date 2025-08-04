@@ -34,7 +34,7 @@ from flask_socketio import SocketIO, emit, join_room, leave_room
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from config.settings import settings
 from content_adapters.multi_platform_adapter import MultiPlatformAdapter
-from agent_s2_controller.official_agent_manager import OfficialAgentManager, PublishResult
+from agent_s2_controller.optimized_agent_manager import OptimizedAgentManager, OptimizedPublishResult
 from streaming.video_streamer import VideoStreamer
 from streaming.progress_tracker import ProgressTracker
 
@@ -58,9 +58,9 @@ class PostPrismApp:
         self.app = self._create_flask_app()
         self.socketio = self._setup_websocket()
         
-        # Initialize core components with new official manager
+        # Initialize core components with OPTIMIZED agent manager
         self.content_adapter = MultiPlatformAdapter(settings.ai_model)
-        self.official_agent_manager = OfficialAgentManager(settings)  # NEW: Official Agent S2.5
+        self.optimized_agent_manager = OptimizedAgentManager(settings)  # OPTIMIZED: Simple, efficient, proven agent manager
         self.video_streamer = VideoStreamer(self.socketio)
         self.progress_tracker = ProgressTracker()
         
@@ -109,26 +109,29 @@ class PostPrismApp:
             """Health check endpoint with parallel execution support"""
             # Check platform configurations
             platform_status = {}
-            for platform, project_id in self.official_agent_manager.platform_projects.items():
+            for platform, project_id in self.optimized_agent_manager.platform_projects.items():
                 platform_status[platform] = 'configured' if project_id else 'missing_project_id'
             
             return jsonify({
                 'status': 'healthy',
                 'timestamp': datetime.utcnow().isoformat(),
-                'version': '2.1.0-parallel-fixed',
-                'agent_system': 'official-agent-s2.5-parallel',
+                'version': '7.0.0-optimized',
+                'agent_system': 'optimized-agent-s2.5',
                 'features': [
-                    'Parallel platform execution',
-                    'Real-time WebSocket streaming',
-                    'LinkedIn-optimized workflows',
-                    'Twitter and Instagram support',
-                    'Enhanced error handling'
+                    'Optimized Agent S2.5 (Based on official cli_app.py patterns)',
+                    'Rate limiting mitigation with intelligent spacing',
+                    'Precise completion detection',
+                    'Smart publish detection and anti-perfectionism',
+                    'True parallel execution with resource isolation',
+                    'Optimized execution timing and performance'
                 ],
                 'components': {
                     'ai_adapter': 'ready',
-                    'official_agent_manager': 'ready',
+                    'optimized_agent_manager': 'ready',
                     'video_streamer': 'ready',
-                    'parallel_execution': 'enabled'
+                    'parallel_execution': 'resource_isolation',
+                    'rate_limiting': 'intelligent_mitigation',
+                    'completion_detection': 'optimized_patterns'
                 },
                 'platform_support': platform_status
             })
@@ -248,14 +251,14 @@ class PostPrismApp:
                 # Calculate total execution time
                 total_time = time.time() - start_time
                 
-                # Emit final completion BEFORE stopping streaming
+                # FIXED: Emit final completion with consistent data format
                 # This ensures frontend receives the event before connection closes
                 self.socketio.emit('all_platforms_completed', {
                     'session_id': session_id,
-                    'results': publish_results,
+                    'results': {'platforms': publish_results},  # Consistent nested format
                     'total_time': f"{total_time:.1f} seconds",
-                    'message': 'Publishing completed with official Agent S2.5!',
-                    'system': 'official-agent-s2.5'
+                    'message': 'Publishing completed with enhanced Agent S2.5!',
+                    'system': 'enhanced-agent-s2.5'
                 }, room=session_id)
                 
                 # Give frontend time to process completion event before stopping streaming
@@ -307,12 +310,12 @@ class PostPrismApp:
                 
                 session_id = str(uuid.uuid4())
                 
-                # Run single platform test
+                # Run single platform test with optimized manager
                 result = asyncio.run(
-                    self.official_agent_manager.publish_content_official(
+                    self.optimized_agent_manager.publish_content_optimized(
                         platform=platform,
                         content=content,
-                        hashtags=['testing', 'postprism', 'agents25'],
+                        hashtags=['testing', 'postprism', 'optimized'],
                         session_id=session_id,
                         socketio=self.socketio
                     )
@@ -325,12 +328,14 @@ class PostPrismApp:
                         'success': result.success,
                         'content': result.content,
                         'execution_time': result.execution_time,
-                        'steps_taken': result.steps_taken,
+                        'api_calls_made': result.api_calls_made,
+                        'rate_limit_hits': result.rate_limit_hits,
                         'post_url': result.post_url,
-                        'error_message': result.error_message
+                        'error_message': result.error_message,
+                        'completion_reason': result.completion_reason
                     },
                     'session_id': session_id,
-                    'system': 'official-agent-s2.5'
+                    'system': 'optimized-agent-s2.5'
                 })
                 
             except Exception as e:
@@ -354,7 +359,7 @@ class PostPrismApp:
                 content = data.get('content', 'Testing PostPrism PARALLEL execution with Agent S2.5! 🚀⚡')
                 
                 # Validate platforms
-                available_platforms = [p for p, pid in self.official_agent_manager.platform_projects.items() if pid]
+                available_platforms = [p for p, pid in self.optimized_agent_manager.platform_projects.items() if pid]
                 test_platforms = [p for p in platforms if p in available_platforms]
                 
                 if not test_platforms:
@@ -554,15 +559,16 @@ class PostPrismApp:
         logger.info(f"🎉 PARALLEL publishing completed: {successful_platforms}/{len(platforms)} platforms successful ({success_rate:.1f}%)")
         logger.info(f"⚡ Efficiency improvement: {efficiency_improvement}")
         
-        # Emit standard completion event (frontend compatibility)
+        # FIXED: Emit standard completion event with consistent data format
         self.socketio.emit('all_platforms_completed', {
             'session_id': session_id,
-            'results': {'platforms': results},
+            'results': {'platforms': results},  # Consistent nested format
             'successful_platforms': successful_platforms,
             'total_platforms': len(platforms),
             'success_rate': success_rate,
-            'message': f'🎉 Parallel publishing completed: {successful_platforms}/{len(platforms)} platforms successful',
-            'system': 'official-agent-s2.5-parallel'
+            'total_time': f"{parallel_execution_time:.1f} seconds",  # Added for consistency
+            'message': f'🎉 Enhanced parallel publishing completed: {successful_platforms}/{len(platforms)} platforms successful',
+            'system': 'enhanced-agent-s2.5-parallel'
         }, room=session_id)
         
         # Also emit enhanced parallel completion event  
@@ -621,9 +627,9 @@ class PostPrismApp:
                 'system': 'official-agent-s2.5-parallel'
             }, room=session_id)
             
-            # Use official Agent S2.5 manager with shared session for WebSocket compatibility
+            # Use Optimized Agent S2.5 manager with efficient execution
             # Keep the same session_id for frontend compatibility - WebSocket events go to main room
-            result = await self.official_agent_manager.publish_content_official(
+            result = await self.optimized_agent_manager.publish_content_optimized(
                 platform=platform,
                 content=content,
                 hashtags=hashtags,
@@ -637,15 +643,16 @@ class PostPrismApp:
             
         except Exception as e:
             logger.error(f"❌ [PARALLEL] {platform} publishing failed: {e}")
-            # Return a mock PublishResult for consistency
-            from agent_s2_controller.official_agent_manager import PublishResult
-            return PublishResult(
+            # Return a mock OptimizedPublishResult for consistency
+            return OptimizedPublishResult(
                 platform=platform,
                 success=False,
                 content=content,
                 error_message=str(e),
                 execution_time=0.0,
-                steps_taken=0
+                api_calls_made=0,
+                rate_limit_hits=0,
+                completion_reason="exception_occurred"
             )
     
     def _calculate_efficiency_improvement(self, platforms: List[str], parallel_time: float) -> str:
@@ -706,31 +713,31 @@ class PostPrismApp:
             
             # Check available platforms
             available_platforms = [
-                p for p, pid in self.official_agent_manager.platform_projects.items() if pid
+                p for p, pid in self.optimized_agent_manager.platform_projects.items() if pid
             ]
             
             emit('connected', {
-                'message': 'Connected to PostPrism with parallel Agent S2.5 execution',
+                                    'message': 'Connected to PostPrism with Optimized Agent S2.5 execution (proven efficiency)',
                 'timestamp': datetime.utcnow().isoformat(),
                 'connection_id': request.sid,
-                'version': '2.1.0-parallel-fixed',
-                'system': 'official-agent-s2.5-parallel',
+                'version': '7.0.0-optimized',
+                'system': 'optimized-agent-s2.5',
                 'available_platforms': available_platforms,
                 'features': [
-                    'PARALLEL platform execution (NEW)',
-                    'Official Agent S2.5 patterns',
-                    'Real-time multi-platform streaming',
-                    'LinkedIn + Twitter + Instagram support',
-                    'Enhanced efficiency and performance',
-                    'Simple, natural instructions',  
-                    'Better UI state detection',
-                    'Proper async handling'
+                    'Optimized Agent S2.5 (based on official cli_app.py patterns)',
+                    'Rate limiting mitigation with intelligent spacing',
+                    'Precise completion detection',
+                    'Smart publish detection and anti-perfectionism',
+                    'True parallel execution with resource isolation',
+                    'Optimized execution timing and performance'
                 ],
                 'performance_benefits': [
-                    'Up to 3x faster execution with parallel processing',
-                    'Simultaneous platform automation',
-                    'Reduced total publishing time',
-                    'Better resource utilization'
+                    'Simple, natural Agent instructions for reliability',
+                    'Rate limiting mitigation prevents API bottlenecks',
+                    'Resource isolation enables true parallel platform execution',
+                    'Optimized timing reduces execution delays',
+                    'Smart completion detection prevents premature termination',
+                    'Anti-perfectionism measures prevent endless editing cycles'
                 ]
             })
         
@@ -749,30 +756,32 @@ class PostPrismApp:
                 
                 # Get current platform status
                 available_platforms = [
-                    p for p, pid in self.official_agent_manager.platform_projects.items() if pid
+                    p for p, pid in self.optimized_agent_manager.platform_projects.items() if pid
                 ]
                 
                 emit('joined_stream', {
                     'session_id': session_id,
-                    'message': f'Joined parallel streaming session {session_id}',
+                    'message': f'Joined Optimized streaming session {session_id}',
                     'timestamp': datetime.utcnow().isoformat(),
-                    'version': '2.1.0-parallel-fixed',
-                    'system': 'official-agent-s2.5-parallel',
+                    'version': '7.0.0-optimized',
+                    'system': 'optimized-agent-s2.5',
                     'available_platforms': available_platforms,
                     'capabilities': [
-                        'PARALLEL multi-platform execution',
-                        'Official Agent S2.5 automation',
-                        'Real-time simultaneous streaming',
+                        'Optimized Agent S2.5 execution (cli_app.py patterns)',
+                        'PARALLEL multi-platform execution (efficient)',
+                        'Real-time streaming with optimized updates',
                         'LinkedIn + Twitter + Instagram support',
-                        'Enhanced performance (up to 3x faster)',
-                        'Simple, natural instructions',
-                        'Better error handling and recovery'
+                        'Rate limiting mitigation',
+                        'Smart completion detection',
+                        'Reliable WebSocket updates'
                     ],
                     'stream_features': [
-                        'Live Agent S2.5 decision making',
+                        'Natural Agent S2.5 decision making',
                         'Real-time screenshot streaming',
                         'Parallel platform progress tracking',
-                        'Efficiency metrics and analytics'
+                        'Performance metrics and API call tracking',
+                        'Optimized execution timing',
+                        'Smart error detection and recovery'
                     ]
                 })
             else:
@@ -798,22 +807,23 @@ class PostPrismApp:
         
         # Check platform availability for startup log
         available_platforms = [
-            p for p, pid in self.official_agent_manager.platform_projects.items() if pid
+            p for p, pid in self.optimized_agent_manager.platform_projects.items() if pid
         ]
         
-        logger.info(f"🚀 Starting PostPrism PARALLEL backend v2.1.0 on {host}:{port} (debug={debug})")
-        logger.info("🎉 NEW: PARALLEL EXECUTION ENABLED")
-        logger.info("System improvements and features:")
-        logger.info(f"  🆕 PARALLEL multi-platform execution (up to 3x faster)")
-        logger.info(f"  🆕 Simultaneous LinkedIn + Twitter + Instagram automation")
-        logger.info(f"  ✅ Official Agent S2.5 patterns (simple, natural instructions)")
-        logger.info(f"  ✅ Enhanced UI state detection and waiting")
-        logger.info(f"  ✅ Clean architecture with proper async handling")
-        logger.info(f"  ✅ Advanced error management and recovery")
-        logger.info(f"  ✅ Real-time WebSocket streaming for all platforms")
-        logger.info(f"  ✅ Efficiency metrics and performance analytics")
+        logger.info(f"🚀 Starting PostPrism OPTIMIZED backend v7.0.0 on {host}:{port} (debug={debug})")
+        logger.info("🎉 OPTIMIZED: EFFICIENT AGENT S2.5 - Proven, Simple, Reliable")
+        logger.info("Optimized system - based on official cli_app.py patterns:")
+        logger.info(f"  ✅ Optimized Agent S2.5 (following official patterns exactly)")
+        logger.info(f"  ✅ Rate limiting mitigation with intelligent spacing")
+        logger.info(f"  ✅ Precise completion detection")
+        logger.info(f"  ✅ Smart publish detection and anti-perfectionism")
+        logger.info(f"  ✅ True parallel execution with resource isolation")
+        logger.info(f"  ✅ Simple, natural instructions (trust Agent intelligence)")
+        logger.info(f"  ✅ Optimized timing and performance")
         logger.info(f"📱 Available platforms: {available_platforms}")
-        logger.info(f"⚡ Performance: Parallel execution reduces total time by 60-70%")
+        logger.info(f"⚡ Performance: Optimized = Simple + Efficient + Reliable")
+        logger.info(f"🧠 Intelligence: Natural Agent S2.5 decision making")
+        logger.info(f"📡 Streaming: Real-time progress with optimized WebSocket events")
         
         # Disable reloading for stable parallel execution
         self.socketio.run(

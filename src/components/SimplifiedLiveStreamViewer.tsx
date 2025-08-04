@@ -165,22 +165,99 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
         }));
       });
       
-      // Agent actions
+      // Enhanced agent actions with more frequent updates
       socket.on('agent_action', (data) => {
         console.log('🤖 Agent action:', data);
         setStreamData(prev => ({
           ...prev,
           [data.platform]: {
             ...prev[data.platform],
-            currentAction: data.action
+            currentAction: data.action,
+            status: data.status === 'executing' ? 'active' : prev[data.platform]?.status || 'active'
           }
         }));
         addToActionLog(`${data.platform}: ${data.action}`, 'action');
       });
       
+      // Working Step-by-Step agent step events
+      socket.on('agent_step', (data) => {
+        console.log('📋 Agent step:', data);
+        setStreamData(prev => ({
+          ...prev,
+          [data.platform]: {
+            ...prev[data.platform],
+            currentAction: `Step ${data.step}/${data.total_steps}: ${data.description}`,
+            progress: (data.step / data.total_steps) * 100,
+            status: 'active'
+          }
+        }));
+        addToActionLog(`${data.platform}: 📋 Step ${data.step}/${data.total_steps}: ${data.description}`, 'step');
+      });
+      
+      // Agent started event for working step-by-step
+      socket.on('agent_started', (data) => {
+        console.log('🚀 Agent started:', data);
+        setStreamData(prev => ({
+          ...prev,
+          [data.platform]: {
+            ...prev[data.platform],
+            status: 'active',
+            currentAction: data.message || 'Starting agent...',
+            progress: 0
+          }
+        }));
+        addToActionLog(`${data.platform}: 🚀 ${data.message || 'Agent started'}`, 'info');
+      });
+      
+      // Agent completed event for working step-by-step
+      socket.on('agent_completed', (data) => {
+        console.log('✅ Agent completed:', data);
+        setStreamData(prev => ({
+          ...prev,
+          [data.platform]: {
+            ...prev[data.platform],
+            status: data.success ? 'completed' : 'error',
+            progress: 100,
+            currentAction: data.success ? 'Completed!' : 'Failed'
+          }
+        }));
+        addToActionLog(`${data.platform}: ${data.success ? '✅' : '❌'} Completed (${data.steps_count} steps in ${data.total_time?.toFixed(1)}s)`, data.success ? 'success' : 'error');
+        updateOverallProgress();
+      });
+      
+      // Enhanced platform progress updates
+      socket.on('platform_progress', (data) => {
+        console.log('📊 Platform progress:', data);
+        setStreamData(prev => ({
+          ...prev,
+          [data.platform]: {
+            ...prev[data.platform],
+            progress: data.progress,
+            currentAction: data.message,
+            status: 'active'
+          }
+        }));
+        updateOverallProgress();
+      });
+      
+      // Enhanced agent thinking with intelligence metrics
       socket.on('agent_thinking', (data) => {
         console.log('💭 Agent thinking:', data);
-        addToActionLog(`${data.platform}: 💭 ${data.thinking}`, 'thinking');
+        setStreamData(prev => ({
+          ...prev,
+          [data.platform]: {
+            ...prev[data.platform],
+            currentAction: data.thinking || data.analysis || 'Analyzing...',
+            status: 'active'
+          }
+        }));
+        
+        // Enhanced thinking log with intelligence score if available
+        const thinkingText = data.thinking || data.analysis || 'Agent thinking...';
+        const scoreText = data.intelligence_score ? ` (Intelligence: ${data.intelligence_score})` : '';
+        const timeText = data.decision_time ? ` [${data.decision_time}]` : '';
+        
+        addToActionLog(`${data.platform}: 💭 ${thinkingText}${scoreText}${timeText}`, 'thinking');
       });
       
       socket.on('agent_success', (data) => {
@@ -201,28 +278,47 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
         addToActionLog(`❌ ${data.platform}: ${data.error}`, 'error');
       });
       
-      // Completion - properly handle workflow finish
+      // Enhanced completion handling - fix blank page issue
       socket.on('all_platforms_completed', (data) => {
         console.log('🎉 All platforms completed:', data);
         addToActionLog('🎉 All platforms completed successfully!', 'success');
         setOverallProgress(100);
         
-        // Immediately notify parent to transition to results with data
-        if (onWorkflowCompleted) {
+        // Mark all platforms as completed
+        setStreamData(prev => {
+          const updated = { ...prev };
+          Object.keys(updated).forEach(platform => {
+            updated[platform] = {
+              ...updated[platform],
+              status: 'completed',
+              progress: 100,
+              currentAction: '✅ Publishing completed!'
+            };
+          });
+          return updated;
+        });
+        
+        // Delay transition to ensure WebSocket events are processed
+        setTimeout(() => {
           console.log('🎯 Triggering workflow completion callback with results...');
           console.log('📊 Results data:', data.results);
-          onWorkflowCompleted(data.results);
-        }
-        
-        // Clean up WebSocket connection after transition
-        setTimeout(() => {
-          console.log('🧹 Cleaning up WebSocket after completion...');
-          if (socketRef.current) {
-            socketRef.current.emit('leave_stream', { session_id: sessionId });
-            socketRef.current.disconnect();
-            socketRef.current = null;
+          
+          // FIXED: Ensure results data is properly formatted
+          if (onWorkflowCompleted) {
+            onWorkflowCompleted(data.results || data);
           }
-        }, 500); // Shorter delay for cleanup
+          
+          // Clean up WebSocket connection AFTER callback
+          setTimeout(() => {
+            console.log('🧹 Cleaning up WebSocket after completion...');
+            if (socketRef.current) {
+              socketRef.current.emit('leave_stream', { session_id: sessionId });
+              socketRef.current.disconnect();
+              socketRef.current = null;
+            }
+            setConnectionStatus('disconnected');
+          }, 1000); // Longer delay to ensure state transition
+        }, 1500); // Allow UI to update before transition
       });
       
       // Cleanup on unmount
