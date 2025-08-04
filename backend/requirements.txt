@@ -1,31 +1,49 @@
-# Core Flask Dependencies
+# PostPrism Backend Dependencies - Core Production Requirements
+
+# Flask Web Framework
 Flask==2.3.3
 Flask-CORS==4.0.0
 Flask-SocketIO==5.3.6
-python-socketio==5.8.0
 
-# AI Model APIs (versions managed by gui-agents)
-anthropic
-openai
+# WebSocket Support
+python-socketio==5.9.0
 
-# AgentS2.5 and ORGO Dependencies
-orgo
-gui-agents
-pyautogui==0.9.54
+# AI/LLM Integration
+openai==1.10.0
+anthropic==0.21.3
 
-# Environment and Configuration
+# Environment Management
 python-dotenv==1.0.0
+
+# Image Processing
+Pillow==10.0.1
+
+# Async Support
+asyncio-mqtt==0.13.0
+
+# HTTP Requests
+requests==2.31.0
+
+# Logging and Monitoring
+loguru==0.7.2
+
+# Data Validation
 pydantic==2.5.0
 
-# Image and Media Processing
-Pillow==10.0.1
-opencv-python==4.8.1.78
-numpy==1.24.3
+# GUI Agents S2.5 (install via git)
+# pip install git+https://github.com/computer-agents/gui-agents.git
 
-# Database and Caching
-redis==5.0.1
+# ORGO API Client
+# pip install orgo
 
-# Utilities
-requests==2.31.0
-python-json-logger==2.0.7
-uuid==1.30
+# Date/Time Utilities
+python-dateutil==2.8.2
+
+# JSON Processing
+ijson==3.2.3
+
+# Process Management
+psutil==5.9.6
+
+# Configuration Management
+configparser==6.0.0
