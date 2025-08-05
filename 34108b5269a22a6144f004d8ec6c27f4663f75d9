@@ -15,3 +15,21 @@
     • Frontend updates: main → Lovable deployment
     • Backend deployment testing: main → cloud-deployment → test → merge back
     • Keep cloud-deployment as staging area for backend deployment experiments
+
+🔄 DEVELOPMENT WORKFLOW DIAGRAM:
+    New Feature Development:
+    main ──→ feature/new-feature ──→ main ──→ Lovable Deploy
+
+    Backend Deployment Testing:
+    main ──→ cloud-deployment ──→ Render Deploy ──→ test ──→ main
+
+📝 QUICK COMMANDS:
+    # Start new feature development
+    git checkout main && git pull && git checkout -b feature/your-feature
+
+    # Prepare backend deployment testing
+    git checkout cloud-deployment && git merge main
+
+    # Update frontend on Lovable
+    git checkout main && git push origin main
+  \IMPORTANT: Always keep main as the single source of truth
