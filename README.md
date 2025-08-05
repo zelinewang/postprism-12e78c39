@@ -10,7 +10,7 @@
 [![ORGO AI](https://img.shields.io/badge/ORGO%20AI-Revolutionary%20Usage-green)](https://docs.orgo.ai/)
 [![UI-TARS 1.5](https://img.shields.io/badge/UI--TARS%201.5-42.5%25%20OSWorld-blue)](https://github.com/bytedance/UI-TARS)
 [![Live Demo](https://img.shields.io/badge/🎮%20Live%20Demo-Try%20Now-purple)](https://postprism.lovable.app)
-[![ORGO Challenge](https://img.shields.io/badge/🏆%20ORGO%20Winner-Potential-gold)](#why-postprism-wins-the-orgo-challenge)
+[![ORGO Challenge](https://img.shields.io/badge/🏆%20ORGO%20Winner-Potential-gold)](#-why-postprism-wins-the-orgo-challenge)
 
 **🚀 Revolutionary breakthrough: First platform to show AI "thinking" in real-time while delivering 3x performance**
 
@@ -80,11 +80,11 @@
 
 ---
 
-## 🏆 For Hackathon Judges
-**[Please read this important context about the project →](./JUDGES_README.md)**
+## 🏆 For Hackathon Judges 👇
+**Please read this important context about the project** 
 
 <details>
-<summary>📝 A Note to Hackathon Judges (Click to expand)</summary>
+<summary>📝 A Note to Hackathon Judges (Click to expand) 👈</summary>
 
 ### 📝 A Note to Hackathon Judges
 
