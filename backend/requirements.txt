@@ -19,7 +19,7 @@ anthropic==0.18.0
 
 # ===== CORE AUTOMATION ENGINES =====
 # GUI Agents S2.5 - Install via git (REQUIRED for automation)
-# pip install git+https://github.com/computer-agents/gui-agents.git
+# pip install git+https://github.com/aiwaves-cn/agents.git
 
 # ORGO Virtual Environment API (REQUIRED for GUI automation)
 # pip install orgo
@@ -33,6 +33,9 @@ Pillow==10.2.0
 
 # HTTP requests for health checks and API calls
 requests==2.31.0
+
+# HTTPX client, required by openai and anthropic
+httpx==0.27.0
 
 # ===== PYTHON STANDARD LIBRARY =====
 # The following are built-in modules (no installation needed):

@@ -21,12 +21,12 @@ echo "⬆️  Upgrading pip..."
 pip install --upgrade pip
 
 # Install standard dependencies from requirements.txt
-echo "📚 Installing standard dependencies..."
-pip install -r requirements.txt
+echo "📚 Installing and upgrading standard dependencies..."
+pip install --upgrade -r requirements.txt
 
 # Install GUI Agents S2.5 (core automation engine)
 echo "🤖 Installing GUI Agents S2.5..."
-pip install git+https://github.com/computer-agents/gui-agents.git
+pip install git+https://github.com/aiwaves-cn/agents.git
 
 # Install ORGO API client (virtual environment)
 echo "🖥️  Installing ORGO API client..."
