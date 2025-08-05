@@ -4,3 +4,14 @@
 🔧 Status: Production Ready - No immediate commits needed
 📋 Notes: Cloud deployment branch tested and verified working
 🎯 Next: Ready for merge to main branch
+
+🌳 BRANCH MANAGEMENT STRATEGY:
+├── 📦 cloud-demo-backup: Backup snapshot before backend deployment work
+├── 🎯 main: Production-ready branch for frontend updates via Lovable
+├── 🛠️ development: Legacy development branch (previous dev work)
+├── ☁️ cloud-deployment: Dedicated backend cloud deployment branch
+└── 📋 WORKFLOW:
+    • All future development should branch from 'main'
+    • Frontend updates: main → Lovable deployment
+    • Backend deployment testing: main → cloud-deployment → test → merge back
+    • Keep cloud-deployment as staging area for backend deployment experiments
