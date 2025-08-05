@@ -24,13 +24,17 @@ pip install --upgrade pip
 echo "📚 Installing and upgrading standard dependencies..."
 pip install --upgrade -r requirements.txt
 
-# Install GUI Agents S2.5 (core automation engine)
-echo "🤖 Installing GUI Agents S2.5..."
-pip install git+https://github.com/aiwaves-cn/agents.git
+# Install GUI Agents S2.5 (Latest SOTA computer use agent - Aug 2025)
+echo "🤖 Installing GUI Agents S2.5 (Latest Agent S2.5 - SOTA 2025)..."
+pip install git+https://github.com/aiwaves-cn/agents.git@v0.2.5
 
-# Install ORGO API client (virtual environment)
-echo "🖥️  Installing ORGO API client..."
+# Install ORGO AI client (Virtual desktop orchestration)
+echo "🖥️  Installing ORGO AI client (Parallel VM orchestration)..."
 pip install orgo
+
+# Install production performance enhancements
+echo "⚡ Installing production performance packages..."
+pip install eventlet gunicorn gevent psutil orjson
 
 # Verify installations
 echo "✅ Verifying installations..."
