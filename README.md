@@ -67,8 +67,8 @@
 ### 🧠 **#3: Latest Agent S2.5 (August 2025) + Custom Optimizations**
 **Beyond [standard Agent S2](https://github.com/simular-ai/Agent-S):**
 - **2025 SOTA** computer use agent ([#1 on WindowsAgentArena](https://github.com/simular-ai/Agent-S))
-- Advanced visual grounding with **UI-TARS-1.5-7b** (42.5% OSWorld success rate)
-- Enhanced decision making with **OpenAI o3-2025-04-16**
+- Advanced visual grounding with **UI-TARS-1.5-7b** (42.5% OSWorld success rate)  
+- Enhanced decision making with **OpenAI models** (default: gpt-4o-mini for speed, gpt-4o for quality, o3-2025-04-16 for best performance)
 - **Custom Production Optimizations:**
   - **Anti-Perfectionism Engine** - Stops AI from endlessly editing content
   - **Smart Loop Detection** - Prevents AI from getting stuck in cycles  
@@ -285,6 +285,7 @@ Instagram VM   → Project ID: "proj_instagram_ghi789" (save this!)
 # Required: OpenAI API Key
 OPENAI_API_KEY=sk-your_openai_key_here
 AGENT_S2_MODEL=o3-2025-04-16              # Recommended by Agent S2.5 team
+# but we use gpt-4o-mini for speed
 
 # Required: UI-TARS 1.5 Grounding Model
 AGENTS2_5_GROUNDING_URL=https://your-endpoint.endpoints.huggingface.cloud
@@ -305,6 +306,7 @@ ORGO_INSTAGRAM_PROJECT_ID=proj_instagram_ghi789
 # 🤖 AI Model Configuration
 OPENAI_API_KEY=sk-your_openai_key_here
 AGENT_S2_MODEL=o3-2025-04-16
+# but we use gpt-4o-mini for speed
 
 # 🎨 UI-TARS 1.5 Configuration
 AGENTS2_5_GROUNDING_URL=your_grounding_endpoint
@@ -348,7 +350,7 @@ python backend/run_fixed.py --test-orgo
 
 # Test Agent S2.5
 python backend/run_fixed.py --test-agent  
-# Expected: ✅ OpenAI o3 working ✅ UI-TARS grounding active
+# Expected: ✅ OpenAI o3/gpt-4o-mini working ✅ UI-TARS grounding active
 ```
 
 ---
