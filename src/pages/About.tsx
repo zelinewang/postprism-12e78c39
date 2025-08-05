@@ -79,19 +79,19 @@ const About = () => {
                 <div className="grid grid-cols-2 gap-6">
                   <div className="text-center">
                     <div className="text-3xl font-bold text-primary mb-2">98%</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">Automation Accuracy</div>
+                    <div className="text-sm text-slate-600 dark:text-slate-300">Automation Accuracy</div>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-bold text-secondary mb-2">3x</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">Faster Publishing</div>
+                    <div className="text-sm text-slate-600 dark:text-slate-300">Faster Publishing</div>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-bold text-accent mb-2">24/7</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">AI Availability</div>
+                    <div className="text-sm text-slate-600 dark:text-slate-300">AI Availability</div>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-bold text-primary mb-2">∞</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">Creative Possibilities</div>
+                    <div className="text-sm text-slate-600 dark:text-slate-300">Creative Possibilities</div>
                   </div>
                 </div>
               </div>
@@ -118,7 +118,7 @@ const About = () => {
                 <Zap className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Innovation First</h3>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-slate-700 dark:text-slate-200">
                 We push the boundaries of what's possible with AI, always staying ahead of the curve 
                 in social media automation technology.
               </p>
@@ -129,7 +129,7 @@ const About = () => {
                 <Users className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">User-Centric</h3>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-slate-700 dark:text-slate-200">
                 Every feature we build starts with understanding our users' needs and creating 
                 solutions that truly make their lives easier.
               </p>
@@ -140,7 +140,7 @@ const About = () => {
                 <Globe className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Global Impact</h3>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-slate-700 dark:text-slate-200">
                 We believe in democratizing access to powerful tools, helping creators worldwide 
                 amplify their voices and reach their audiences.
               </p>
@@ -169,21 +169,21 @@ const About = () => {
               <div className="space-y-6">
                 <div>
                   <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">AI Content Adaptation</h4>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p className="text-slate-700 dark:text-slate-200">
                     Our multi-model AI system combines Anthropic's Claude for professional content and 
                     OpenAI's GPT-4 for creative optimization, ensuring perfect platform adaptation.
                   </p>
                 </div>
                 <div>
                   <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">AgentS2 Automation</h4>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p className="text-slate-700 dark:text-slate-200">
                     Powered by state-of-the-art computer vision and UI automation, our AgentS2 technology 
                     achieves 98% accuracy in complex web interactions.
                   </p>
                 </div>
                 <div>
                   <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Real-time Streaming</h4>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p className="text-slate-700 dark:text-slate-200">
                     Watch AI agents work in real-time through our advanced WebSocket streaming technology, 
                     providing complete transparency in the automation process.
                   </p>
@@ -200,7 +200,7 @@ const About = () => {
                     </div>
                     <div>
                       <div className="font-bold text-gray-900 dark:text-white">OSWorld Ranking #3</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">AgentS2 Performance</div>
+                      <div className="text-sm text-slate-600 dark:text-slate-300">AgentS2 Performance</div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
@@ -209,7 +209,7 @@ const About = () => {
                     </div>
                     <div>
                       <div className="font-bold text-gray-900 dark:text-white">Windows Agent Arena #1</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">UI Automation Excellence</div>
+                      <div className="text-sm text-slate-600 dark:text-slate-300">UI Automation Excellence</div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
@@ -218,7 +218,7 @@ const About = () => {
                     </div>
                     <div>
                       <div className="font-bold text-gray-900 dark:text-white">Multi-AI Integration</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">Claude + GPT-4 + DALL-E</div>
+                      <div className="text-sm text-slate-600 dark:text-slate-300">Claude + GPT-4 + DALL-E</div>
                     </div>
                   </div>
                 </div>
@@ -243,15 +243,15 @@ const About = () => {
             <div className="grid md:grid-cols-3 gap-8 text-center">
               <div>
                 <div className="text-4xl font-bold text-primary mb-2">5+</div>
-                <div className="text-gray-600 dark:text-gray-300">Years AI Experience</div>
+                <div className="text-slate-600 dark:text-slate-300">Years AI Experience</div>
               </div>
               <div>
                 <div className="text-4xl font-bold text-secondary mb-2">100K+</div>
-                <div className="text-gray-600 dark:text-gray-300">Posts Automated</div>
+                <div className="text-slate-600 dark:text-slate-300">Posts Automated</div>
               </div>
               <div>
                 <div className="text-4xl font-bold text-accent mb-2">24/7</div>
-                <div className="text-gray-600 dark:text-gray-300">Innovation Never Stops</div>
+                <div className="text-slate-600 dark:text-slate-300">Innovation Never Stops</div>
               </div>
             </div>
           </div>
