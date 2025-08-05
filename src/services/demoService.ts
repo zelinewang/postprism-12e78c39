@@ -50,7 +50,7 @@ class SecureDemoService {
   private readonly minDemoInterval = 10000; // 10 seconds between demos
   
   /**
-   * Start secure demo publishing simulation
+   * Start secure demo publishing simulation - FRONTEND ONLY
    */
   async startDemo(content: string, platforms: string[]): Promise<{ sessionId: string }> {
     // Rate limiting check
@@ -63,58 +63,19 @@ class SecureDemoService {
     this.isActive = true;
     this.sessionId = `demo_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     
-    console.log(`🎮 Starting secure demo mode: ${this.sessionId}`);
+    console.log(`🎮 Starting SECURE FRONTEND-ONLY demo mode: ${this.sessionId}`);
+    console.log('🔒 NO API calls, NO backend connections, NO cost consumption');
     
-    // Try backend demo first, fallback to frontend simulation
-    try {
-      const backendDemoResult = await this.tryBackendDemo(content, platforms);
-      if (backendDemoResult) {
-        return { sessionId: this.sessionId };
-      }
-    } catch (error) {
-      console.log('📱 Backend demo unavailable, using frontend simulation');
-    }
-    
-    // Fallback to frontend-only simulation
+    // ALWAYS use frontend-only simulation for security
     this.simulateDemoPublishing(content, platforms);
     
     return { sessionId: this.sessionId };
   }
   
   /**
-   * Try to use backend demo endpoint (if available)
+   * REMOVED: Backend demo endpoint removed for security
+   * Demo is now 100% frontend-only to prevent API usage
    */
-  private async tryBackendDemo(content: string, platforms: string[]): Promise<boolean> {
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000);
-      
-      const response = await fetch(`${API_CONFIG.baseURL}${ENDPOINTS.publishContent}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          content,
-          platforms,
-          session_id: this.sessionId,
-          demo_mode: true
-        }),
-        signal: controller.signal
-      });
-      
-      clearTimeout(timeoutId);
-      
-      if (response.ok) {
-        const result = await response.json();
-        console.log('✅ Backend demo response received:', result);
-        return true;
-      }
-    } catch (error) {
-      console.log('⚠️ Backend demo failed:', error);
-    }
-    return false;
-  }
   
   /**
    * Frontend-only demo simulation with realistic timing

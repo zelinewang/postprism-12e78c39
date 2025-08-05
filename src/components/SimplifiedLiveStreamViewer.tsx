@@ -79,10 +79,11 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
       setStreamData(initialData);
       
       if (DEMO_MODE || isDemoModeRecommended()) {
-        // Enhanced secure demo mode with backend integration
-        console.log('🎮 Starting secure demo mode...');
+        // SECURE frontend-only demo mode - NO backend connections
+        console.log('🎮 Starting SECURE frontend-only demo mode...');
+        console.log('🔒 NO API calls, NO backend, NO cost consumption');
         setConnectionStatus('connected');
-        addToActionLog('🎮 Safe Demo Mode: Simulating AI automation', 'info');
+        addToActionLog('🎮 Secure Demo Mode: Frontend-only simulation (no API usage)', 'info');
         
         // Set up demo service listeners
         const progressUnsubscribe = secureDemoService.onProgress((progress: DemoProgress) => {
@@ -123,10 +124,26 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
             }));
           });
           
-          // Trigger completion callback
+          // Convert demo results to expected format for PublishResults component
+          const formattedResults = results.map(result => ({
+            platform: result.platform,
+            adaptedContent: result.adaptedContent,
+            hashtags: result.hashtags,
+            publishStatus: result.publishStatus,
+            postUrl: result.postUrl,
+            aiInsights: result.aiInsights,
+            stepsTaken: result.stepsTaken,
+            errorCount: result.errorCount,
+            executionTime: result.executionTime,
+            engagement: result.engagement,
+            intelligenceScore: result.intelligenceScore
+          }));
+          
+          // Trigger completion callback with properly formatted results
           setTimeout(() => {
             if (onWorkflowCompleted) {
-              onWorkflowCompleted(results);
+              console.log('🎯 Triggering demo completion callback with formatted results');
+              onWorkflowCompleted(formattedResults);
             }
           }, 1500);
         });
