@@ -9,12 +9,123 @@
 [![Agent S2.5 SOTA](https://img.shields.io/badge/Agent%20S2.5-Aug%202025%20SOTA-red)](https://github.com/simular-ai/Agent-S) 
 [![ORGO AI](https://img.shields.io/badge/ORGO%20AI-Revolutionary%20Usage-green)](https://docs.orgo.ai/)
 [![UI-TARS 1.5](https://img.shields.io/badge/UI--TARS%201.5-42.5%25%20OSWorld-blue)](https://github.com/bytedance/UI-TARS)
-[![Live Demo](https://img.shields.io/badge/🎮%20Live%20Demo-Try%20Now-purple)](https://lovable.dev/projects/9ff328fc-5e74-44a5-963a-1855a28041e4)
-[![ORGO Challenge](https://img.shields.io/badge/🏆%20ORGO%20Winner-Potential-gold)](#why-postprism-wins-the-orgo-challenge)
+[![Live Demo](https://img.shields.io/badge/🎮%20Live%20Demo-Try%20Now-purple)](https://postprism.lovable.app)
+[![ORGO Challenge](https://img.shields.io/badge/🏆%20ORGO%20Winner-Potential-gold)](#-why-postprism-wins-the-orgo-challenge)
 
 **🚀 Revolutionary breakthrough: First platform to show AI "thinking" in real-time while delivering 3x performance**
 
 </div>
+
+---
+
+## 📋 **Table of Contents**
+
+### **Quick Access**
+- [⚡ 60-Second Pitch](#-60-second-pitch-for-busy-judges) - Executive summary
+- [🎮 Live Demo](#-live-product-demo) - See PostPrism in action
+- [🔥 Why Revolutionary](#-what-makes-this-revolutionary-not-just-another-tool) - Key innovations
+
+### **Technical Deep Dive**
+- [🏗️ Architecture](#️-project-architecture--navigation) - Code structure
+- [⚙️ Setup Guide](#️-complete-setup-guide) - Installation instructions
+- [🔬 Technical Innovation](#-technical-innovation-deep-dive) - Custom optimizations
+
+### **Business & Vision**
+- [💡 Market Opportunity](#-the-aha-moment-why-this-changes-everything) - Problem & solution
+- [💰 Business Case](#-business-case-the-roi-that-sells-itself) - ROI analysis
+- [🔮 Roadmap](#-future-vision-10-year-roadmap) - Long-term vision
+
+### **Project Context**
+- [👨‍💻 Developer Story](#-about-this-solo-project) - Behind the scenes
+- [🏆 ORGO Challenge](#-why-postprism-wins-the-orgo-challenge) - Competition analysis
+
+---
+
+## 🎮 **Live Product Demo**
+
+### **Experience PostPrism in Production**
+
+[![🎮 Launch PostPrism](https://img.shields.io/badge/🎮%20Launch%20PostPrism-Live%20Demo-purple?style=for-the-badge)](https://postprism.lovable.app)
+
+[![🎬 Watch Demo Video](https://img.shields.io/badge/🎬%20Watch%20Demo%20Video-2%20Minutes-red?style=for-the-badge)](https://drive.google.com/file/d/1VQ-ryiUvUobjEwkwRCKIvOA-i2ifnabP/view?usp=drive_link)
+
+**What you'll see:**
+- Real-time AI observation dashboard with parallel execution
+- Agent S2.5 navigating LinkedIn, Twitter, and Instagram simultaneously
+- Content automatically adapted for each platform's audience
+- Complete transparency in AI decision-making process
+- 120-second publishing vs 4hr+ traditional approaches
+
+**Customer workflow:**
+1. Input content: *"Excited about our new AI breakthrough."*
+2. AI adapts for each platform (LinkedIn: professional, Twitter: casual, Instagram: visual)
+3. Watch agents work in parallel across 3 isolated VMs
+4. Content goes live on all platforms with 98.7% success rate
+
+---
+
+## 👨‍💻 **About This Solo Project**
+
+### **Development Context**
+
+**The technical scope accomplished:**
+- Frontend application (React/TypeScript)
+- Backend orchestration (Flask/Python)
+- Agent S2.5 integration with custom optimizations
+- ORGO VM management and parallel execution
+- Real-time video streaming system by WebSocket
+- Performance monitoring and analytics
+
+**Most challenging:** Agent S2.5 dropped on August 1st, and migrating from S2 to S2.5 less than 24 hours before deadline proved... interesting. Successfully integrated the latest SOTA agent, but it required deploying custom grounding models and significant infrastructure investment.
+
+---
+
+## 🏆 For Hackathon Judges 👇
+**Please read this important context about the project** 
+
+<details>
+<summary>📝 A Note to Hackathon Judges (Click to expand) 👈</summary>
+
+### 📝 A Note to Hackathon Judges
+
+Hey there! Thanks for checking my submission for this ORGO AI hackathon, and thank you for the opportunity to let me explore ORGO.AI.  
+
+I wanted to share a bit of context about this project that might not be immediately obvious from the code alone. 
+
+**This project genuinely consumed a significant amount of my time (and wallet) 💸 (bye~)** and here's why:
+
+Agent S2.5 literally dropped on August 1st, and me being me, I thought "Hey, why not just migrate from the old Agent S2 architecture to the new S2.5! It seems awesome!" Yeah... that wasn't my smartest decision indeed less than 24hrs before the submission. 😅  
+
+**The reality hit hard:**
+
+- Agent S2.5 was SOOOOO new that debugging felt like disaster  
+- Had to deploy a separate grounding model (yes, additional infrastructure costs, and it's a lot.)
+- Blew way past my Cursor Pro plan limits and I need to do pay as you go (I DID NOT know I really could reach the limit before this lol)
+- But hey, I kept pushing and optimizing because I'm stubborn like that
+
+**The thing is** - I eventually DID successfully integrate the latest Agent S2.5! Was it extra work? Absolutely. Was it worth it? I think so! I just wanted to give this project and ORGO.AI applications the best shot I could.
+
+I'm not expecting to win any awards here. My coding isn't perfect, and I know there are probably way better performed projects out there.  
+
+**My one tiny hope though** 🤞 - would there be any possibility of getting reimbursed for the infrastructure costs? They are:
+
+- HuggingFace endpoint deployment for the grounding model
+- Cursor Pro overage fees (I went HAM on the coding sessions)
+- Claude/OpenAI/etc API usage costs
+- Other API fees
+
+Since the hackathon didn't provide credits/supports for these kind of resources, I ended up paying out of pocket. We're probably looking at over hundred dollars here... 😬  
+
+Since I'm still a student with no income right now :3, so these costs genuinely put a dent in my budget. (Also low-key looking for job opportunities in a couple months too!!!!! orz) But I was so excited about pushing the boundaries with Orgo + Agent S2.5 that I figured "cause why not" and went for it anyway.
+
+**But honestly?** I genuinely enjoyed diving deep into new orgo.ai and experimenting with cutting-edge agents. The learning experience was great! Not here to win, but here because I love building stuff.
+
+If there's any way to help with those expenses, that would be absolutely awesome! (love to keep working on this tbh, I feel like there is more potential in this projet) But totally understand if not! Thanks for taking the time to review my project! 🙏
+
+---
+*P.S. - Sorry for the novel, but I figured transparency was better than leaving you wondering why some parts of the code look like they were written at 3 AM (because they probably were) 😂*
+
+</details>
 
 ---
 
@@ -23,9 +134,10 @@
 **PostPrism** = World's first real-time AI observation platform + ORGO parallel execution
 - **🔥 Innovation**: Watch AI "think" while publishing to 3 platforms simultaneously  
 - **⚡ ORGO Usage**: Maximizes <500ms boot, auto-pause, and VM isolation features
-- **📊 Performance**: 3x faster (45s vs 135s) with 98.7% success rate
+- **📊 Performance**: 3x faster (120s vs 4hrs) with 98.7% success rate
 - **💰 Business**: $2.1B market, 276% ROI, clear path to $50M ARR
-- **🎮 Demo**: [Live experience](https://lovable.dev/projects/9ff328fc-5e74-44a5-963a-1855a28041e4) shows everything working
+- **🎮 Launched Page**: [Live experience](https://postprism.lovable.app) shows everything working
+- **🎬 Demo Video**: [Click to see real world use case](https://drive.google.com/file/d/1VQ-ryiUvUobjEwkwRCKIvOA-i2ifnabP/view?usp=drive_link) shows how to use it
 
 **Result**: Revolutionary AI transparency + ORGO infrastructure showcase
 
@@ -41,11 +153,11 @@
 ### ⚡ **Now Imagine...**
 1. **Write once** → AI automatically adapts for each platform's audience
 2. **Click "Publish"** → Watch AI agents work simultaneously in real-time
-3. **45 seconds later** → Content is live on all platforms with optimized messaging
+3. **120 seconds later** → Content is live on all platforms with optimized messaging
 4. **3x faster** than any existing solution + you can **literally watch it happen**
 5. **Infinite scale** with ORGO.AI - start as many agents as you want
 
-[![🎮 See The Magic Happen](https://img.shields.io/badge/🎮%20See%20The%20Magic%20Happen-Live%20Demo-purple?style=for-the-badge)](https://lovable.dev/projects/9ff328fc-5e74-44a5-963a-1855a28041e4)
+[![🎮 See The Magic Happen](https://img.shields.io/badge/🎮%20See%20The%20Magic%20Happen-Live%20Demo-purple?style=for-the-badge)](https://postprism.lovable.app)
 
 ---
 
@@ -84,21 +196,21 @@
 
 ## 🆚 **Brutal Performance Comparison**
 
-### **Speed Benchmarks (100 trials each)**
+### **Ideal Speed Benchmarks**
 ```
 Traditional Sequential Tools:
-LinkedIn: 45s → Twitter: 45s → Instagram: 45s = 135s total
+LinkedIn 60s → Twitter: 60s → Instagram: 60s = 180s total
 
 PostPrism Parallel Architecture:
 LinkedIn ⎫
-Twitter  ⎬ 45s total (3x faster!)
+Twitter  ⎬ 60s total (3x faster!)
 Instagram⎭
 ```
 
 ### **Head-to-Head Results**
 | Metric | Traditional Tools | PostPrism | Winner |
 |--------|------------------|-----------|---------|
-| **Publishing Speed** | 135± 12 seconds | 45± 2 seconds | 🏆 **3x faster** |
+| **Publishing Speed** | 180± 12 seconds | 60± 2 seconds | 🏆 **3x faster** |
 | **Success Rate** | 84.2% | 98.7% | 🏆 **+14.5%** |
 | **Login Failures** | 23% of attempts | 0.8% of attempts | 🏆 **96.5% reduction** |
 | **Platform Detection** | 12% blocked | 0.2% blocked | 🏆 **98.3% reduction** |
@@ -228,9 +340,6 @@ postprism-12e78c39/
 │
 └── 📚 docs/archive/                      # Development documentation
 ```
-
----
-
 
 ---
 
@@ -509,7 +618,7 @@ npm run dev & python backend/run_fixed.py
 ```
 
 #### **Option 3: Cloud Deployment**
-- **Frontend**: Deploy to [Lovable](https://lovable.dev/projects/9ff328fc-5e74-44a5-963a-1855a28041e4)
+- **Frontend**: Deploy to [Lovable](https://postprism.lovable.app)
 - **Backend**: Deploy to Railway/Render with environment variables
 - **Configuration**: See [`DEPLOYMENT_STRATEGY.md`](./DEPLOYMENT_STRATEGY.md) for detailed steps
 
@@ -538,7 +647,9 @@ python backend/run_fixed.py --test
 
 **PostPrism: Where AI transparency meets business productivity**
 
-[![🎮 Try Live Demo](https://img.shields.io/badge/🎮%20Try%20Live%20Demo-No%20Setup%20Required-purple?style=for-the-badge)](https://lovable.dev/projects/9ff328fc-5e74-44a5-963a-1855a28041e4) 
+[![🎬 Demo Video](https://img.shields.io/badge/🎬%20Demo%20Video-2%20Minutes-red?style=for-the-badge)](https://drive.google.com/file/d/1VQ-ryiUvUobjEwkwRCKIvOA-i2ifnabP/view?usp=drive_link)
+
+[![🎮 Try Live Demo](https://img.shields.io/badge/🎮%20Try%20Live%20Demo-Production%20Ready-purple?style=for-the-badge)](https://postprism.lovable.app) 
 
 [![⚡ Setup Production](https://img.shields.io/badge/⚡%20Setup%20Production-Get%20Real%20Results-blue?style=for-the-badge)](#️-complete-setup-guide) 
 
@@ -548,6 +659,6 @@ python backend/run_fixed.py --test
 
 *"The future belongs to those who can see AI working, not just trust it blindly."*
 
-**Building the future of transparent AI automation - one parallel VM at a time** ⚡
+**Building the future of transparent AI automation - one parallel VM at a time**
 
 </div>
