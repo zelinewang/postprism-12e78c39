@@ -38,7 +38,7 @@ const SimplifiedLiveStreamViewer: React.FC<StreamingProps> = ({
   // Optimized callback functions with useCallback
   const addToActionLog = useCallback((message: string, type: ActionLogEntry['type']) => {
     setActionLog(prev => [...prev, {
-      id: Date.now().toString(),
+      id: `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`, // Ensure unique keys
       message,
       type,
       timestamp: new Date().toLocaleTimeString()
