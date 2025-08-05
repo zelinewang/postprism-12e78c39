@@ -86,7 +86,7 @@ const Landing = () => {
 
           {/* Feature Cards */}
           <div className="grid md:grid-cols-3 gap-8 mt-20">
-            <div className="glass-card p-8 rounded-2xl backdrop-blur-sm bg-white/60 dark:bg-gray-800/60 border border-white/20 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+            <div className="glass-card p-8 rounded-2xl backdrop-blur-sm bg-emerald-50/80 dark:bg-emerald-950/80 border border-emerald-200/30 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center mb-6 mx-auto">
                 <Zap className="h-8 w-8 text-white" />
               </div>
@@ -96,7 +96,7 @@ const Landing = () => {
               </p>
             </div>
 
-            <div className="glass-card p-8 rounded-2xl backdrop-blur-sm bg-white/60 dark:bg-gray-800/60 border border-white/20 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+            <div className="glass-card p-8 rounded-2xl backdrop-blur-sm bg-teal-50/80 dark:bg-teal-950/80 border border-teal-200/30 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
               <div className="w-16 h-16 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-2xl flex items-center justify-center mb-6 mx-auto">
                 <Target className="h-8 w-8 text-white" />
               </div>
@@ -106,7 +106,7 @@ const Landing = () => {
               </p>
             </div>
 
-            <div className="glass-card p-8 rounded-2xl backdrop-blur-sm bg-white/60 dark:bg-gray-800/60 border border-white/20 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+            <div className="glass-card p-8 rounded-2xl backdrop-blur-sm bg-cyan-50/80 dark:bg-cyan-950/80 border border-cyan-200/30 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
               <div className="w-16 h-16 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-2xl flex items-center justify-center mb-6 mx-auto">
                 <Users className="h-8 w-8 text-white" />
               </div>
@@ -120,7 +120,7 @@ const Landing = () => {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white/40 dark:bg-gray-900/40 backdrop-blur-sm">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-emerald-50/60 dark:bg-emerald-950/60 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
