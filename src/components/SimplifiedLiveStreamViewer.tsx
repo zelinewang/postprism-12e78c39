@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback, memo } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -42,18 +42,18 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
   const [connectionStatus, setConnectionStatus] = useState<'disconnected' | 'connecting' | 'connected'>('disconnected');
   const socketRef = useRef<Socket | null>(null);
 
-  // Platform icons and colors
-  const platformIcons = {
+  // Platform icons and colors - memoized to prevent recreating objects
+  const platformIcons = useMemo(() => ({
     linkedin: Linkedin,
     twitter: Twitter,
     instagram: Instagram
-  };
+  }), []);
 
-  const platformColors = {
+  const platformColors = useMemo(() => ({
     linkedin: "text-blue-400",
     twitter: "text-sky-400", 
     instagram: "text-pink-400"
-  };
+  }), []);
 
   // Update internal sessionId when external sessionId changes
   useEffect(() => {
@@ -418,16 +418,16 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
     }
   }, [isActive, selectedPlatforms, sessionId]);
   
-  const addToActionLog = (message: string, type: string) => {
+  const addToActionLog = useCallback((message: string, type: string) => {
     setActionLog(prev => [...prev, {
-      id: Date.now().toString(),
+      id: `${Date.now()}-${Math.random()}`,
       message,
       type,
       timestamp: new Date().toLocaleTimeString()
     }]);
-  };
+  }, []);
   
-  const updateOverallProgress = () => {
+  const updateOverallProgress = useCallback(() => {
     const platforms = Object.values(streamData);
     const completedCount = platforms.filter(p => p.status === 'completed').length;
     const totalCount = platforms.length;
@@ -435,7 +435,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
     if (totalCount > 0) {
       setOverallProgress((completedCount / totalCount) * 100);
     }
-  };
+  }, [streamData]);
 
   const simulateDemoPublishing = async () => {
     console.log('🎮 Starting enhanced demo publishing simulation...');
@@ -772,4 +772,4 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
   );
 };
 
-export default SimplifiedLiveStreamViewer;
+export default memo(SimplifiedLiveStreamViewer);

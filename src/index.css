@@ -514,4 +514,41 @@ All colors MUST be HSL.
     background: 
       linear-gradient(45deg, transparent 0%, rgba(255, 255, 255, 0.03) 25%, transparent 50%, rgba(255, 255, 255, 0.03) 75%, transparent 100%);
   }
+
+  /* Enhanced performance optimizations for animations */
+  .animate-smooth {
+    will-change: transform, opacity;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+    will-change: box-shadow;
+    contain: layout style paint;
+  }
+
+  .hover-lift {
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    will-change: transform, box-shadow;
+    contain: layout style paint;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px) translateZ(0);
+    box-shadow: 0 10px 30px -10px rgba(var(--primary), 0.3);
+  }
+
+  /* GPU acceleration for better performance */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  /* Reduce repaints for glass effects */
+  .glass-card {
+    contain: layout style paint;
+  }
 }
