@@ -28,7 +28,8 @@ const Index = () => {
     setAppState('streaming');
     
     try {
-      if (DEMO_MODE || isDemoModeRecommended()) {
+      // Respect explicit VITE_DEMO_MODE=false setting
+      if (import.meta.env.VITE_DEMO_MODE !== 'false' && (DEMO_MODE || isDemoModeRecommended())) {
         // Enhanced secure demo mode
         console.log('🎮 启动安全Demo模式...');
         

@@ -86,6 +86,17 @@ FLASK_PORT=8000
 # Python path for UI-TARS processing
 PYTHON_PATH=/Library/Frameworks/Python.framework/Versions/3.10/bin/python3.10
 
+# ----------------------------------------------------
+# Frontend Configuration (CRITICAL for demo mode control)
+# ----------------------------------------------------
+# Disable demo mode for local development
+VITE_DEMO_MODE=false
+VITE_API_URL=http://localhost:8000
+VITE_WS_URL=ws://localhost:8000
+
+# CORS Settings (for frontend-backend communication)
+CORS_ORIGINS=http://localhost:8080,https://postprism.lovable.app
+
 # Logging
 LOG_LEVEL=INFO
 DEBUG_AGENT_ACTIONS=false
@@ -108,11 +119,13 @@ def create_example_env():
     }
     env_content = DEFAULT_ENV_CONFIG_TEMPLATE.format(**placeholder_vars)
     
-    env_path = Path('.env.example')
+    # Create .env.example in project root directory
+    project_root = Path(__file__).parent.parent  # Go up from backend/ to project root
+    env_path = project_root / '.env.example'
     with open(env_path, 'w') as f:
         f.write(env_content)
     
-    print("\n✅ Created .env.example file with the latest configuration.")
+    print(f"\n✅ Created .env.example file with the latest configuration at {env_path}")
     print("Please rename it to .env and fill in your actual API keys and endpoint URL.")
 
 def check_environment_and_connections():
@@ -246,9 +259,11 @@ def interactive_setup():
     print("🚀 PostPrism Backend Interactive Setup")
     print("=" * 40)
     
-    env_path = Path('.env')
+    # Create .env in project root directory (not backend directory)
+    project_root = Path(__file__).parent.parent  # Go up from backend/ to project root
+    env_path = project_root / '.env'
     if env_path.exists():
-        print("Found existing .env file. We will now check and update it.")
+        print("Found existing .env file in project root. We will now check and update it.")
     
     from dotenv import load_dotenv
     load_dotenv()
@@ -278,10 +293,11 @@ def interactive_setup():
     # Format the template with the gathered variables
     final_content = DEFAULT_ENV_CONFIG_TEMPLATE.format(**env_vars)
     
-    with open('.env', 'w') as f:
+    # Write to project root .env file
+    with open(env_path, 'w') as f:
         f.write(final_content)
     
-    print("\n✅ Environment configuration saved to .env")
+    print(f"\n✅ Environment configuration saved to {env_path}")
     print("\nRunning validation...")
     check_environment_and_connections()
 

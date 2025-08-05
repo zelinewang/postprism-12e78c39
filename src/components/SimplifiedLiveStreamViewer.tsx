@@ -78,7 +78,8 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
       });
       setStreamData(initialData);
       
-      if (DEMO_MODE || isDemoModeRecommended()) {
+      // Respect explicit VITE_DEMO_MODE=false setting
+      if (import.meta.env.VITE_DEMO_MODE !== 'false' && (DEMO_MODE || isDemoModeRecommended())) {
         // SECURE frontend-only demo mode - NO backend connections
         console.log('🎮 Starting SECURE frontend-only demo mode...');
         console.log('🔒 NO API calls, NO backend, NO cost consumption');
