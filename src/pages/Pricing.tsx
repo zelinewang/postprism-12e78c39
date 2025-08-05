@@ -1,54 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles, Check, Star, Zap } from 'lucide-react';
 
-const PrismLogo = () => (
-  <div className="relative w-8 h-8 animate-prism-rotate">
-    <img 
-      src="/lovable-uploads/88784487-172c-4e13-87e3-3ecd85d7d29d.png" 
-      alt="PostPrism AI" 
-      className="w-full h-full object-contain filter drop-shadow-lg"
-    />
-    <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 via-teal-500/20 to-cyan-400/20 rounded-lg blur-md -z-10 animate-glow"></div>
-  </div>
-);
-
 const Pricing = () => {
-  const [scrollY, setScrollY] = useState(0);
-  
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Enhanced background */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/5 right-1/4 w-96 h-96 bg-gradient-to-r from-emerald-500/20 via-teal-500/20 to-cyan-500/20 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-1/4 left-1/5 w-80 h-80 bg-gradient-to-r from-violet-500/20 via-purple-500/20 to-fuchsia-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '1.5s' }}></div>
-      </div>
-
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-100 dark:from-emerald-950 dark:via-teal-950 dark:to-cyan-950">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 glass border-b border-border/20">
+      <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-white/80 dark:bg-gray-900/80 border-b border-white/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <Link to="/" className="flex items-center space-x-4">
-              <PrismLogo />
-              <span className="text-2xl font-bold text-rainbow">PostPrism AI</span>
+          <div className="flex justify-between items-center h-16">
+            <Link to="/landing" className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+                <Sparkles className="h-5 w-5 text-white" />
+              </div>
+              <span className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                PostPrism AI
+              </span>
             </Link>
             
             <div className="hidden md:flex items-center space-x-8">
-              <Link to="/" className="text-muted-foreground hover:text-foreground transition-all duration-300 hover:scale-105">Home</Link>
-              <Link to="/features" className="text-muted-foreground hover:text-foreground transition-all duration-300 hover:scale-105">Features</Link>
-              <Link to="/about" className="text-muted-foreground hover:text-foreground transition-all duration-300 hover:scale-105">About</Link>
-              <Link to="/pricing" className="text-emerald-400 font-semibold">Pricing</Link>
-              <Link to="/app">
-                <Button className="btn-prism">
-                  Try PostPrism AI <ArrowRight className="h-4 w-4 ml-2" />
-                </Button>
+              <Link to="/landing" className="text-gray-600 hover:text-primary transition-colors">Home</Link>
+              <Link to="/features" className="text-gray-600 hover:text-primary transition-colors">Features</Link>
+              <Link to="/about" className="text-gray-600 hover:text-primary transition-colors">About</Link>
+              <Link to="/pricing" className="text-primary font-semibold">Pricing</Link>
+              <Link to="/" className="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
+                Try PostPrism AI <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           </div>
@@ -56,16 +33,16 @@ const Pricing = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative">
-        <div className="max-w-7xl mx-auto text-center relative z-10">
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 animate-fade-in">
+      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto text-center">
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
             Simple, Transparent
             <br />
-            <span className="text-rainbow animate-pulse-glow">
+            <span className="bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-600 bg-clip-text text-transparent">
               Pricing
             </span>
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto animate-slide-up">
+          <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-3xl mx-auto">
             Choose the perfect plan for your content creation needs. Start free and scale as you grow.
           </p>
         </div>
