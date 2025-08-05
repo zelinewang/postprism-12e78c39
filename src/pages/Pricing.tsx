@@ -10,7 +10,7 @@ const Pricing = () => {
       <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-white/80 dark:bg-gray-900/80 border-b border-white/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link to="/" className="flex items-center space-x-2">
+            <Link to="/landing" className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
                 <Sparkles className="h-5 w-5 text-white" />
               </div>
@@ -20,7 +20,7 @@ const Pricing = () => {
             </Link>
             
             <div className="hidden md:flex items-center space-x-8">
-              <Link to="/" className="text-gray-600 hover:text-primary transition-colors">Home</Link>
+              <Link to="/landing" className="text-gray-600 hover:text-primary transition-colors">Home</Link>
               <Link to="/features" className="text-gray-600 hover:text-primary transition-colors">Features</Link>
               <Link to="/about" className="text-gray-600 hover:text-primary transition-colors">About</Link>
               <Link to="/pricing" className="text-primary font-semibold">Pricing</Link>
@@ -60,29 +60,29 @@ const Pricing = () => {
                 <div className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
                   Free
                 </div>
-                <p className="text-slate-600 dark:text-slate-300">Perfect for testing and small creators</p>
+                <p className="text-gray-600 dark:text-gray-300">Perfect for testing and small creators</p>
               </div>
               
               <ul className="space-y-4 mb-8">
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-slate-700 dark:text-slate-200">5 posts per month</span>
+                  <span className="text-gray-700 dark:text-gray-300">5 posts per month</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-slate-700 dark:text-slate-200">3 social platforms</span>
+                  <span className="text-gray-700 dark:text-gray-300">3 social platforms</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-slate-700 dark:text-slate-200">Basic AI adaptation</span>
+                  <span className="text-gray-700 dark:text-gray-300">Basic AI adaptation</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-slate-700 dark:text-slate-200">Live agent streaming</span>
+                  <span className="text-gray-700 dark:text-gray-300">Live agent streaming</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-slate-700 dark:text-slate-200">Email support</span>
+                  <span className="text-gray-700 dark:text-gray-300">Email support</span>
                 </li>
               </ul>
               
@@ -107,37 +107,37 @@ const Pricing = () => {
                 <div className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
                   $29<span className="text-lg text-gray-600 dark:text-gray-400">/month</span>
                 </div>
-                <p className="text-slate-600 dark:text-slate-300">For content creators and small businesses</p>
+                <p className="text-gray-600 dark:text-gray-300">For content creators and small businesses</p>
               </div>
               
               <ul className="space-y-4 mb-8">
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-slate-700 dark:text-slate-200">200 posts per month</span>
+                  <span className="text-gray-700 dark:text-gray-300">200 posts per month</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-slate-700 dark:text-slate-200">All social platforms</span>
+                  <span className="text-gray-700 dark:text-gray-300">All social platforms</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-slate-700 dark:text-slate-200">Advanced AI adaptation</span>
+                  <span className="text-gray-700 dark:text-gray-300">Advanced AI adaptation</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-slate-700 dark:text-slate-200">Real-time agent streaming</span>
+                  <span className="text-gray-700 dark:text-gray-300">Real-time agent streaming</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-slate-700 dark:text-slate-200">Image generation</span>
+                  <span className="text-gray-700 dark:text-gray-300">Image generation</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-slate-700 dark:text-slate-200">Analytics & insights</span>
+                  <span className="text-gray-700 dark:text-gray-300">Analytics & insights</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-slate-700 dark:text-slate-200">Priority support</span>
+                  <span className="text-gray-700 dark:text-gray-300">Priority support</span>
                 </li>
               </ul>
               
@@ -156,37 +156,37 @@ const Pricing = () => {
                 <div className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
                   $99<span className="text-lg text-gray-600 dark:text-gray-400">/month</span>
                 </div>
-                <p className="text-slate-600 dark:text-slate-300">For agencies and large organizations</p>
+                <p className="text-gray-600 dark:text-gray-300">For agencies and large organizations</p>
               </div>
               
               <ul className="space-y-4 mb-8">
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-slate-700 dark:text-slate-200">Unlimited posts</span>
+                  <span className="text-gray-700 dark:text-gray-300">Unlimited posts</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-slate-700 dark:text-slate-200">All platforms + future releases</span>
+                  <span className="text-gray-700 dark:text-gray-300">All platforms + future releases</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-slate-700 dark:text-slate-200">Custom AI models</span>
+                  <span className="text-gray-700 dark:text-gray-300">Custom AI models</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-slate-700 dark:text-slate-200">Multi-user team access</span>
+                  <span className="text-gray-700 dark:text-gray-300">Multi-user team access</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-slate-700 dark:text-slate-200">Advanced analytics</span>
+                  <span className="text-gray-700 dark:text-gray-300">Advanced analytics</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-slate-700 dark:text-slate-200">API access</span>
+                  <span className="text-gray-700 dark:text-gray-300">API access</span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-slate-700 dark:text-slate-200">24/7 phone support</span>
+                  <span className="text-gray-700 dark:text-gray-300">24/7 phone support</span>
                 </li>
               </ul>
               
@@ -217,7 +217,7 @@ const Pricing = () => {
                 <Zap className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">AI Content Adaptation</h3>
-              <p className="text-slate-700 dark:text-slate-200">Intelligent content optimization for each platform</p>
+              <p className="text-gray-600 dark:text-gray-300">Intelligent content optimization for each platform</p>
             </div>
 
             <div className="text-center">
@@ -225,7 +225,7 @@ const Pricing = () => {
                 <Sparkles className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Live Agent Streaming</h3>
-              <p className="text-slate-700 dark:text-slate-200">Watch AI agents work in real-time</p>
+              <p className="text-gray-600 dark:text-gray-300">Watch AI agents work in real-time</p>
             </div>
 
             <div className="text-center">
@@ -233,7 +233,7 @@ const Pricing = () => {
                 <Check className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Multi-Platform Publishing</h3>
-              <p className="text-slate-700 dark:text-slate-200">Simultaneous posting across all platforms</p>
+              <p className="text-gray-600 dark:text-gray-300">Simultaneous posting across all platforms</p>
             </div>
 
             <div className="text-center">
@@ -241,7 +241,7 @@ const Pricing = () => {
                 <Star className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Performance Analytics</h3>
-              <p className="text-slate-700 dark:text-slate-200">Detailed insights and optimization metrics</p>
+              <p className="text-gray-600 dark:text-gray-300">Detailed insights and optimization metrics</p>
             </div>
           </div>
         </div>
@@ -259,22 +259,22 @@ const Pricing = () => {
           <div className="space-y-8">
             <div className="glass-card p-6 rounded-xl backdrop-blur-sm bg-white/60 dark:bg-gray-800/60 border border-white/20">
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Can I change plans anytime?</h3>
-              <p className="text-slate-700 dark:text-slate-200">Yes! You can upgrade or downgrade your plan at any time. Changes take effect immediately, and we'll prorate any billing differences.</p>
+              <p className="text-gray-600 dark:text-gray-300">Yes! You can upgrade or downgrade your plan at any time. Changes take effect immediately, and we'll prorate any billing differences.</p>
             </div>
 
             <div className="glass-card p-6 rounded-xl backdrop-blur-sm bg-white/60 dark:bg-gray-800/60 border border-white/20">
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Is there a free trial?</h3>
-              <p className="text-slate-700 dark:text-slate-200">Absolutely! All paid plans come with a 14-day free trial. No credit card required to start, and you can cancel anytime.</p>
+              <p className="text-gray-600 dark:text-gray-300">Absolutely! All paid plans come with a 14-day free trial. No credit card required to start, and you can cancel anytime.</p>
             </div>
 
             <div className="glass-card p-6 rounded-xl backdrop-blur-sm bg-white/60 dark:bg-gray-800/60 border border-white/20">
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">What happens if I exceed my post limit?</h3>
-              <p className="text-slate-700 dark:text-slate-200">We'll notify you when you're approaching your limit. You can upgrade your plan or purchase additional posts for the current month.</p>
+              <p className="text-gray-600 dark:text-gray-300">We'll notify you when you're approaching your limit. You can upgrade your plan or purchase additional posts for the current month.</p>
             </div>
 
             <div className="glass-card p-6 rounded-xl backdrop-blur-sm bg-white/60 dark:bg-gray-800/60 border border-white/20">
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Do you support custom integrations?</h3>
-              <p className="text-slate-700 dark:text-slate-200">Enterprise plans include API access and custom integrations. Contact our sales team to discuss your specific requirements.</p>
+              <p className="text-gray-600 dark:text-gray-300">Enterprise plans include API access and custom integrations. Contact our sales team to discuss your specific requirements.</p>
             </div>
           </div>
         </div>
