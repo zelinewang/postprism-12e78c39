@@ -1,80 +1,31 @@
-# PostPrism Backend Dependencies - Production Grade Requirements
-# Optimized for Agent S2.5 + ORGO AI parallel execution architecture
-
-# ===== CORE WEB FRAMEWORK =====
-# Flask web application framework with production optimizations
-Flask==3.0.3
+# Core Flask Dependencies
+Flask==2.3.3
 Flask-CORS==4.0.0
 Flask-SocketIO==5.3.6
+python-socketio==5.8.0
 
-# WebSocket real-time communication for live streaming
-python-socketio==5.10.1
-eventlet==0.33.3  # High-performance WSGI server for production
+# AI Model APIs (versions managed by gui-agents)
+anthropic
+openai
 
-# ===== LATEST AI/LLM INTEGRATION =====
-# OpenAI GPT models - Latest version for Agent S2.5 compatibility
-openai==1.25.0
+# AgentS2.5 and ORGO Dependencies
+orgo
+gui-agents
+pyautogui==0.9.54
 
-# Anthropic Claude models - Enhanced content adaptation
-anthropic==0.21.3
+# Environment and Configuration
+python-dotenv==1.0.0
+pydantic==2.5.0
 
-# ===== CORE AUTOMATION ENGINES =====
-# GUI Agents S2.5 - Latest SOTA computer use agent (Aug 2025)
-# Note: Install via: pip install git+https://github.com/aiwaves-cn/agents.git
-gui-agents>=0.2.5
+# Image and Media Processing
+Pillow==10.0.1
+opencv-python==4.8.1.78
+numpy==1.24.3
 
-# ORGO AI Virtual Environment API - Parallel VM orchestration
-# Note: Install via: pip install orgo
-orgo>=1.0.0
+# Database and Caching
+redis==5.0.1
 
-# ===== PRODUCTION ESSENTIALS =====
-# Environment variable management
-python-dotenv==1.0.1
-
-# Advanced image processing for screenshot optimization
-Pillow==10.3.0
-
-# HTTP client with retry and timeout handling
+# Utilities
 requests==2.31.0
-httpx==0.27.0
-
-# Async programming enhancements
-aiohttp==3.9.5
-asyncio-mqtt==0.16.1  # For future MQTT integration
-
-# ===== PERFORMANCE & MONITORING =====
-# Memory profiling and optimization
-psutil==5.9.8
-
-# JSON performance optimization
-orjson==3.9.15
-
-# Rate limiting and caching
-redis==5.0.4  # For future caching layer
-slowapi==0.1.9  # Rate limiting middleware
-
-# ===== PRODUCTION DEPLOYMENT =====
-# WSGI server for production deployment
-gunicorn==21.2.0
-gevent==23.9.1
-
-# Process management
-supervisor==4.2.5
-
-# ===== DEVELOPMENT & DEBUGGING =====
-# Code quality and debugging (dev only)
-# black==24.3.0
-# pytest==8.1.1
-# pytest-asyncio==0.23.6
-
-# ===== SYSTEM REQUIREMENTS =====
-# The following are built-in Python modules:
-# - asyncio (async/await programming)
-# - threading (concurrent execution)  
-# - multiprocessing (parallel processing)
-# - logging (comprehensive logging)
-# - dataclasses, typing (type safety)
-# - collections, enum, abc (data structures)
-# - time, datetime, uuid (utilities)
-# - json, base64, io (data processing)
-# - os, sys, pathlib (system interface)
+python-json-logger==2.0.7
+uuid==1.30
