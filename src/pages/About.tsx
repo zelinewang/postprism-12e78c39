@@ -80,11 +80,11 @@ const About = () => {
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
                 Our Mission
               </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 mb-6">
+              <p className="text-xl text-slate-600 dark:text-slate-200 mb-6">
                 To democratize social media success by making advanced AI automation accessible to creators, 
                 businesses, and individuals worldwide.
               </p>
-              <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+              <p className="text-lg text-slate-600 dark:text-slate-200 mb-8">
                 Like a prism that splits white light into a beautiful spectrum, PostPrism AI takes your single 
                 piece of content and refracts it into perfectly optimized versions for each social platform, 
                 each with its own unique characteristics and appeal.
@@ -102,19 +102,19 @@ const About = () => {
                 <div className="grid grid-cols-2 gap-6">
                   <div className="text-center">
                     <div className="text-3xl font-bold text-primary mb-2">98%</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">Automation Accuracy</div>
+                    <div className="text-sm text-slate-600 dark:text-slate-300">Automation Accuracy</div>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-bold text-secondary mb-2">3x</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">Faster Publishing</div>
+                    <div className="text-sm text-slate-600 dark:text-slate-300">Faster Publishing</div>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-bold text-accent mb-2">24/7</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">AI Availability</div>
+                    <div className="text-sm text-slate-600 dark:text-slate-300">AI Availability</div>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-bold text-primary mb-2">∞</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-300">Creative Possibilities</div>
+                    <div className="text-sm text-slate-600 dark:text-slate-300">Creative Possibilities</div>
                   </div>
                 </div>
               </div>
@@ -130,7 +130,7 @@ const About = () => {
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               Our Core Values
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-slate-600 dark:text-slate-200 max-w-3xl mx-auto">
               The principles that guide everything we build and every decision we make.
             </p>
           </div>
@@ -141,7 +141,7 @@ const About = () => {
                 <Zap className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Innovation First</h3>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-slate-600 dark:text-slate-200">
                 We push the boundaries of what's possible with AI, always staying ahead of the curve 
                 in social media automation technology.
               </p>
@@ -152,7 +152,7 @@ const About = () => {
                 <Users className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">User-Centric</h3>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-slate-600 dark:text-slate-200">
                 Every feature we build starts with understanding our users' needs and creating 
                 solutions that truly make their lives easier.
               </p>
@@ -163,7 +163,7 @@ const About = () => {
                 <Globe className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Global Impact</h3>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-slate-600 dark:text-slate-200">
                 We believe in democratizing access to powerful tools, helping creators worldwide 
                 amplify their voices and reach their audiences.
               </p>
@@ -179,7 +179,7 @@ const About = () => {
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               Cutting-Edge Technology
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-slate-600 dark:text-slate-200 max-w-3xl mx-auto">
               Built on the latest advances in artificial intelligence and automation technology.
             </p>
           </div>
@@ -192,21 +192,21 @@ const About = () => {
               <div className="space-y-6">
                 <div>
                   <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">AI Content Adaptation</h4>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p className="text-slate-600 dark:text-slate-200">
                     Our multi-model AI system combines Anthropic's Claude for professional content and 
                     OpenAI's GPT-4 for creative optimization, ensuring perfect platform adaptation.
                   </p>
                 </div>
                 <div>
                   <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">AgentS2 Automation</h4>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p className="text-slate-600 dark:text-slate-200">
                     Powered by state-of-the-art computer vision and UI automation, our AgentS2 technology 
                     achieves 98% accuracy in complex web interactions.
                   </p>
                 </div>
                 <div>
                   <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Real-time Streaming</h4>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p className="text-slate-600 dark:text-slate-200">
                     Watch AI agents work in real-time through our advanced WebSocket streaming technology, 
                     providing complete transparency in the automation process.
                   </p>
@@ -223,7 +223,7 @@ const About = () => {
                     </div>
                     <div>
                       <div className="font-bold text-gray-900 dark:text-white">OSWorld Ranking #3</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">AgentS2 Performance</div>
+                      <div className="text-sm text-slate-600 dark:text-slate-300">AgentS2 Performance</div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
@@ -232,7 +232,7 @@ const About = () => {
                     </div>
                     <div>
                       <div className="font-bold text-gray-900 dark:text-white">Windows Agent Arena #1</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">UI Automation Excellence</div>
+                      <div className="text-sm text-slate-600 dark:text-slate-300">UI Automation Excellence</div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
@@ -241,7 +241,7 @@ const About = () => {
                     </div>
                     <div>
                       <div className="font-bold text-gray-900 dark:text-white">Multi-AI Integration</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">Claude + GPT-4 + DALL-E</div>
+                      <div className="text-sm text-slate-600 dark:text-slate-300">Claude + GPT-4 + DALL-E</div>
                     </div>
                   </div>
                 </div>
@@ -257,7 +257,7 @@ const About = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
             Built by Innovators
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 mb-12 max-w-3xl mx-auto">
+          <p className="text-xl text-slate-600 dark:text-slate-200 mb-12 max-w-3xl mx-auto">
             Our team combines expertise in AI research, software engineering, and social media marketing 
             to create the ultimate content automation platform.
           </p>
@@ -266,15 +266,15 @@ const About = () => {
             <div className="grid md:grid-cols-3 gap-8 text-center">
               <div>
                 <div className="text-4xl font-bold text-primary mb-2">5+</div>
-                <div className="text-gray-600 dark:text-gray-300">Years AI Experience</div>
+                <div className="text-slate-600 dark:text-slate-300">Years AI Experience</div>
               </div>
               <div>
                 <div className="text-4xl font-bold text-secondary mb-2">100K+</div>
-                <div className="text-gray-600 dark:text-gray-300">Posts Automated</div>
+                <div className="text-slate-600 dark:text-slate-300">Posts Automated</div>
               </div>
               <div>
                 <div className="text-4xl font-bold text-accent mb-2">24/7</div>
-                <div className="text-gray-600 dark:text-gray-300">Innovation Never Stops</div>
+                <div className="text-slate-600 dark:text-slate-300">Innovation Never Stops</div>
               </div>
             </div>
           </div>
@@ -287,7 +287,7 @@ const About = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
             Ready to Join the Revolution?
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+          <p className="text-xl text-slate-600 dark:text-slate-200 mb-8">
             Be part of the future of social media automation and see your content reach new heights.
           </p>
           <Link to="/">

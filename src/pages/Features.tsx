@@ -82,10 +82,10 @@ const Features = () => {
                 <Brain className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">AI Content Adaptation</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-slate-700 dark:text-slate-200 mb-4">
                 Advanced AI models including Claude and GPT-4 work together to adapt your content for each platform's unique audience, tone, and requirements.
               </p>
-              <ul className="text-sm text-gray-500 dark:text-gray-400 space-y-2">
+              <ul className="text-sm text-slate-600 dark:text-slate-300 space-y-2">
                 <li>• LinkedIn: Professional tone with industry insights</li>
                 <li>• Twitter: Concise, engaging with trending elements</li>
                 <li>• Instagram: Visual storytelling with emotional appeal</li>
@@ -98,10 +98,10 @@ const Features = () => {
                 <Eye className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Live Agent Streaming</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-slate-700 dark:text-slate-200 mb-4">
                 Watch AI agents work in real-time through live video streams. See every click, type, and interaction as your content gets published.
               </p>
-              <ul className="text-sm text-gray-500 dark:text-gray-400 space-y-2">
+              <ul className="text-sm text-slate-600 dark:text-slate-300 space-y-2">
                 <li>• Real-time video streaming</li>
                 <li>• Step-by-step action logging</li>
                 <li>• Multi-platform parallel processing</li>
@@ -114,10 +114,10 @@ const Features = () => {
                 <Rocket className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">AgentS2 Automation</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-slate-700 dark:text-slate-200 mb-4">
                 Powered by state-of-the-art AgentS2 technology for precise UI automation and intelligent computer interaction.
               </p>
-              <ul className="text-sm text-gray-500 dark:text-gray-400 space-y-2">
+              <ul className="text-sm text-slate-600 dark:text-slate-300 space-y-2">
                 <li>• 98% UI detection accuracy</li>
                 <li>• Smart error recovery</li>
                 <li>• Cross-platform compatibility</li>
@@ -130,10 +130,10 @@ const Features = () => {
                 <Target className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Multi-Platform Publishing</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-slate-700 dark:text-slate-200 mb-4">
                 Seamlessly publish to LinkedIn, Twitter, and Instagram with platform-specific optimizations and formatting.
               </p>
-              <ul className="text-sm text-gray-500 dark:text-gray-400 space-y-2">
+              <ul className="text-sm text-slate-600 dark:text-slate-300 space-y-2">
                 <li>• Simultaneous multi-platform posting</li>
                 <li>• Platform-specific hashtag optimization</li>
                 <li>• Image generation for Instagram</li>
@@ -146,10 +146,10 @@ const Features = () => {
                 <Zap className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Performance Analytics</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-slate-700 dark:text-slate-200 mb-4">
                 Get detailed insights on your content performance, AI optimization metrics, and publishing analytics.
               </p>
-              <ul className="text-sm text-gray-500 dark:text-gray-400 space-y-2">
+              <ul className="text-sm text-slate-600 dark:text-slate-300 space-y-2">
                 <li>• AI optimization insights</li>
                 <li>• Publishing success rates</li>
                 <li>• Performance recommendations</li>
@@ -162,10 +162,10 @@ const Features = () => {
                 <Shield className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Enterprise Security</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-slate-700 dark:text-slate-200 mb-4">
                 Bank-level security with encrypted sessions, secure authentication, and comprehensive data protection.
               </p>
-              <ul className="text-sm text-gray-500 dark:text-gray-400 space-y-2">
+              <ul className="text-sm text-slate-600 dark:text-slate-300 space-y-2">
                 <li>• End-to-end encryption</li>
                 <li>• Secure session management</li>
                 <li>• GDPR compliance ready</li>
@@ -183,7 +183,7 @@ const Features = () => {
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               Technical Excellence
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-slate-600 dark:text-slate-200 max-w-3xl mx-auto">
               Built with cutting-edge technology stack for maximum performance and reliability.
             </p>
           </div>
@@ -194,19 +194,19 @@ const Features = () => {
               <div className="space-y-4">
                 <div className="flex items-center space-x-4">
                   <div className="w-3 h-3 bg-primary rounded-full"></div>
-                  <span className="text-gray-700 dark:text-gray-300">Anthropic Claude API for professional content</span>
+                  <span className="text-slate-700 dark:text-slate-200">Anthropic Claude API for professional content</span>
                 </div>
                 <div className="flex items-center space-x-4">
                   <div className="w-3 h-3 bg-secondary rounded-full"></div>
-                  <span className="text-gray-700 dark:text-gray-300">OpenAI GPT-4 for creative optimization</span>
+                  <span className="text-slate-700 dark:text-slate-200">OpenAI GPT-4 for creative optimization</span>
                 </div>
                 <div className="flex items-center space-x-4">
                   <div className="w-3 h-3 bg-accent rounded-full"></div>
-                  <span className="text-gray-700 dark:text-gray-300">DALL-E integration for image generation</span>
+                  <span className="text-slate-700 dark:text-slate-200">DALL-E integration for image generation</span>
                 </div>
                 <div className="flex items-center space-x-4">
                   <div className="w-3 h-3 bg-primary rounded-full"></div>
-                  <span className="text-gray-700 dark:text-gray-300">AgentS2 for computer automation</span>
+                  <span className="text-slate-700 dark:text-slate-200">AgentS2 for computer automation</span>
                 </div>
               </div>
             </div>
@@ -216,19 +216,19 @@ const Features = () => {
               <div className="space-y-4">
                 <div className="flex items-center space-x-4">
                   <div className="w-3 h-3 bg-primary rounded-full"></div>
-                  <span className="text-gray-700 dark:text-gray-300">React + TypeScript frontend</span>
+                  <span className="text-slate-700 dark:text-slate-200">React + TypeScript frontend</span>
                 </div>
                 <div className="flex items-center space-x-4">
                   <div className="w-3 h-3 bg-secondary rounded-full"></div>
-                  <span className="text-gray-700 dark:text-gray-300">Python Flask backend with WebSocket</span>
+                  <span className="text-slate-700 dark:text-slate-200">Python Flask backend with WebSocket</span>
                 </div>
                 <div className="flex items-center space-x-4">
                   <div className="w-3 h-3 bg-accent rounded-full"></div>
-                  <span className="text-gray-700 dark:text-gray-300">ORGO cloud infrastructure</span>
+                  <span className="text-slate-700 dark:text-slate-200">ORGO cloud infrastructure</span>
                 </div>
                 <div className="flex items-center space-x-4">
                   <div className="w-3 h-3 bg-primary rounded-full"></div>
-                  <span className="text-gray-700 dark:text-gray-300">Real-time video streaming</span>
+                  <span className="text-slate-700 dark:text-slate-200">Real-time video streaming</span>
                 </div>
               </div>
             </div>
@@ -242,7 +242,7 @@ const Features = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
             Experience the Future of Social Media
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+          <p className="text-xl text-slate-600 dark:text-slate-200 mb-8">
             Join the revolution and see how AI can transform your content strategy.
           </p>
           <Link to="/">
