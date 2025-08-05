@@ -199,7 +199,7 @@ const About = () => {
                 </div>
                 <div>
                   <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">AgentS2 Automation</h4>
-                  <p className="text-slate-700 dark:text-slate-100">
+                  <p className="text-gray-800">
                     Powered by state-of-the-art computer vision and UI automation, our AgentS2 technology 
                     achieves 98% accuracy in complex web interactions.
                   </p>
