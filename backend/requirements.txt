@@ -18,7 +18,7 @@ python-dotenv==1.0.0
 pydantic==2.5.0
 
 # Image and Media Processing
-Pillow==10.0.1
+Pillow>=10.3.0,<11.0.0
 opencv-python==4.8.1.78
 numpy==1.24.3
 
