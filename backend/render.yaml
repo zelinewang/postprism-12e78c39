@@ -11,16 +11,17 @@ services:
   - type: web
     name: postprism-backend
     env: python
-    runtime: python-3.11  # Specify Python version
+    runtime: python-3.11.9
     
     # Build Configuration
     buildCommand: |
       echo "🚀 Starting PostPrism backend build..." &&
+      python3.11 --version &&
       cd backend &&
       echo "📦 Upgrading pip..." &&
-      pip install --upgrade pip && 
+      python3.11 -m pip install --upgrade pip && 
       echo "📚 Installing requirements..." &&
-      pip install -r requirements.txt && 
+      python3.11 -m pip install -r requirements.txt && 
       echo "🤖 Installing Agent S2.5..." &&
       pip install git+https://github.com/simular-ai/Agent-S.git@v0.2.5 &&
       echo "🖥️ Installing ORGO..." &&
