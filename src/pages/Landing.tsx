@@ -73,7 +73,12 @@ const Landing = () => {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <Button variant="outline" size="lg" className="px-8 py-4 text-lg rounded-xl border-2 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300">
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="px-8 py-4 text-lg rounded-xl border-2 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300"
+                onClick={() => window.open('https://drive.google.com/file/d/1VQ-ryiUvUobjEwkwRCKIvOA-i2ifnabP/view?usp=sharing', '_blank')}
+              >
                 Watch Demo
               </Button>
             </div>
@@ -213,11 +218,11 @@ const Landing = () => {
             </div>
 
             <div>
-              <h4 className="font-bold mb-4">Support</h4>
+              <h4 className="font-bold mb-4">Resources</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">Documentation</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Status</a></li>
+                <li><a href="https://github.com/zelinewang/postprism-12e78c39/blob/main/README.md#%EF%B8%8F-complete-setup-guide" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Setup Guide</a></li>
+                <li><a href="https://github.com/zelinewang/postprism-12e78c39" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Source Code</a></li>
+                <li><a href="https://drive.google.com/file/d/1VQ-ryiUvUobjEwkwRCKIvOA-i2ifnabP/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Video Demo</a></li>
               </ul>
             </div>
           </div>
