@@ -402,6 +402,57 @@ All colors MUST be HSL.
 }
 
 @layer utilities {
+  /* Interactive dots animation */
+  .interactive-dots {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .dot {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: hsl(var(--primary) / 0.3);
+    border-radius: 50%;
+    animation: float-dot 3s ease-in-out infinite;
+  }
+
+  @keyframes float-dot {
+    0%, 100% { 
+      transform: translateY(0px) scale(1);
+      opacity: 0.3;
+    }
+    50% { 
+      transform: translateY(-20px) scale(1.2);
+      opacity: 0.6;
+    }
+  }
+
+  /* Landing page animations */
+  .animate-fade-in {
+    animation: fade-in 1s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.8s ease-out;
+  }
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   /* Enhanced Custom keyframes */
   @keyframes enhanced-glow {
     0% { 
