@@ -33,6 +33,10 @@ sys.path.insert(0, str(backend_dir))
 try:
     from app_fixed import postprism_app_fixed
     from config.settings import settings
+    
+    # ADD THIS LINE: Expose the Flask app for Gunicorn
+    app = postprism_app_fixed.app
+    
 except ImportError as e:
     print(f"❌ Failed to import fixed PostPrism modules: {e}")
     print("Make sure all dependencies are installed:")
