@@ -80,7 +80,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
       
       if (DEMO_MODE || isDemoModeRecommended()) {
         // Enhanced secure demo mode with backend integration
-        console.log('🎮 启动安全Demo模式...');
+        console.log('🎮 Starting secure demo mode...');
         setConnectionStatus('connected');
         addToActionLog('🎮 Safe Demo Mode: Simulating AI automation', 'info');
         
@@ -106,7 +106,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
         });
         
         const resultsUnsubscribe = secureDemoService.onResults((results) => {
-          console.log('📊 安全Demo结果:', results);
+          console.log('📊 Secure demo results:', results);
           addToActionLog('🎉 All demo platforms completed successfully!', 'success');
           setOverallProgress(100);
           
@@ -147,12 +147,13 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
       console.log('🔌 Connecting to WebSocket server...');
       setConnectionStatus('connecting');
       
-      const socket = io(API_CONFIG.baseURL, {
-        transports: ['polling'],  // Only use polling to avoid WebSocket upgrade errors
+      const socket = io(API_CONFIG.websocketURL, {
+        transports: ['websocket', 'polling'],  // Try WebSocket first, fallback to polling
         autoConnect: true,
-        timeout: 10000,
-        reconnection: false,  // Disable reconnection to prevent connection conflicts
-        forceNew: true       // Always create fresh connection
+        timeout: 20000,  // Longer timeout for Render cold starts
+        reconnection: true,
+        reconnectionAttempts: 3,
+        forceNew: true
       });
       
       socketRef.current = socket;

@@ -56,14 +56,14 @@ class SecureDemoService {
     // Rate limiting check
     const now = Date.now();
     if (now - this.lastDemoRun < this.minDemoInterval) {
-      throw new Error(`请等待 ${Math.ceil((this.minDemoInterval - (now - this.lastDemoRun)) / 1000)} 秒后再试`);
+      throw new Error(`Please wait ${Math.ceil((this.minDemoInterval - (now - this.lastDemoRun)) / 1000)} seconds before trying again`);
     }
     
     this.lastDemoRun = now;
     this.isActive = true;
     this.sessionId = `demo_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     
-    console.log(`🎮 启动安全Demo模式: ${this.sessionId}`);
+    console.log(`🎮 Starting secure demo mode: ${this.sessionId}`);
     
     // Try backend demo first, fallback to frontend simulation
     try {
@@ -123,7 +123,7 @@ class SecureDemoService {
     const totalSteps = 12;
     const stepDuration = DEMO_CONFIG.mockPublishingTime / totalSteps;
     
-    console.log(`🤖 启动前端Demo模拟: ${platforms.length}个平台`);
+    console.log(`🤖 Starting frontend demo simulation for ${platforms.length} platforms`);
     
     // Simulate parallel platform processing
     const platformPromises = platforms.map((platform, index) => 
@@ -143,7 +143,7 @@ class SecureDemoService {
     });
     
     this.isActive = false;
-    console.log('🎉 Demo模拟完成');
+    console.log('🎉 Demo simulation completed');
   }
   
   /**
@@ -153,18 +153,18 @@ class SecureDemoService {
     await this.sleep(delay); // Stagger platform starts
     
     const steps = [
-      '🔍 AI分析平台特征...',
-      '💭 优化内容风格...',
-      '🎯 选择最佳发布时机...',
-      '📝 生成平台特定内容...',
-      '🏷️ 添加相关标签...',
-      '🤖 模拟浏览器操作...',
-      '✍️ 填写发布内容...',
-      '📸 处理媒体文件...',
-      '🎨 调整视觉元素...',
-      '✅ 验证发布格式...',
-      '🚀 执行发布操作...',
-      '🎉 确认发布成功!'
+      '🔍 AI analyzing platform characteristics...',
+      '💭 Optimizing content style...',
+      '🎯 Selecting optimal posting time...',
+      '📝 Generating platform-specific content...',
+      '🏷️ Adding relevant hashtags...',
+      '🤖 Simulating browser automation...',
+      '✍️ Filling in content...',
+      '📸 Processing media files...',
+      '🎨 Adjusting visual elements...',
+      '✅ Validating post format...',
+      '🚀 Executing publish operation...',
+      '🎉 Confirming successful publication!'
     ];
     
     // Simulate step-by-step progress
@@ -215,11 +215,11 @@ class SecureDemoService {
    */
   private adaptContentForPlatform(content: string, platform: string): string {
     const adaptations = {
-      linkedin: `🚀 ${content}\n\n这是PostPrism AI的革命性演示！通过Agent S2.5 + ORGO的强大组合，我们实现了真正的多平台并行发布。\n\n#人工智能 #社交媒体自动化 #PostPrism #科技创新`,
+      linkedin: `🚀 ${content}\n\nThis is a revolutionary demo of PostPrism AI! Through the powerful combination of Agent S2.5 + ORGO, we've achieved true multi-platform parallel publishing.\n\n#ArtificialIntelligence #SocialMediaAutomation #PostPrism #TechInnovation`,
       
-      twitter: `🤖 ${content}\n\n✨ 刚刚体验了@PostPrism的AI发布功能：\n→ 3个平台同时发布\n→ 实时观看AI工作\n→ 45秒完成所有操作\n\n这就是未来！🚀\n\n#PostPrism #AI自动化 #效率工具`,
+      twitter: `🤖 ${content}\n\n✨ Just experienced @PostPrism's AI publishing magic:\n→ 3 platforms simultaneously\n→ Watch AI work in real-time\n→ 45 seconds for everything\n\nThis is the future! 🚀\n\n#PostPrism #AIAutomation #ProductivityTool`,
       
-      instagram: `🌈 ${content}\n\n刚刚见证了PostPrism的神奇时刻！✨\n\nAI同时在LinkedIn、Twitter和Instagram工作，而我就像看电影一样观看整个过程 🎬\n\n这种透明的AI自动化体验前所未有！\n\n#PostPrism #人工智能 #科技美学 #自动化 #效率革命 #未来科技 #创新体验 #数字化转型 #AI工具 #社交媒体`
+      instagram: `🌈 ${content}\n\nJust witnessed PostPrism's magical moment! ✨\n\nAI working simultaneously on LinkedIn, Twitter and Instagram while I watch the entire process like a movie 🎬\n\nThis transparent AI automation experience is unprecedented!\n\n#PostPrism #ArtificialIntelligence #TechAesthetics #Automation #EfficiencyRevolution #FutureTech #Innovation #DigitalTransformation #AITools #SocialMedia`
     };
     
     return adaptations[platform as keyof typeof adaptations] || content;
@@ -230,9 +230,9 @@ class SecureDemoService {
    */
   private generateDemoHashtags(platform: string): string[] {
     const platformTags = {
-      linkedin: ['人工智能', 'PostPrism', '自动化', '效率工具', '科技创新'],
-      twitter: ['PostPrism', 'AI自动化', '效率工具', '科技', '创新'],
-      instagram: ['PostPrism', '人工智能', '科技美学', '自动化', '效率革命', '未来科技', 'AI工具']
+      linkedin: ['ArtificialIntelligence', 'PostPrism', 'Automation', 'ProductivityTool', 'TechInnovation'],
+      twitter: ['PostPrism', 'AIAutomation', 'ProductivityTool', 'Tech', 'Innovation'],
+      instagram: ['PostPrism', 'ArtificialIntelligence', 'TechAesthetics', 'Automation', 'EfficiencyRevolution', 'FutureTech', 'AITools']
     };
     
     return platformTags[platform as keyof typeof platformTags] || ['PostPrism', 'Demo'];
@@ -281,7 +281,7 @@ class SecureDemoService {
   stopDemo() {
     this.isActive = false;
     this.sessionId = null;
-    console.log('⏹️ Demo已停止');
+    console.log('⏹️ Demo stopped');
   }
   
   /**
@@ -301,11 +301,11 @@ export const getDemoFeatures = () => ({
   maxDemoRuns: 5, // Per session
   averageSimulationTime: DEMO_CONFIG.mockPublishingTime,
   securityFeatures: [
-    '✅ 无API密钥暴露',
-    '✅ 频率限制保护',
-    '✅ 前端模拟安全',
-    '✅ 成本零消耗',
-    '✅ 真实体验感受'
+    '✅ No API keys exposed',
+    '✅ Rate limiting protection',
+    '✅ Secure frontend simulation',
+    '✅ Zero cost consumption',
+    '✅ Authentic experience'
   ]
 });
 
