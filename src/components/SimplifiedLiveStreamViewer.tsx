@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback, memo } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { io, Socket } from 'socket.io-client';
 import { API_CONFIG, DEMO_MODE, DEMO_CONFIG } from "@/config/api";
+import { secureDemoService, DemoProgress, isDemoModeRecommended } from "@/services/demoService";
 
 interface SimplifiedStreamData {
   platform: string;
@@ -41,18 +42,18 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
   const [connectionStatus, setConnectionStatus] = useState<'disconnected' | 'connecting' | 'connected'>('disconnected');
   const socketRef = useRef<Socket | null>(null);
 
-  // Platform icons and colors
-  const platformIcons = {
+  // Platform icons and colors - memoized to prevent recreating objects
+  const platformIcons = useMemo(() => ({
     linkedin: Linkedin,
     twitter: Twitter,
     instagram: Instagram
-  };
+  }), []);
 
-  const platformColors = {
+  const platformColors = useMemo(() => ({
     linkedin: "text-blue-400",
     twitter: "text-sky-400", 
     instagram: "text-pink-400"
-  };
+  }), []);
 
   // Update internal sessionId when external sessionId changes
   useEffect(() => {
@@ -77,27 +78,100 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
       });
       setStreamData(initialData);
       
-      if (DEMO_MODE) {
-        // Demo mode - simulate streaming without real WebSocket
-        console.log('🎮 Demo mode: Simulating streaming...');
+      // Respect explicit VITE_DEMO_MODE=false setting
+      if (import.meta.env.VITE_DEMO_MODE !== 'false' && (DEMO_MODE || isDemoModeRecommended())) {
+        // SECURE frontend-only demo mode - NO backend connections
+        console.log('🎮 Starting SECURE frontend-only demo mode...');
+        console.log('🔒 NO API calls, NO backend, NO cost consumption');
         setConnectionStatus('connected');
-        addToActionLog('Demo mode: Simulating live streaming', 'info');
+        addToActionLog('🎮 Secure Demo Mode: Frontend-only simulation (no API usage)', 'info');
         
-        // Simulate demo publishing process
-        simulateDemoPublishing();
-        return;
+        // Set up demo service listeners
+        const progressUnsubscribe = secureDemoService.onProgress((progress: DemoProgress) => {
+          setStreamData(prev => ({
+            ...prev,
+            [progress.platform]: {
+              ...prev[progress.platform],
+              progress: (progress.step / progress.maxSteps) * 100,
+              currentAction: progress.action,
+              status: 'active'
+            }
+          }));
+          
+          addToActionLog(`${progress.platform}: ${progress.action}`, 'action');
+          
+          if (progress.thinking) {
+            addToActionLog(`${progress.platform}: ${progress.thinking}`, 'thinking');
+          }
+          
+          updateOverallProgress();
+        });
+        
+        const resultsUnsubscribe = secureDemoService.onResults((results) => {
+          console.log('📊 Secure demo results:', results);
+          addToActionLog('🎉 All demo platforms completed successfully!', 'success');
+          setOverallProgress(100);
+          
+          // Mark all platforms as completed
+          results.forEach(result => {
+            setStreamData(prev => ({
+              ...prev,
+              [result.platform]: {
+                ...prev[result.platform],
+                status: 'completed',
+                progress: 100,
+                currentAction: '✅ Publishing completed!'
+              }
+            }));
+          });
+          
+          // Convert demo results to expected format for PublishResults component
+          const formattedResults = results.map(result => ({
+            platform: result.platform,
+            adaptedContent: result.adaptedContent,
+            hashtags: result.hashtags,
+            publishStatus: result.publishStatus,
+            postUrl: result.postUrl,
+            aiInsights: result.aiInsights,
+            stepsTaken: result.stepsTaken,
+            errorCount: result.errorCount,
+            executionTime: result.executionTime,
+            engagement: result.engagement,
+            intelligenceScore: result.intelligenceScore
+          }));
+          
+          // Trigger completion callback with properly formatted results
+          setTimeout(() => {
+            if (onWorkflowCompleted) {
+              console.log('🎯 Triggering demo completion callback with formatted results');
+              onWorkflowCompleted(formattedResults);
+            }
+          }, 1500);
+        });
+        
+        // Cleanup function for demo subscriptions
+        const cleanup = () => {
+          progressUnsubscribe();
+          resultsUnsubscribe();
+        };
+        
+        // Store cleanup in ref for later use
+        socketRef.current = { disconnect: cleanup } as any;
+        
+        return cleanup;
       }
       
       // Production mode - Connect to real WebSocket server
       console.log('🔌 Connecting to WebSocket server...');
       setConnectionStatus('connecting');
       
-      const socket = io(API_CONFIG.baseURL, {
-        transports: ['polling'],  // Only use polling to avoid WebSocket upgrade errors
+      const socket = io(API_CONFIG.websocketURL, {
+        transports: ['websocket', 'polling'],  // Try WebSocket first, fallback to polling
         autoConnect: true,
-        timeout: 10000,
-        reconnection: false,  // Disable reconnection to prevent connection conflicts
-        forceNew: true       // Always create fresh connection
+        timeout: 20000,  // Longer timeout for Render cold starts
+        reconnection: true,
+        reconnectionAttempts: 3,
+        forceNew: true
       });
       
       socketRef.current = socket;
@@ -345,16 +419,16 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
     }
   }, [isActive, selectedPlatforms, sessionId]);
   
-  const addToActionLog = (message: string, type: string) => {
+  const addToActionLog = useCallback((message: string, type: string) => {
     setActionLog(prev => [...prev, {
-      id: Date.now().toString(),
+      id: `${Date.now()}-${Math.random()}`,
       message,
       type,
       timestamp: new Date().toLocaleTimeString()
     }]);
-  };
+  }, []);
   
-  const updateOverallProgress = () => {
+  const updateOverallProgress = useCallback(() => {
     const platforms = Object.values(streamData);
     const completedCount = platforms.filter(p => p.status === 'completed').length;
     const totalCount = platforms.length;
@@ -362,7 +436,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
     if (totalCount > 0) {
       setOverallProgress((completedCount / totalCount) * 100);
     }
-  };
+  }, [streamData]);
 
   const simulateDemoPublishing = async () => {
     console.log('🎮 Starting enhanced demo publishing simulation...');
@@ -699,4 +773,4 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
   );
 };
 
-export default SimplifiedLiveStreamViewer;
+export default memo(SimplifiedLiveStreamViewer);

@@ -17,6 +17,7 @@ import {
   Zap
 } from "lucide-react";
 import { io, Socket } from 'socket.io-client';
+import { API_CONFIG } from "@/config/api";
 
 interface StreamData {
   platform: string;
@@ -71,9 +72,12 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
       setStreamData(initialData);
       
       // Connect to WebSocket server
-      const socket = io('http://localhost:8000', {
+      const socket = io(API_CONFIG.websocketURL, {
         transports: ['websocket', 'polling'],
-        autoConnect: true
+        autoConnect: true,
+        timeout: 20000,  // Longer timeout for Render cold starts
+        reconnection: true,
+        reconnectionAttempts: 3
       });
       
       socketRef.current = socket;

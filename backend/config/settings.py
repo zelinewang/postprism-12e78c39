@@ -21,9 +21,13 @@ from typing import Optional, Dict, Any
 from dataclasses import dataclass
 from dotenv import load_dotenv
 import logging
+from pathlib import Path
 
-# Load environment variables from .env file
-load_dotenv()
+# Load environment variables from .env file in project root
+# This ensures consistent .env loading regardless of working directory
+project_root = Path(__file__).parent.parent.parent  # Go up from backend/config/ to project root
+env_path = project_root / '.env'
+load_dotenv(env_path)
 
 @dataclass
 class AIModelConfig:

@@ -5,6 +5,7 @@ import SimplifiedLiveStreamViewer from "@/components/SimplifiedLiveStreamViewer"
 import PublishResults from "@/components/PublishResults";
 import CloudStatus from "@/components/CloudStatus";
 import { API_CONFIG, ENDPOINTS, DEMO_MODE, DEMO_CONFIG, CLOUD_CONFIG } from "@/config/api";
+import { secureDemoService, DemoPublishResult, isDemoModeRecommended } from "@/services/demoService";
 
 type AppState = 'input' | 'processing' | 'streaming' | 'results';
 
@@ -27,38 +28,46 @@ const Index = () => {
     setAppState('streaming');
     
     try {
-      if (DEMO_MODE) {
-        // Demo mode - simulate publishing without real API calls
-        console.log('🎮 Demo mode: Simulating publishing process...');
+      // Respect explicit VITE_DEMO_MODE=false setting
+      if (import.meta.env.VITE_DEMO_MODE !== 'false' && (DEMO_MODE || isDemoModeRecommended())) {
+        // Enhanced secure demo mode
+        console.log('🎮 启动安全Demo模式...');
         
-        // Simulate API delay
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        // Create mock results based on selected platforms
-        const mockResults = platforms.reduce((acc, platform) => {
-          acc[platform] = {
-            ...DEMO_CONFIG.mockResults[platform as keyof typeof DEMO_CONFIG.mockResults],
-            content: `${content} (Demo: ${platform})`
-          };
-          return acc;
-        }, {} as any);
-        
-        // Process mock results
-        const processedResults = Object.entries(mockResults).map(([platform, data]: [string, any]) => ({
-          platform,
-          adaptedContent: data.content,
-          hashtags: ['PostPrismDemo', 'AIPublishing'],
-          publishStatus: 'success' as const,
-          postUrl: data.postUrl,
-          aiInsights: `Successfully published to ${platform} in demo mode`,
-          stepsTaken: Math.floor(Math.random() * 10) + 5,
-          errorCount: 0
-        }));
-        
-        setPublishResults(processedResults);
-        
-        // Don't auto-transition in demo mode - let viewer handle it
-        return;
+        try {
+          const { sessionId: demoSessionId } = await secureDemoService.startDemo(content, platforms);
+          setCurrentSessionId(demoSessionId);
+          
+          // Listen for demo results
+          const unsubscribe = secureDemoService.onResults((demoResults: DemoPublishResult[]) => {
+            console.log('📊 收到Demo结果:', demoResults);
+            setPublishResults(demoResults);
+          });
+          
+          // Clean up subscription when component unmounts or demo completes
+          setTimeout(() => {
+            unsubscribe();
+          }, 30000); // 30 second timeout
+          
+          return;
+        } catch (error) {
+          console.error('Demo服务错误:', error);
+          // Fallback to simple demo if service fails
+          await new Promise(resolve => setTimeout(resolve, 2000));
+          
+          const fallbackResults = platforms.map(platform => ({
+            platform,
+            adaptedContent: `${content} (Demo fallback: ${platform})`,
+            hashtags: ['PostPrismDemo', 'AIPublishing'],
+            publishStatus: 'success' as const,
+            postUrl: DEMO_CONFIG.mockResults[platform as keyof typeof DEMO_CONFIG.mockResults]?.postUrl || '#',
+            aiInsights: `Demo模式：成功发布到${platform}`,
+            stepsTaken: Math.floor(Math.random() * 10) + 5,
+            errorCount: 0
+          }));
+          
+          setPublishResults(fallbackResults);
+          return;
+        }
       }
       
       // Production mode - call real backend API
@@ -226,7 +235,11 @@ const Index = () => {
         />
 
         {/* Results Display */}
-        {console.log(`🔍 Render - appState: ${appState}, publishResults length: ${publishResults.length}`)}
+        {/* Debugging: Remove in production */}
+        {(() => {
+          console.log(`🔍 Render - appState: ${appState}, publishResults length: ${publishResults.length}`);
+          return null;
+        })()}
         <PublishResults
           isVisible={appState === 'results'}
           originalContent={originalContent}

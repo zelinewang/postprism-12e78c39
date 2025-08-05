@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo, useCallback, memo } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
@@ -45,13 +45,13 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
     }
   ];
 
-  const togglePlatform = (platformId: string) => {
+  const togglePlatform = useCallback((platformId: string) => {
     setSelectedPlatforms(prev => 
       prev.includes(platformId) 
         ? prev.filter(id => id !== platformId)
         : [...prev, platformId]
     );
-  };
+  }, []);
 
   const validateContent = (text: string): string | null => {
     // Content length validation
@@ -115,7 +115,7 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
     }
   };
 
-  const handlePublish = async () => {
+  const handlePublish = useCallback(async () => {
     setValidationError(null);
     
     // Validate content
@@ -145,9 +145,12 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
     setLastPublishTime(now);
     
     onPublish(content, selectedPlatforms);
-  };
+  }, [content, selectedPlatforms, lastPublishTime, publishCount, user, onPublish]);
 
-  const canPublish = content.trim().length > 0 && selectedPlatforms.length > 0 && !isProcessing;
+  const canPublish = useMemo(() => 
+    content.trim().length > 0 && selectedPlatforms.length > 0 && !isProcessing,
+    [content, selectedPlatforms.length, isProcessing]
+  );
 
   return (
     <div className="w-full max-w-5xl mx-auto px-6 mb-12">
@@ -257,4 +260,4 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
   );
 };
 
-export default ContentInput;
+export default memo(ContentInput);

@@ -421,14 +421,14 @@ ENABLE_LIVE_STREAMING=true
 git clone https://github.com/your-username/postprism.git
 cd postprism
 
-# Configure environment
-cp env.example.txt .env
-# Edit .env with your keys and VM IDs
-
-# Run automated setup (Note that this also resets the .ENV file)
+# Run automated backend dependencies installation
 cd backend && chmod +x install_dependencies.sh && ./install_dependencies.sh
 
+# The setup script will create/update .env in project root with all necessary variables
+# Edit the generated .env file with your actual API keys and VM IDs
+
 # Launch PostPrism
+cd ..                                     # Return to project root
 npm run dev &                             # Frontend on :8080
 python backend/run_fixed.py              # Backend on :8000
 

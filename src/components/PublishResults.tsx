@@ -14,7 +14,7 @@ import {
   Clock,
   Hash
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useMemo, useCallback, memo } from "react";
 
 interface PlatformResult {
   platform: string;
@@ -56,13 +56,21 @@ const PublishResults = ({
     instagram: "border-pink-400 bg-pink-400/10"
   };
 
-  const copyToClipboard = async (text: string, platform: string) => {
+  const copyToClipboard = useCallback(async (text: string, platform: string) => {
     await navigator.clipboard.writeText(text);
     setCopiedPlatform(platform);
     setTimeout(() => setCopiedPlatform(null), 2000);
-  };
+  }, []);
 
-  const successCount = results.filter(r => r.publishStatus === 'success').length;
+  const successCount = useMemo(() => 
+    results.filter(r => r.publishStatus === 'success').length, 
+    [results]
+  );
+
+  const totalSteps = useMemo(() => 
+    results.reduce((sum, r) => sum + r.stepsTaken, 0), 
+    [results]
+  );
 
   if (!isVisible) return null;
 
@@ -97,7 +105,7 @@ const PublishResults = ({
           <div className="glass rounded-lg p-4 text-center">
             <Sparkles className="w-6 h-6 text-purple-400 mx-auto mb-2" />
             <div className="text-2xl font-bold text-purple-400">
-              {results.reduce((sum, r) => sum + r.stepsTaken, 0)}
+              {totalSteps}
             </div>
             <div className="text-sm text-muted-foreground">AI Steps Executed</div>
           </div>
@@ -223,4 +231,4 @@ const PublishResults = ({
   );
 };
 
-export default PublishResults;
+export default memo(PublishResults);

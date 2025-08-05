@@ -28,8 +28,17 @@ const Header = () => {
               </div>
             </div>
 
-            {/* User Profile and Actions */}
+            {/* Navigation and User Profile */}
             <div className="flex items-center space-x-6">
+              {/* Back to Landing */}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => window.location.href = '/landing'}
+                className="glass border-white/20 hover:border-white/40 text-white hover:bg-white/10"
+              >
+                ← Back to Landing
+              </Button>
               {/* Value Proposition */}
               <div className="hidden lg:flex items-center space-x-3 glass rounded-2xl px-6 py-4 hover-lift">
                 <div className="w-10 h-10 bg-prism rounded-xl flex items-center justify-center animate-pulse-glow">
