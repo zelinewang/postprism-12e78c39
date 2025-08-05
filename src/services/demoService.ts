@@ -65,7 +65,7 @@ class SecureDemoService {
     
     console.log(`🎮 Starting secure demo mode: ${this.sessionId}`);
     
-    // Use real backend for live virtual machine demo
+    // Try real backend first for live virtual machine demo
     try {
       const backendDemoResult = await this.tryBackendDemo(content, platforms);
       if (backendDemoResult) {
@@ -73,12 +73,12 @@ class SecureDemoService {
         return { sessionId: this.sessionId };
       }
     } catch (error) {
-      console.error('❌ Cannot connect to backend for real demo:', error);
-      throw new Error('Real demo backend unavailable. Please try again later.');
+      console.warn('⚠️ Real backend unavailable (might be sleeping), using realistic simulation:', error);
     }
     
-    // No fallback - always use real backend for demo
-    throw new Error('Backend connection required for live virtual machine demo');
+    // Fallback to realistic frontend simulation if backend is sleeping
+    console.log('📱 Using enhanced simulation while backend wakes up...');
+    this.simulateDemoPublishing(content, platforms);
     
     return { sessionId: this.sessionId };
   }
