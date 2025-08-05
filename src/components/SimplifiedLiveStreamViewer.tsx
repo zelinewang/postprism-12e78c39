@@ -15,6 +15,7 @@ import {
   Instagram
 } from "lucide-react";
 import { io, Socket } from 'socket.io-client';
+import { API_CONFIG, DEMO_MODE, DEMO_CONFIG } from "@/config/api";
 
 interface SimplifiedStreamData {
   platform: string;
@@ -76,11 +77,22 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
       });
       setStreamData(initialData);
       
-      // Connect to WebSocket server with error handling
+      if (DEMO_MODE) {
+        // Demo mode - simulate streaming without real WebSocket
+        console.log('🎮 Demo mode: Simulating streaming...');
+        setConnectionStatus('connected');
+        addToActionLog('Demo mode: Simulating live streaming', 'info');
+        
+        // Simulate demo publishing process
+        simulateDemoPublishing();
+        return;
+      }
+      
+      // Production mode - Connect to real WebSocket server
       console.log('🔌 Connecting to WebSocket server...');
       setConnectionStatus('connecting');
       
-      const socket = io('http://localhost:8000', {
+      const socket = io(API_CONFIG.baseURL, {
         transports: ['polling'],  // Only use polling to avoid WebSocket upgrade errors
         autoConnect: true,
         timeout: 10000,
@@ -350,6 +362,101 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
     if (totalCount > 0) {
       setOverallProgress((completedCount / totalCount) * 100);
     }
+  };
+
+  const simulateDemoPublishing = async () => {
+    console.log('🎮 Starting demo publishing simulation...');
+    addToActionLog('🎮 Demo mode: Starting simulated publishing...', 'info');
+    
+    // Simulate each platform's publishing process
+    for (let i = 0; i < selectedPlatforms.length; i++) {
+      const platform = selectedPlatforms[i];
+      
+      // Update status to active
+      setStreamData(prev => ({
+        ...prev,
+        [platform]: {
+          ...prev[platform],
+          status: 'active',
+          currentAction: `Starting ${platform} demo publishing...`
+        }
+      }));
+      
+      addToActionLog(`🚀 Starting ${platform} demo publishing...`, 'info');
+      
+      // Simulate publishing steps with random delays
+      const steps = [
+        'Opening browser...',
+        `Navigating to ${platform}...`,
+        'AI analyzing interface...',
+        'Composing content...',
+        'Adding hashtags...',
+        'Publishing content...',
+        'Verifying publication...'
+      ];
+      
+      for (let step = 0; step < steps.length; step++) {
+        await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 400));
+        
+        const progress = ((step + 1) / steps.length) * 100;
+        setStreamData(prev => ({
+          ...prev,
+          [platform]: {
+            ...prev[platform],
+            progress,
+            currentAction: steps[step]
+          }
+        }));
+        
+        addToActionLog(`${platform}: ${steps[step]}`, 'action');
+        
+        // Simulate some thinking messages
+        if (step === 2) {
+          addToActionLog(`${platform}: 💭 Analyzing UI elements and optimal click positions...`, 'thinking');
+        }
+        if (step === 4) {
+          addToActionLog(`${platform}: 💭 Optimizing hashtag placement for maximum reach...`, 'thinking');
+        }
+      }
+      
+      // Mark as completed
+      setStreamData(prev => ({
+        ...prev,
+        [platform]: {
+          ...prev[platform],
+          status: 'completed',
+          progress: 100,
+          currentAction: 'Publishing completed!'
+        }
+      }));
+      
+      addToActionLog(`✅ ${platform} demo publishing completed successfully!`, 'success');
+      updateOverallProgress();
+      
+      // Small delay between platforms
+      if (i < selectedPlatforms.length - 1) {
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+    }
+    
+    // All platforms completed
+    addToActionLog('🎉 All demo platforms completed successfully!', 'success');
+    setOverallProgress(100);
+    
+    // Trigger completion callback after a short delay
+    setTimeout(() => {
+      if (onWorkflowCompleted) {
+        const demoResults = selectedPlatforms.reduce((acc, platform) => {
+          acc[platform] = {
+            ...DEMO_CONFIG.mockResults[platform as keyof typeof DEMO_CONFIG.mockResults],
+            success: true
+          };
+          return acc;
+        }, {} as any);
+        
+        onWorkflowCompleted({ platforms: demoResults });
+      }
+    }, 1500);
   };
 
   if (!isActive) return null;

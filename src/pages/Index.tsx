@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import ContentInput from "@/components/ContentInput";
 import SimplifiedLiveStreamViewer from "@/components/SimplifiedLiveStreamViewer";
 import PublishResults from "@/components/PublishResults";
+import { API_CONFIG, ENDPOINTS, DEMO_MODE, DEMO_CONFIG } from "@/config/api";
 
 type AppState = 'input' | 'processing' | 'streaming' | 'results';
 
@@ -25,8 +26,42 @@ const Index = () => {
     setAppState('streaming');
     
     try {
-      // Call real backend API with session_id
-      const response = await fetch('http://localhost:8000/api/publish-content', {
+      if (DEMO_MODE) {
+        // Demo mode - simulate publishing without real API calls
+        console.log('🎮 Demo mode: Simulating publishing process...');
+        
+        // Simulate API delay
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        // Create mock results based on selected platforms
+        const mockResults = platforms.reduce((acc, platform) => {
+          acc[platform] = {
+            ...DEMO_CONFIG.mockResults[platform as keyof typeof DEMO_CONFIG.mockResults],
+            content: `${content} (Demo: ${platform})`
+          };
+          return acc;
+        }, {} as any);
+        
+        // Process mock results
+        const processedResults = Object.entries(mockResults).map(([platform, data]: [string, any]) => ({
+          platform,
+          adaptedContent: data.content,
+          hashtags: ['PostPrismDemo', 'AIPublishing'],
+          publishStatus: 'success' as const,
+          postUrl: data.postUrl,
+          aiInsights: `Successfully published to ${platform} in demo mode`,
+          stepsTaken: Math.floor(Math.random() * 10) + 5,
+          errorCount: 0
+        }));
+        
+        setPublishResults(processedResults);
+        
+        // Don't auto-transition in demo mode - let viewer handle it
+        return;
+      }
+      
+      // Production mode - call real backend API
+      const response = await fetch(`${API_CONFIG.baseURL}${ENDPOINTS.publishContent}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,7 +69,7 @@ const Index = () => {
         body: JSON.stringify({
           content,
           platforms,
-          session_id: sessionId  // 传递给后端
+          session_id: sessionId
         })
       });
 
