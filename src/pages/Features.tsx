@@ -1,54 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles, Zap, Target, Users, Eye, Brain, Rocket, Shield } from 'lucide-react';
 
-const PrismLogo = () => (
-  <div className="relative w-8 h-8 animate-prism-rotate">
-    <img 
-      src="/lovable-uploads/88784487-172c-4e13-87e3-3ecd85d7d29d.png" 
-      alt="PostPrism AI" 
-      className="w-full h-full object-contain filter drop-shadow-lg"
-    />
-    <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 via-teal-500/20 to-cyan-400/20 rounded-lg blur-md -z-10 animate-glow"></div>
-  </div>
-);
-
 const Features = () => {
-  const [scrollY, setScrollY] = useState(0);
-  
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Enhanced background */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-emerald-500/20 via-teal-500/20 to-cyan-500/20 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute top-1/2 right-1/4 w-80 h-80 bg-gradient-to-r from-violet-500/20 via-purple-500/20 to-fuchsia-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-      </div>
-
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-100 dark:from-emerald-950 dark:via-teal-950 dark:to-cyan-950">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 glass border-b border-border/20">
+      <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-white/80 dark:bg-gray-900/80 border-b border-white/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <Link to="/" className="flex items-center space-x-4">
-              <PrismLogo />
-              <span className="text-2xl font-bold text-rainbow">PostPrism AI</span>
+          <div className="flex justify-between items-center h-16">
+            <Link to="/landing" className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+                <Sparkles className="h-5 w-5 text-white" />
+              </div>
+              <span className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                PostPrism AI
+              </span>
             </Link>
             
             <div className="hidden md:flex items-center space-x-8">
-              <Link to="/" className="text-muted-foreground hover:text-foreground transition-all duration-300 hover:scale-105">Home</Link>
-              <Link to="/features" className="text-emerald-400 font-semibold">Features</Link>
-              <Link to="/about" className="text-muted-foreground hover:text-foreground transition-all duration-300 hover:scale-105">About</Link>
-              <Link to="/pricing" className="text-muted-foreground hover:text-foreground transition-all duration-300 hover:scale-105">Pricing</Link>
-              <Link to="/app">
-                <Button className="btn-prism">
-                  Try PostPrism AI <ArrowRight className="h-4 w-4 ml-2" />
-                </Button>
+              <Link to="/landing" className="text-gray-600 hover:text-primary transition-colors">Home</Link>
+              <Link to="/features" className="text-primary font-semibold">Features</Link>
+              <Link to="/about" className="text-gray-600 hover:text-primary transition-colors">About</Link>
+              <Link to="/pricing" className="text-gray-600 hover:text-primary transition-colors">Pricing</Link>
+              <Link to="/" className="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
+                Try PostPrism AI <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           </div>
@@ -56,16 +33,16 @@ const Features = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative">
-        <div className="max-w-7xl mx-auto text-center relative z-10">
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 animate-fade-in">
+      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto text-center">
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
             Powerful Features for
             <br />
-            <span className="text-rainbow animate-pulse-glow">
+            <span className="bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-600 bg-clip-text text-transparent">
               Modern Creators
             </span>
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto animate-slide-up">
+          <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-3xl mx-auto">
             Discover the cutting-edge capabilities that make PostPrism AI the ultimate social media automation platform.
           </p>
         </div>
@@ -82,10 +59,10 @@ const Features = () => {
                 <Brain className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">AI Content Adaptation</h3>
-              <p className="text-slate-700 dark:text-slate-200 mb-4">
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 Advanced AI models including Claude and GPT-4 work together to adapt your content for each platform's unique audience, tone, and requirements.
               </p>
-              <ul className="text-sm text-slate-600 dark:text-slate-300 space-y-2">
+              <ul className="text-sm text-gray-500 dark:text-gray-400 space-y-2">
                 <li>• LinkedIn: Professional tone with industry insights</li>
                 <li>• Twitter: Concise, engaging with trending elements</li>
                 <li>• Instagram: Visual storytelling with emotional appeal</li>
@@ -98,10 +75,10 @@ const Features = () => {
                 <Eye className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Live Agent Streaming</h3>
-              <p className="text-slate-700 dark:text-slate-200 mb-4">
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 Watch AI agents work in real-time through live video streams. See every click, type, and interaction as your content gets published.
               </p>
-              <ul className="text-sm text-slate-600 dark:text-slate-300 space-y-2">
+              <ul className="text-sm text-gray-500 dark:text-gray-400 space-y-2">
                 <li>• Real-time video streaming</li>
                 <li>• Step-by-step action logging</li>
                 <li>• Multi-platform parallel processing</li>
@@ -114,10 +91,10 @@ const Features = () => {
                 <Rocket className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">AgentS2 Automation</h3>
-              <p className="text-slate-700 dark:text-slate-200 mb-4">
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 Powered by state-of-the-art AgentS2 technology for precise UI automation and intelligent computer interaction.
               </p>
-              <ul className="text-sm text-slate-600 dark:text-slate-300 space-y-2">
+              <ul className="text-sm text-gray-500 dark:text-gray-400 space-y-2">
                 <li>• 98% UI detection accuracy</li>
                 <li>• Smart error recovery</li>
                 <li>• Cross-platform compatibility</li>
@@ -130,10 +107,10 @@ const Features = () => {
                 <Target className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Multi-Platform Publishing</h3>
-              <p className="text-slate-700 dark:text-slate-200 mb-4">
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 Seamlessly publish to LinkedIn, Twitter, and Instagram with platform-specific optimizations and formatting.
               </p>
-              <ul className="text-sm text-slate-600 dark:text-slate-300 space-y-2">
+              <ul className="text-sm text-gray-500 dark:text-gray-400 space-y-2">
                 <li>• Simultaneous multi-platform posting</li>
                 <li>• Platform-specific hashtag optimization</li>
                 <li>• Image generation for Instagram</li>
@@ -146,10 +123,10 @@ const Features = () => {
                 <Zap className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Performance Analytics</h3>
-              <p className="text-slate-700 dark:text-slate-200 mb-4">
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 Get detailed insights on your content performance, AI optimization metrics, and publishing analytics.
               </p>
-              <ul className="text-sm text-slate-600 dark:text-slate-300 space-y-2">
+              <ul className="text-sm text-gray-500 dark:text-gray-400 space-y-2">
                 <li>• AI optimization insights</li>
                 <li>• Publishing success rates</li>
                 <li>• Performance recommendations</li>
@@ -162,10 +139,10 @@ const Features = () => {
                 <Shield className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Enterprise Security</h3>
-              <p className="text-slate-700 dark:text-slate-200 mb-4">
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 Bank-level security with encrypted sessions, secure authentication, and comprehensive data protection.
               </p>
-              <ul className="text-sm text-slate-600 dark:text-slate-300 space-y-2">
+              <ul className="text-sm text-gray-500 dark:text-gray-400 space-y-2">
                 <li>• End-to-end encryption</li>
                 <li>• Secure session management</li>
                 <li>• GDPR compliance ready</li>
@@ -183,7 +160,7 @@ const Features = () => {
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               Technical Excellence
             </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-200 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               Built with cutting-edge technology stack for maximum performance and reliability.
             </p>
           </div>
@@ -194,19 +171,19 @@ const Features = () => {
               <div className="space-y-4">
                 <div className="flex items-center space-x-4">
                   <div className="w-3 h-3 bg-primary rounded-full"></div>
-                  <span className="text-slate-700 dark:text-slate-200">Anthropic Claude API for professional content</span>
+                  <span className="text-gray-700 dark:text-gray-300">Anthropic Claude API for professional content</span>
                 </div>
                 <div className="flex items-center space-x-4">
                   <div className="w-3 h-3 bg-secondary rounded-full"></div>
-                  <span className="text-slate-700 dark:text-slate-200">OpenAI GPT-4 for creative optimization</span>
+                  <span className="text-gray-700 dark:text-gray-300">OpenAI GPT-4 for creative optimization</span>
                 </div>
                 <div className="flex items-center space-x-4">
                   <div className="w-3 h-3 bg-accent rounded-full"></div>
-                  <span className="text-slate-700 dark:text-slate-200">DALL-E integration for image generation</span>
+                  <span className="text-gray-700 dark:text-gray-300">DALL-E integration for image generation</span>
                 </div>
                 <div className="flex items-center space-x-4">
                   <div className="w-3 h-3 bg-primary rounded-full"></div>
-                  <span className="text-slate-700 dark:text-slate-200">AgentS2 for computer automation</span>
+                  <span className="text-gray-700 dark:text-gray-300">AgentS2 for computer automation</span>
                 </div>
               </div>
             </div>
@@ -216,19 +193,19 @@ const Features = () => {
               <div className="space-y-4">
                 <div className="flex items-center space-x-4">
                   <div className="w-3 h-3 bg-primary rounded-full"></div>
-                  <span className="text-slate-700 dark:text-slate-200">React + TypeScript frontend</span>
+                  <span className="text-gray-700 dark:text-gray-300">React + TypeScript frontend</span>
                 </div>
                 <div className="flex items-center space-x-4">
                   <div className="w-3 h-3 bg-secondary rounded-full"></div>
-                  <span className="text-slate-700 dark:text-slate-200">Python Flask backend with WebSocket</span>
+                  <span className="text-gray-700 dark:text-gray-300">Python Flask backend with WebSocket</span>
                 </div>
                 <div className="flex items-center space-x-4">
                   <div className="w-3 h-3 bg-accent rounded-full"></div>
-                  <span className="text-slate-700 dark:text-slate-200">ORGO cloud infrastructure</span>
+                  <span className="text-gray-700 dark:text-gray-300">ORGO cloud infrastructure</span>
                 </div>
                 <div className="flex items-center space-x-4">
                   <div className="w-3 h-3 bg-primary rounded-full"></div>
-                  <span className="text-slate-700 dark:text-slate-200">Real-time video streaming</span>
+                  <span className="text-gray-700 dark:text-gray-300">Real-time video streaming</span>
                 </div>
               </div>
             </div>
@@ -242,7 +219,7 @@ const Features = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
             Experience the Future of Social Media
           </h2>
-          <p className="text-xl text-slate-600 dark:text-slate-200 mb-8">
+          <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
             Join the revolution and see how AI can transform your content strategy.
           </p>
           <Link to="/">

@@ -1,54 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles, Users, Target, Award, Globe, Zap } from 'lucide-react';
 
-const PrismLogo = () => (
-  <div className="relative w-8 h-8 animate-prism-rotate">
-    <img 
-      src="/lovable-uploads/88784487-172c-4e13-87e3-3ecd85d7d29d.png" 
-      alt="PostPrism AI" 
-      className="w-full h-full object-contain filter drop-shadow-lg"
-    />
-    <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 via-teal-500/20 to-cyan-400/20 rounded-lg blur-md -z-10 animate-glow"></div>
-  </div>
-);
-
 const About = () => {
-  const [scrollY, setScrollY] = useState(0);
-  
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Enhanced background */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-gradient-to-r from-emerald-500/20 via-teal-500/20 to-cyan-500/20 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-1/3 right-1/3 w-80 h-80 bg-gradient-to-r from-violet-500/20 via-purple-500/20 to-fuchsia-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }}></div>
-      </div>
-
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-100 dark:from-emerald-950 dark:via-teal-950 dark:to-cyan-950">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 glass border-b border-border/20">
+      <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-white/80 dark:bg-gray-900/80 border-b border-white/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <Link to="/" className="flex items-center space-x-4">
-              <PrismLogo />
-              <span className="text-2xl font-bold text-rainbow">PostPrism AI</span>
+          <div className="flex justify-between items-center h-16">
+            <Link to="/landing" className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+                <Sparkles className="h-5 w-5 text-white" />
+              </div>
+              <span className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                PostPrism AI
+              </span>
             </Link>
             
             <div className="hidden md:flex items-center space-x-8">
-              <Link to="/" className="text-muted-foreground hover:text-foreground transition-all duration-300 hover:scale-105">Home</Link>
-              <Link to="/features" className="text-muted-foreground hover:text-foreground transition-all duration-300 hover:scale-105">Features</Link>
-              <Link to="/about" className="text-emerald-400 font-semibold">About</Link>
-              <Link to="/pricing" className="text-muted-foreground hover:text-foreground transition-all duration-300 hover:scale-105">Pricing</Link>
-              <Link to="/app">
-                <Button className="btn-prism">
-                  Try PostPrism AI <ArrowRight className="h-4 w-4 ml-2" />
-                </Button>
+              <Link to="/landing" className="text-gray-600 hover:text-primary transition-colors">Home</Link>
+              <Link to="/features" className="text-gray-600 hover:text-primary transition-colors">Features</Link>
+              <Link to="/about" className="text-primary font-semibold">About</Link>
+              <Link to="/pricing" className="text-gray-600 hover:text-primary transition-colors">Pricing</Link>
+              <Link to="/" className="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
+                Try PostPrism AI <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           </div>
@@ -56,16 +33,16 @@ const About = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative">
-        <div className="max-w-7xl mx-auto text-center relative z-10">
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 animate-fade-in">
+      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto text-center">
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
             Redefining Social Media
             <br />
-            <span className="text-rainbow animate-pulse-glow">
+            <span className="bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-600 bg-clip-text text-transparent">
               with AI Innovation
             </span>
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-4xl mx-auto animate-slide-up">
+          <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-4xl mx-auto">
             We're building the future of content creation where artificial intelligence meets human creativity 
             to amplify your voice across every platform.
           </p>
@@ -80,11 +57,11 @@ const About = () => {
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
                 Our Mission
               </h2>
-              <p className="text-xl text-slate-600 dark:text-slate-200 mb-6">
+              <p className="text-xl text-gray-600 dark:text-gray-300 mb-6">
                 To democratize social media success by making advanced AI automation accessible to creators, 
                 businesses, and individuals worldwide.
               </p>
-              <p className="text-lg text-slate-600 dark:text-slate-200 mb-8">
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
                 Like a prism that splits white light into a beautiful spectrum, PostPrism AI takes your single 
                 piece of content and refracts it into perfectly optimized versions for each social platform, 
                 each with its own unique characteristics and appeal.
@@ -102,19 +79,19 @@ const About = () => {
                 <div className="grid grid-cols-2 gap-6">
                   <div className="text-center">
                     <div className="text-3xl font-bold text-primary mb-2">98%</div>
-                    <div className="text-sm text-slate-600 dark:text-slate-300">Automation Accuracy</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300">Automation Accuracy</div>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-bold text-secondary mb-2">3x</div>
-                    <div className="text-sm text-slate-600 dark:text-slate-300">Faster Publishing</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300">Faster Publishing</div>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-bold text-accent mb-2">24/7</div>
-                    <div className="text-sm text-slate-600 dark:text-slate-300">AI Availability</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300">AI Availability</div>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-bold text-primary mb-2">∞</div>
-                    <div className="text-sm text-slate-600 dark:text-slate-300">Creative Possibilities</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300">Creative Possibilities</div>
                   </div>
                 </div>
               </div>
@@ -130,7 +107,7 @@ const About = () => {
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               Our Core Values
             </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-200 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               The principles that guide everything we build and every decision we make.
             </p>
           </div>
@@ -141,7 +118,7 @@ const About = () => {
                 <Zap className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Innovation First</h3>
-              <p className="text-slate-600 dark:text-slate-200">
+              <p className="text-gray-600 dark:text-gray-300">
                 We push the boundaries of what's possible with AI, always staying ahead of the curve 
                 in social media automation technology.
               </p>
@@ -152,7 +129,7 @@ const About = () => {
                 <Users className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">User-Centric</h3>
-              <p className="text-slate-600 dark:text-slate-200">
+              <p className="text-gray-600 dark:text-gray-300">
                 Every feature we build starts with understanding our users' needs and creating 
                 solutions that truly make their lives easier.
               </p>
@@ -163,7 +140,7 @@ const About = () => {
                 <Globe className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Global Impact</h3>
-              <p className="text-slate-600 dark:text-slate-200">
+              <p className="text-gray-600 dark:text-gray-300">
                 We believe in democratizing access to powerful tools, helping creators worldwide 
                 amplify their voices and reach their audiences.
               </p>
@@ -179,7 +156,7 @@ const About = () => {
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               Cutting-Edge Technology
             </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-200 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               Built on the latest advances in artificial intelligence and automation technology.
             </p>
           </div>
@@ -192,21 +169,21 @@ const About = () => {
               <div className="space-y-6">
                 <div>
                   <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">AI Content Adaptation</h4>
-                  <p className="text-slate-600 dark:text-slate-200">
+                  <p className="text-gray-600 dark:text-gray-300">
                     Our multi-model AI system combines Anthropic's Claude for professional content and 
                     OpenAI's GPT-4 for creative optimization, ensuring perfect platform adaptation.
                   </p>
                 </div>
                 <div>
                   <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">AgentS2 Automation</h4>
-                  <p className="text-gray-800">
+                  <p className="text-gray-600 dark:text-gray-300">
                     Powered by state-of-the-art computer vision and UI automation, our AgentS2 technology 
                     achieves 98% accuracy in complex web interactions.
                   </p>
                 </div>
                 <div>
                   <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Real-time Streaming</h4>
-                  <p className="text-slate-600 dark:text-slate-200">
+                  <p className="text-gray-600 dark:text-gray-300">
                     Watch AI agents work in real-time through our advanced WebSocket streaming technology, 
                     providing complete transparency in the automation process.
                   </p>
@@ -223,7 +200,7 @@ const About = () => {
                     </div>
                     <div>
                       <div className="font-bold text-gray-900 dark:text-white">OSWorld Ranking #3</div>
-                      <div className="text-sm text-slate-600 dark:text-slate-300">AgentS2 Performance</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">AgentS2 Performance</div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
@@ -232,7 +209,7 @@ const About = () => {
                     </div>
                     <div>
                       <div className="font-bold text-gray-900 dark:text-white">Windows Agent Arena #1</div>
-                      <div className="text-sm text-slate-600 dark:text-slate-300">UI Automation Excellence</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">UI Automation Excellence</div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
@@ -241,7 +218,7 @@ const About = () => {
                     </div>
                     <div>
                       <div className="font-bold text-gray-900 dark:text-white">Multi-AI Integration</div>
-                      <div className="text-sm text-slate-600 dark:text-slate-300">Claude + GPT-4 + DALL-E</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">Claude + GPT-4 + DALL-E</div>
                     </div>
                   </div>
                 </div>
@@ -257,7 +234,7 @@ const About = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
             Built by Innovators
           </h2>
-          <p className="text-xl text-slate-600 dark:text-slate-200 mb-12 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-300 mb-12 max-w-3xl mx-auto">
             Our team combines expertise in AI research, software engineering, and social media marketing 
             to create the ultimate content automation platform.
           </p>
@@ -266,15 +243,15 @@ const About = () => {
             <div className="grid md:grid-cols-3 gap-8 text-center">
               <div>
                 <div className="text-4xl font-bold text-primary mb-2">5+</div>
-                <div className="text-slate-600 dark:text-slate-300">Years AI Experience</div>
+                <div className="text-gray-600 dark:text-gray-300">Years AI Experience</div>
               </div>
               <div>
                 <div className="text-4xl font-bold text-secondary mb-2">100K+</div>
-                <div className="text-slate-600 dark:text-slate-300">Posts Automated</div>
+                <div className="text-gray-600 dark:text-gray-300">Posts Automated</div>
               </div>
               <div>
                 <div className="text-4xl font-bold text-accent mb-2">24/7</div>
-                <div className="text-slate-600 dark:text-slate-300">Innovation Never Stops</div>
+                <div className="text-gray-600 dark:text-gray-300">Innovation Never Stops</div>
               </div>
             </div>
           </div>
@@ -287,7 +264,7 @@ const About = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
             Ready to Join the Revolution?
           </h2>
-          <p className="text-xl text-slate-600 dark:text-slate-200 mb-8">
+          <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
             Be part of the future of social media automation and see your content reach new heights.
           </p>
           <Link to="/">
