@@ -98,7 +98,11 @@ class LinkedInAdapter(BasePlatformAdapter):
     
     def __init__(self, ai_config: AIModelConfig):
         super().__init__(ai_config)
-        self.client = anthropic.Anthropic(api_key=ai_config.anthropic_api_key)
+        # Initialize Anthropic client with explicit parameters to avoid version compatibility issues
+        self.client = anthropic.Anthropic(
+            api_key=ai_config.anthropic_api_key,
+            max_retries=2
+        )
         self.platform_name = "LinkedIn"
     
     async def adapt_content(self, original_content: str) -> AdaptedContent:
@@ -247,7 +251,11 @@ class TwitterAdapter(BasePlatformAdapter):
     
     def __init__(self, ai_config: AIModelConfig):
         super().__init__(ai_config)
-        self.client = openai.OpenAI(api_key=ai_config.openai_api_key)
+        # Initialize OpenAI client with explicit parameters to avoid version compatibility issues
+        self.client = openai.OpenAI(
+            api_key=ai_config.openai_api_key,
+            max_retries=2
+        )
         self.platform_name = "Twitter"
     
     async def adapt_content(self, original_content: str) -> AdaptedContent:
@@ -405,7 +413,11 @@ class InstagramAdapter(BasePlatformAdapter):
     
     def __init__(self, ai_config: AIModelConfig):
         super().__init__(ai_config)
-        self.client = anthropic.Anthropic(api_key=ai_config.anthropic_api_key)
+        # Initialize Anthropic client with explicit parameters to avoid version compatibility issues
+        self.client = anthropic.Anthropic(
+            api_key=ai_config.anthropic_api_key,
+            max_retries=2
+        )
         self.platform_name = "Instagram"
     
     async def adapt_content(self, original_content: str) -> AdaptedContent:
