@@ -403,7 +403,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
   
   const addToActionLog = (message: string, type: string) => {
     setActionLog(prev => [...prev, {
-      id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      id: Date.now().toString(),
       message,
       type,
       timestamp: new Date().toLocaleTimeString()
@@ -721,8 +721,8 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
           <div className="bg-black/20 rounded-lg p-4 max-h-64 overflow-y-auto">
             {actionLog.length > 0 ? (
               <div className="space-y-2">
-                {actionLog.slice(-10).map((log, index) => (
-                  <div key={`${log.id}-${index}`} className="flex items-center justify-between text-sm">
+                {actionLog.slice(-10).map((log) => (
+                  <div key={log.id} className="flex items-center justify-between text-sm">
                     <span className={`flex-1 ${
                       log.type === 'error' ? 'text-red-400' :
                       log.type === 'success' ? 'text-green-400' :

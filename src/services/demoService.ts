@@ -65,33 +65,29 @@ class SecureDemoService {
     
     console.log(`🎮 Starting secure demo mode: ${this.sessionId}`);
     
-    // Try real backend first for live virtual machine demo
+    // Try backend demo first, fallback to frontend simulation
     try {
       const backendDemoResult = await this.tryBackendDemo(content, platforms);
       if (backendDemoResult) {
-        console.log('🎬 Real live stream demo started with virtual machines and agents');
         return { sessionId: this.sessionId };
       }
     } catch (error) {
-      console.warn('⚠️ Real backend unavailable (might be sleeping), using realistic simulation:', error);
+      console.log('📱 Backend demo unavailable, using frontend simulation');
     }
     
-    // Fallback to realistic frontend simulation if backend is sleeping
-    console.log('📱 Using enhanced simulation while backend wakes up...');
+    // Fallback to frontend-only simulation
     this.simulateDemoPublishing(content, platforms);
     
     return { sessionId: this.sessionId };
   }
   
   /**
-   * Use real backend for live demo with virtual machines and agents
+   * Try to use backend demo endpoint (if available)
    */
   private async tryBackendDemo(content: string, platforms: string[]): Promise<boolean> {
     try {
-      console.log(`🚀 Connecting to real backend: ${API_CONFIG.baseURL}`);
-      
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000); // Longer timeout for real processing
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
       
       const response = await fetch(`${API_CONFIG.baseURL}${ENDPOINTS.publishContent}`, {
         method: 'POST',
@@ -111,15 +107,11 @@ class SecureDemoService {
       
       if (response.ok) {
         const result = await response.json();
-        console.log('✅ Real backend connected - live stream processing started:', result);
+        console.log('✅ Backend demo response received:', result);
         return true;
-      } else {
-        console.error('❌ Backend returned error:', response.status, response.statusText);
-        const errorText = await response.text();
-        console.error('Error details:', errorText);
       }
     } catch (error) {
-      console.error('❌ Failed to connect to real backend:', error);
+      console.log('⚠️ Backend demo failed:', error);
     }
     return false;
   }
