@@ -11,27 +11,28 @@ interface APIConfig {
   websocketURL: string;
 }
 
-// Environment detection
+// Environment detection with secure demo prioritization
 const isDevelopment = import.meta.env.DEV;
-const isDemo = import.meta.env.VITE_DEMO_MODE === 'true';
-const isCloudDeployment = import.meta.env.VITE_CLOUD_MODE === 'true';
+const isLovableHosted = window.location.hostname.includes('lovable.app');
+const isDemo = import.meta.env.VITE_DEMO_MODE === 'true' || isLovableHosted; // Force demo mode on Lovable
+const isCloudDeployment = import.meta.env.VITE_CLOUD_MODE === 'true' || isLovableHosted;
 
-// API endpoints configuration
+// API endpoints configuration - prioritize Render.com for demo
 const DEVELOPMENT_API = 'http://localhost:8000';
-const CLOUD_API = import.meta.env.VITE_API_URL || 'https://postprism-backend.onrender.com';
-const PRODUCTION_API = import.meta.env.VITE_API_URL || 'https://postprism-backend.railway.app';
+const RENDER_BACKEND = 'https://postprism-backend.onrender.com'; // Your deployed backend
+const FALLBACK_API = import.meta.env.VITE_API_URL || RENDER_BACKEND;
 
-// Smart API selection based on environment
+// Smart API selection based on environment - prioritize secure demo
 function getAPIBaseURL(): string {
   if (isDevelopment) return DEVELOPMENT_API;
-  if (isCloudDeployment || isDemo) return CLOUD_API;
-  return PRODUCTION_API;
+  // Always use Render backend for demo/cloud deployment
+  return RENDER_BACKEND;
 }
 
 function getWebSocketURL(): string {
   if (isDevelopment) return 'ws://localhost:8000';
-  if (isCloudDeployment || isDemo) return import.meta.env.VITE_WS_URL || 'wss://postprism-backend.onrender.com';
-  return import.meta.env.VITE_WS_URL || 'wss://postprism-backend.railway.app';
+  // Always use Render WebSocket for demo/cloud deployment
+  return 'wss://postprism-backend.onrender.com';
 }
 
 export const API_CONFIG: APIConfig = {
@@ -163,9 +164,11 @@ export const ENDPOINTS = {
   testParallel: '/api/test-parallel-execution'
 };
 
-console.log(`🔧 API Configuration:`, {
-  mode: isDevelopment ? 'development' : 'production',
-  baseURL: API_CONFIG.baseURL,
-  websocketURL: API_CONFIG.websocketURL,
-  demoMode: DEMO_MODE
+// Secure logging with limited information exposure
+console.log(`🔧 PostPrism Configuration:`, {
+  mode: isDevelopment ? 'development' : isDemo ? 'secure-demo' : 'production',
+  backend: API_CONFIG.baseURL.includes('render.com') ? 'cloud-backend' : 'local-backend',
+  demoMode: DEMO_MODE,
+  cloudDeployment: CLOUD_CONFIG.isCloudDeployment,
+  securityLevel: isLovableHosted ? 'lovable-secured' : 'standard'
 });

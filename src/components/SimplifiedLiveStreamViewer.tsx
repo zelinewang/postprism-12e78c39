@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { io, Socket } from 'socket.io-client';
 import { API_CONFIG, DEMO_MODE, DEMO_CONFIG } from "@/config/api";
+import { secureDemoService, DemoProgress, isDemoModeRecommended } from "@/services/demoService";
 
 interface SimplifiedStreamData {
   platform: string;
@@ -77,15 +78,69 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
       });
       setStreamData(initialData);
       
-      if (DEMO_MODE) {
-        // Demo mode - simulate streaming without real WebSocket
-        console.log('🎮 Demo mode: Simulating streaming...');
+      if (DEMO_MODE || isDemoModeRecommended()) {
+        // Enhanced secure demo mode with backend integration
+        console.log('🎮 启动安全Demo模式...');
         setConnectionStatus('connected');
-        addToActionLog('Demo mode: Simulating live streaming', 'info');
+        addToActionLog('🎮 Safe Demo Mode: Simulating AI automation', 'info');
         
-        // Simulate demo publishing process
-        simulateDemoPublishing();
-        return;
+        // Set up demo service listeners
+        const progressUnsubscribe = secureDemoService.onProgress((progress: DemoProgress) => {
+          setStreamData(prev => ({
+            ...prev,
+            [progress.platform]: {
+              ...prev[progress.platform],
+              progress: (progress.step / progress.maxSteps) * 100,
+              currentAction: progress.action,
+              status: 'active'
+            }
+          }));
+          
+          addToActionLog(`${progress.platform}: ${progress.action}`, 'action');
+          
+          if (progress.thinking) {
+            addToActionLog(`${progress.platform}: ${progress.thinking}`, 'thinking');
+          }
+          
+          updateOverallProgress();
+        });
+        
+        const resultsUnsubscribe = secureDemoService.onResults((results) => {
+          console.log('📊 安全Demo结果:', results);
+          addToActionLog('🎉 All demo platforms completed successfully!', 'success');
+          setOverallProgress(100);
+          
+          // Mark all platforms as completed
+          results.forEach(result => {
+            setStreamData(prev => ({
+              ...prev,
+              [result.platform]: {
+                ...prev[result.platform],
+                status: 'completed',
+                progress: 100,
+                currentAction: '✅ Publishing completed!'
+              }
+            }));
+          });
+          
+          // Trigger completion callback
+          setTimeout(() => {
+            if (onWorkflowCompleted) {
+              onWorkflowCompleted(results);
+            }
+          }, 1500);
+        });
+        
+        // Cleanup function for demo subscriptions
+        const cleanup = () => {
+          progressUnsubscribe();
+          resultsUnsubscribe();
+        };
+        
+        // Store cleanup in ref for later use
+        socketRef.current = { disconnect: cleanup } as any;
+        
+        return cleanup;
       }
       
       // Production mode - Connect to real WebSocket server
