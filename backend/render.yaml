@@ -11,17 +11,29 @@ services:
   - type: web
     name: postprism-backend
     env: python
+    runtime: python-3.11  # Specify Python version
     
     # Build Configuration
     buildCommand: |
+      echo "🚀 Starting PostPrism backend build..." &&
+      cd backend &&
+      echo "📦 Upgrading pip..." &&
       pip install --upgrade pip && 
+      echo "📚 Installing requirements..." &&
       pip install -r requirements.txt && 
-      pip install git+https://github.com/aiwaves-cn/agents.git@v0.2.5 &&
+      echo "🤖 Installing Agent S2.5..." &&
+      pip install git+https://github.com/simular-ai/Agent-S.git@v0.2.5 &&
+      echo "🖥️ Installing ORGO..." &&
       pip install orgo &&
-      pip install gunicorn eventlet gevent
+      echo "⚡ Installing production dependencies..." &&
+      pip install gunicorn eventlet gevent psutil &&
+      echo "✅ Build completed successfully!"
     
-    # Start Command
-    startCommand: gunicorn --worker-class eventlet -w 1 --bind 0.0.0.0:$PORT run_fixed:app
+    # Start Command  
+    startCommand: cd backend && gunicorn --worker-class eventlet -w 1 --bind 0.0.0.0:$PORT run_fixed:app
+    
+    # Working directory
+    rootDir: .
     
     # Plan: Free tier (sufficient for demo usage)
     plan: free
@@ -30,7 +42,7 @@ services:
     region: oregon
     
     # Branch to deploy from
-    branch: main
+    branch: cloud-deployment
     
     # Environment Variables (set these in Render dashboard)
     envVars:
@@ -48,13 +60,21 @@ services:
       # ORGO_API_KEY (required for production mode)
       # AGENTS2_5_MODEL (optional, defaults to gpt-4o-mini)
       
-      # CORS Configuration for frontend
+      # CORS Configuration for frontend  
       - key: CORS_ORIGINS
-        value: https://postprism.lovable.app,http://localhost:8080
+        value: https://postprism.lovable.app,https://*.lovable.app,http://localhost:8080
         
-      # Demo mode can be enabled for pure demo backend
+      # Demo mode enabled for free demo backend (no API keys required)
       - key: DEMO_MODE_BACKEND
-        value: false
+        value: true
+        
+      # Flask/Python configuration
+      - key: PYTHONPATH
+        value: /opt/render/project/src/backend
+        
+      # Port configuration (Render sets this automatically, but good to be explicit)
+      - key: PORT
+        generateValue: true
     
     # Health check endpoint
     healthCheckPath: /health
@@ -67,9 +87,21 @@ services:
         - backend/venv/**
         - backend/__pycache__/**
         - backend/*.log
+        - backend/postprism*.log
         
     # Auto-deploy on git push
     autoDeploy: true
+    
+    # Disk storage (for logs and temporary files)
+    disk:
+      name: postprism-storage
+      mountPath: /opt/render/project/src/backend/storage
+      sizeGB: 1  # Free tier includes 1GB
+      
+    # Resource limits for free tier
+    scaling:
+      minInstances: 0  # Can scale to 0 (sleep mode)
+      maxInstances: 1  # Free tier limit
 
 # Static files (not needed for this backend-only service)
 # The frontend will be deployed separately on Lovable
@@ -79,6 +111,25 @@ services:
 
 # Additional Notes:
 # 1. Free tier sleeps after 15 minutes of inactivity
-# 2. Cold starts may take 10-30 seconds
-# 3. For heavy usage, upgrade to paid plan
+# 2. Cold starts may take 10-30 seconds  
+# 3. For heavy usage, upgrade to paid plan ($7/month starter)
 # 4. Environment variables must be set manually in Render dashboard
+# 5. Build time: ~5-10 minutes for first deployment
+# 6. Deploy from 'cloud-deployment' branch for best results
+#
+# Troubleshooting:
+# - If build fails: Check Python version compatibility 
+# - If Agent S2.5 install fails: Verify GitHub repository access
+# - If ORGO install fails: Check if orgo package is available
+# - If app won't start: Verify run_fixed:app path is correct
+# - If health check fails: Ensure /health endpoint returns 200
+#
+# Environment Variables to set in Render Dashboard:
+# Required: (none for demo mode)
+# Optional: OPENAI_API_KEY, ORGO_API_KEY (for real functionality)
+#
+# Expected Performance:
+# - Cold start: 10-30 seconds
+# - Warm response: <1 second  
+# - Demo mode: Fully functional without API keys
+# - Real mode: Requires user-provided API keys
