@@ -269,7 +269,7 @@ Instagram VM   → Project ID: "proj_instagram_ghi789" (save this!)
 ```bash
 # Required: OpenAI API Key
 OPENAI_API_KEY=sk-your_openai_key_here
-AGENT_S2_MODEL=o3-2025-04-16              # Recommended by Agent S2.5 team
+AGENTS2_5_MODEL=o3-2025-04-16              # Recommended by Agent S2.5 team
 # but we use gpt-4o-mini for speed
 
 # Required: UI-TARS 1.5 Grounding Model
@@ -290,13 +290,13 @@ ORGO_INSTAGRAM_PROJECT_ID=proj_instagram_ghi789
 
 # 🤖 AI Model Configuration
 OPENAI_API_KEY=sk-your_openai_key_here
-AGENT_S2_MODEL=o3-2025-04-16
+AGENTS2_5_MODEL=o3-2025-04-16
 # but we use gpt-4o-mini for speed
 
 # 🎨 UI-TARS 1.5 Configuration
 AGENTS2_5_GROUNDING_URL=your_grounding_endpoint
 AGENTS2_5_GROUNDING_API_KEY=your_grounding_key
-AGENT_S2_GROUNDING_MODEL=ui-tars-1.5-7b
+AGENTS2_5_GROUNDING_MODEL=ui-tars-1.5-7b
 
 # ⚡ Performance Optimizations
 ENABLE_ANTI_PERFECTIONISM=true
@@ -312,30 +312,18 @@ ENABLE_LIVE_STREAMING=true
 git clone https://github.com/your-username/postprism.git
 cd postprism
 
-# Run automated setup
-chmod +x setup.sh
-./setup.sh
-
 # Configure environment
 cp env.example.txt .env
 # Edit .env with your keys and VM IDs
+
+# Run automated setup (Note that this also resets the .ENV file)
+cd backend && chmod +x install_dependencies.sh && ./install_dependencies.sh
 
 # Launch PostPrism
 npm run dev &                             # Frontend on :8080
 python backend/run_fixed.py              # Backend on :8000
 
 # 🎉 Open http://localhost:8080 and watch the magic!
-```
-
-### **🔍 Verification**
-```bash
-# Test ORGO connection
-python backend/run_fixed.py --test-orgo
-# Expected: ✅ All 3 VMs accessible ✅ Login states preserved
-
-# Test Agent S2.5
-python backend/run_fixed.py --test-agent  
-# Expected: ✅ OpenAI o3/gpt-4o-mini working ✅ UI-TARS grounding active
 ```
 
 ---
