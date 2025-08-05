@@ -1,0 +1,84 @@
+# Render.com Free Tier Deployment Configuration
+# PostPrism Backend - Flask API + WebSocket Support
+# 
+# Free Tier Includes:
+# - 750 hours/month of runtime (enough for most demo usage)
+# - Automatic builds from GitHub
+# - HTTPS included
+# - Custom domain support
+
+services:
+  - type: web
+    name: postprism-backend
+    env: python
+    
+    # Build Configuration
+    buildCommand: |
+      pip install --upgrade pip && 
+      pip install -r requirements.txt && 
+      pip install git+https://github.com/aiwaves-cn/agents.git@v0.2.5 &&
+      pip install orgo &&
+      pip install gunicorn eventlet gevent
+    
+    # Start Command
+    startCommand: gunicorn --worker-class eventlet -w 1 --bind 0.0.0.0:$PORT run_fixed:app
+    
+    # Plan: Free tier (sufficient for demo usage)
+    plan: free
+    
+    # Region: US Oregon (closest to most users)
+    region: oregon
+    
+    # Branch to deploy from
+    branch: main
+    
+    # Environment Variables (set these in Render dashboard)
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      
+      - key: FLASK_HOST
+        value: 0.0.0.0
+      
+      - key: LOG_LEVEL
+        value: INFO
+        
+      # Users need to set these in Render dashboard:
+      # OPENAI_API_KEY (required for production mode)
+      # ORGO_API_KEY (required for production mode)
+      # AGENTS2_5_MODEL (optional, defaults to gpt-4o-mini)
+      
+      # CORS Configuration for frontend
+      - key: CORS_ORIGINS
+        value: https://postprism.lovable.app,http://localhost:8080
+        
+      # Demo mode can be enabled for pure demo backend
+      - key: DEMO_MODE_BACKEND
+        value: false
+    
+    # Health check endpoint
+    healthCheckPath: /health
+    
+    # Build settings
+    buildFilter:
+      paths:
+        - backend/**
+      ignoredPaths:
+        - backend/venv/**
+        - backend/__pycache__/**
+        - backend/*.log
+        
+    # Auto-deploy on git push
+    autoDeploy: true
+
+# Static files (not needed for this backend-only service)
+# The frontend will be deployed separately on Lovable
+
+# Database (not required for PostPrism demo mode)
+# For production usage, users would set up their own data persistence
+
+# Additional Notes:
+# 1. Free tier sleeps after 15 minutes of inactivity
+# 2. Cold starts may take 10-30 seconds
+# 3. For heavy usage, upgrade to paid plan
+# 4. Environment variables must be set manually in Render dashboard

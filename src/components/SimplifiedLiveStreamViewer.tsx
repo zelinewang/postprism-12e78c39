@@ -365,38 +365,82 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
   };
 
   const simulateDemoPublishing = async () => {
-    console.log('🎮 Starting demo publishing simulation...');
-    addToActionLog('🎮 Demo mode: Starting simulated publishing...', 'info');
+    console.log('🎮 Starting enhanced demo publishing simulation...');
+    addToActionLog(DEMO_CONFIG.demoMessages.welcome, 'info');
     
-    // Simulate each platform's publishing process
-    for (let i = 0; i < selectedPlatforms.length; i++) {
-      const platform = selectedPlatforms[i];
-      
-      // Update status to active
+    // Initial AI analysis phase
+    addToActionLog('🧠 AI initializing parallel publishing strategy...', 'info');
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Show some initial AI thinking
+    for (let i = 0; i < 2; i++) {
+      const thinkingMsg = DEMO_CONFIG.demoMessages.aiThinking[Math.floor(Math.random() * DEMO_CONFIG.demoMessages.aiThinking.length)];
+      addToActionLog(thinkingMsg, 'thinking');
+      await new Promise(resolve => setTimeout(resolve, 800));
+    }
+    
+    addToActionLog(DEMO_CONFIG.demoMessages.startPublishing, 'info');
+    
+    // Simulate parallel publishing (show all platforms starting simultaneously)
+    selectedPlatforms.forEach(platform => {
       setStreamData(prev => ({
         ...prev,
         [platform]: {
           ...prev[platform],
           status: 'active',
-          currentAction: `Starting ${platform} demo publishing...`
+          currentAction: `Initializing ${platform} agent...`
         }
       }));
-      
-      addToActionLog(`🚀 Starting ${platform} demo publishing...`, 'info');
-      
-      // Simulate publishing steps with random delays
-      const steps = [
-        'Opening browser...',
-        `Navigating to ${platform}...`,
+    });
+    
+    // Enhanced simulation with realistic steps for each platform
+    const platformSteps = {
+      linkedin: [
+        'Opening LinkedIn professional interface...',
+        'AI detecting compose button position...',
+        'Analyzing LinkedIn algorithm preferences...',
+        'Composing professional content...',
+        'Adding industry-relevant hashtags...',
+        'Optimizing for LinkedIn engagement...',
+        'Publishing to professional network...',
+        'Verifying publication success...'
+      ],
+      twitter: [
+        'Opening Twitter interface...',
+        'AI analyzing tweet composition area...',
+        'Optimizing for Twitter character limit...',
+        'Composing viral-optimized content...',
+        'Adding trending hashtags...',
+        'Scheduling for optimal engagement...',
+        'Publishing tweet...',
+        'Verifying tweet visibility...'
+      ],
+      instagram: [
+        'Opening Instagram interface...',
+        'AI detecting story/feed options...',
+        'Analyzing visual content requirements...',
+        'Composing Instagram-optimized content...',
+        'Adding discovery hashtags...',
+        'Optimizing for Instagram algorithm...',
+        'Publishing to feed...',
+        'Verifying post publication...'
+      ]
+    };
+    
+    // Run platforms in parallel simulation
+    const platformPromises = selectedPlatforms.map(async (platform, index) => {
+      const steps = platformSteps[platform as keyof typeof platformSteps] || [
+        'Opening platform...',
         'AI analyzing interface...',
         'Composing content...',
-        'Adding hashtags...',
-        'Publishing content...',
-        'Verifying publication...'
+        'Publishing content...'
       ];
       
+      // Add small stagger between platforms
+      await new Promise(resolve => setTimeout(resolve, index * 300));
+      
       for (let step = 0; step < steps.length; step++) {
-        await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 400));
+        await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 800));
         
         const progress = ((step + 1) / steps.length) * 100;
         setStreamData(prev => ({
@@ -410,12 +454,15 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
         
         addToActionLog(`${platform}: ${steps[step]}`, 'action');
         
-        // Simulate some thinking messages
+        // Add AI thinking messages at strategic points
         if (step === 2) {
-          addToActionLog(`${platform}: 💭 Analyzing UI elements and optimal click positions...`, 'thinking');
+          const thinkingMsg = DEMO_CONFIG.demoMessages.aiThinking[Math.floor(Math.random() * DEMO_CONFIG.demoMessages.aiThinking.length)];
+          addToActionLog(`${platform}: ${thinkingMsg}`, 'thinking');
         }
+        
         if (step === 4) {
-          addToActionLog(`${platform}: 💭 Optimizing hashtag placement for maximum reach...`, 'thinking');
+          const actionMsg = DEMO_CONFIG.demoMessages.agentActions[Math.floor(Math.random() * DEMO_CONFIG.demoMessages.agentActions.length)];
+          addToActionLog(`${platform}: ${actionMsg}`, 'action');
         }
       }
       
@@ -430,17 +477,27 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
         }
       }));
       
-      addToActionLog(`✅ ${platform} demo publishing completed successfully!`, 'success');
-      updateOverallProgress();
+      const result = DEMO_CONFIG.mockResults[platform as keyof typeof DEMO_CONFIG.mockResults];
+      addToActionLog(`✅ ${platform}: Published successfully! Execution time: ${result.executionTime}s`, 'success');
       
-      // Small delay between platforms
-      if (i < selectedPlatforms.length - 1) {
-        await new Promise(resolve => setTimeout(resolve, 500));
-      }
-    }
+      // Show AI insights
+      setTimeout(() => {
+        addToActionLog(`💡 ${platform}: ${result.aiInsights}`, 'info');
+      }, 500);
+      
+      updateOverallProgress();
+    });
     
-    // All platforms completed
+    // Wait for all platforms to complete
+    await Promise.all(platformPromises);
+    
+    // All platforms completed - show performance metrics
     addToActionLog('🎉 All demo platforms completed successfully!', 'success');
+    addToActionLog(`📊 Performance Summary: ${DEMO_CONFIG.performanceMetrics.successRate} success rate`, 'info');
+    addToActionLog(`⚡ Time Saved: ${DEMO_CONFIG.performanceMetrics.totalTimeSaved}`, 'info');
+    addToActionLog(`📈 Total Reach: ${DEMO_CONFIG.performanceMetrics.platformReach}`, 'info');
+    addToActionLog(`🚀 Engagement Boost: ${DEMO_CONFIG.performanceMetrics.engagementBoost}`, 'success');
+    
     setOverallProgress(100);
     
     // Trigger completion callback after a short delay
@@ -456,7 +513,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
         
         onWorkflowCompleted({ platforms: demoResults });
       }
-    }, 1500);
+    }, 2000);
   };
 
   if (!isActive) return null;

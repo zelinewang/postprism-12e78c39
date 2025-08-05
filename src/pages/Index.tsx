@@ -3,7 +3,8 @@ import Header from "@/components/Header";
 import ContentInput from "@/components/ContentInput";
 import SimplifiedLiveStreamViewer from "@/components/SimplifiedLiveStreamViewer";
 import PublishResults from "@/components/PublishResults";
-import { API_CONFIG, ENDPOINTS, DEMO_MODE, DEMO_CONFIG } from "@/config/api";
+import CloudStatus from "@/components/CloudStatus";
+import { API_CONFIG, ENDPOINTS, DEMO_MODE, DEMO_CONFIG, CLOUD_CONFIG } from "@/config/api";
 
 type AppState = 'input' | 'processing' | 'streaming' | 'results';
 
@@ -187,11 +188,24 @@ const Index = () => {
     <div className="min-h-screen bg-background prism-light-effect">
       <Header />
       
+      {/* Cloud Status - Show in cloud deployment or demo mode */}
+      {(CLOUD_CONFIG.isCloudDeployment || DEMO_MODE) && (
+        <div className="container mx-auto px-6 pt-4">
+          <CloudStatus 
+            className="max-w-4xl mx-auto"
+            showShareButton={true}
+            showPerformanceInfo={true}
+          />
+        </div>
+      )}
+      
       {/* Debug Status - Remove in production */}
       <div className="fixed top-20 right-4 z-50 bg-black/50 text-white p-2 rounded text-xs">
         <div>State: {appState}</div>
         <div>Results: {publishResults.length}</div>
         <div>Session: {currentSessionId.slice(-8)}</div>
+        <div>Cloud: {CLOUD_CONFIG.isCloudDeployment ? 'Yes' : 'No'}</div>
+        <div>Demo: {DEMO_MODE ? 'Yes' : 'No'}</div>
       </div>
       
       <main className="space-y-8 relative z-10">

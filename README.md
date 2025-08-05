@@ -231,21 +231,6 @@ postprism-12e78c39/
 
 ---
 
-## 🎮 **Experience Options: Zero to Hero**
-
-### **🚀 Option 1: "Holy Shit" Moment (0 Setup)**
-Experience the revolutionary interface instantly:
-
-[![🎮 Live Demo - No Setup Required](https://img.shields.io/badge/🎮%20Live%20Demo-Click%20&%20Be%20Amazed-purple?style=for-the-badge)](https://lovable.dev/projects/9ff328fc-5e74-44a5-963a-1855a28041e4)
-
-**What You'll Experience:**
-- ✅ Real-time AI streaming simulation - See 3 agents working simultaneously
-- ✅ Content adaptation examples - Watch AI optimize for each platform
-- ✅ Interactive dashboard - Experience the full publishing workflow
-- ✅ Performance analytics - See speed and success rate comparisons
-
-### **⚡ Option 2: Full Production Power**
-Deploy the real system with live social media publishing:
 
 ---
 
