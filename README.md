@@ -18,6 +18,57 @@
 
 ---
 
+
+## 🏆 For Hackathon Judges
+**[Please read this important context about the project →](./JUDGES_README.md)**
+
+<details>
+<summary>📝 A Note to Hackathon Judges (Click to expand)</summary>
+
+### 📝 A Note to Hackathon Judges
+
+Hey there! Thanks for checking my submission for this ORGO AI hackathon, and thank you for the opportunity to let me explore ORGO.AI.  
+
+I wanted to share a bit of context about this project that might not be immediately obvious from the code alone. 
+
+**This project genuinely consumed a significant amount of my time (and wallet) 💸 (bye~)** and here's why:
+
+Agent S2.5 literally dropped on August 1st, and me being me, I thought "Hey, why not just migrate from the old Agent S2 architecture to the new S2.5! It seems awesome!" Yeah... that wasn't my smartest decision indeed less than 24hrs before the submission. 😅  
+
+**The reality hit hard:**
+
+- Agent S2.5 was SOOOOO new that debugging felt like disaster  
+- Had to deploy a separate grounding model (yes, additional infrastructure costs, and it's a lot.)
+- Blew way past my Cursor Pro plan limits and I need to do pay as you go (I DID NOT know I really could reach the limit before this lol)
+- But hey, I kept pushing and optimizing because I'm stubborn like that
+
+**The thing is** - I eventually DID successfully integrate the latest Agent S2.5! Was it extra work? Absolutely. Was it worth it? I think so! I just wanted to give this project and ORGO.AI applications the best shot I could.
+
+I'm not expecting to win any awards here. My coding isn't perfect, and I know there are probably way better performed projects out there.  
+
+**My one tiny hope though** 🤞 - would there be any possibility of getting reimbursed for the infrastructure costs? They are:
+
+- HuggingFace endpoint deployment for the grounding model
+- Cursor Pro overage fees (I went HAM on the coding sessions)
+- Claude/OpenAI/etc API usage costs
+- Other API fees
+
+Since the hackathon didn't provide credits/supports for these kind of resources, I ended up paying out of pocket. We're probably looking at over hundred dollars here... 😬  
+
+Since I'm still a student with no income right now :3, so these costs genuinely put a dent in my budget. (Also low-key looking for job opportunities in a couple months too!!!!! orz) But I was so excited about pushing the boundaries with Orgo + Agent S2.5 that I figured "cause why not" and went for it anyway.
+
+**But honestly?** I genuinely enjoyed diving deep into new orgo.ai and experimenting with cutting-edge agents. The learning experience was great! Not here to win, but here because I love building stuff.
+
+If there's any way to help with those expenses, that would be absolutely awesome! (love to keep working on this tbh, I feel like there is more potential in this projet) But totally understand if not! Thanks for taking the time to review my project! 🙏
+
+---
+*P.S. - Sorry for the novel, but I figured transparency was better than leaving you wondering why some parts of the code look like they were written at 3 AM (because they probably were) 😂*
+
+</details>
+
+
+---
+
 ## ⚡ **60-Second Pitch for Busy Judges**
 
 **PostPrism** = World's first real-time AI observation platform + ORGO parallel execution
