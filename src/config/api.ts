@@ -22,10 +22,9 @@ const DEVELOPMENT_API = 'http://localhost:8000';
 const RENDER_BACKEND = 'https://postprism-backend.onrender.com'; // Your deployed backend
 const FALLBACK_API = import.meta.env.VITE_API_URL || RENDER_BACKEND;
 
-// Smart API selection based on environment - prioritize secure demo
+// Smart API selection based on environment - ALWAYS use Render backend for real demo
 function getAPIBaseURL(): string {
-  if (isDevelopment) return DEVELOPMENT_API;
-  // Always use Render backend for demo/cloud deployment
+  // Always use Render backend for live virtual machine demo
   return RENDER_BACKEND;
 }
 
