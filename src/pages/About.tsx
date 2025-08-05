@@ -10,7 +10,7 @@ const About = () => {
       <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-white/80 dark:bg-gray-900/80 border-b border-white/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link to="/landing" className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
                 <Sparkles className="h-5 w-5 text-white" />
               </div>
@@ -20,7 +20,7 @@ const About = () => {
             </Link>
             
             <div className="hidden md:flex items-center space-x-8">
-              <Link to="/landing" className="text-gray-600 hover:text-primary transition-colors">Home</Link>
+              <Link to="/" className="text-gray-600 hover:text-primary transition-colors">Home</Link>
               <Link to="/features" className="text-gray-600 hover:text-primary transition-colors">Features</Link>
               <Link to="/about" className="text-primary font-semibold">About</Link>
               <Link to="/pricing" className="text-gray-600 hover:text-primary transition-colors">Pricing</Link>
