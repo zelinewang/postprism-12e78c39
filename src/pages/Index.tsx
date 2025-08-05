@@ -226,7 +226,11 @@ const Index = () => {
         />
 
         {/* Results Display */}
-        {console.log(`🔍 Render - appState: ${appState}, publishResults length: ${publishResults.length}`)}
+        {/* Debugging: Remove in production */}
+        {(() => {
+          console.log(`🔍 Render - appState: ${appState}, publishResults length: ${publishResults.length}`);
+          return null;
+        })()}
         <PublishResults
           isVisible={appState === 'results'}
           originalContent={originalContent}
