@@ -3,14 +3,14 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { 
-  Monitor, 
-  Maximize2, 
-  Minimize2, 
-  Play, 
-  Pause, 
-  Linkedin, 
-  Twitter, 
+import {
+  Monitor,
+  Maximize2,
+  Minimize2,
+  Play,
+  Pause,
+  Linkedin,
+  Twitter,
   Instagram,
   CheckCircle,
   Clock,
@@ -48,7 +48,7 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
 
   const platformColors = {
     linkedin: "text-blue-400",
-    twitter: "text-sky-400", 
+    twitter: "text-sky-400",
     instagram: "text-pink-400"
   };
 
@@ -58,7 +58,7 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
       // Generate unique session ID
       const newSessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       setSessionId(newSessionId);
-      
+
       // Initialize stream data for selected platforms
       const initialData: Record<string, StreamData> = {};
       selectedPlatforms.forEach(platform => {
@@ -70,7 +70,7 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
         };
       });
       setStreamData(initialData);
-      
+
       // Connect to WebSocket server
       const socket = io(API_CONFIG.websocketURL, {
         transports: ['websocket', 'polling'],
@@ -79,34 +79,34 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
         reconnection: true,
         reconnectionAttempts: 3
       });
-      
+
       socketRef.current = socket;
-      
+
       // Join the specific streaming session
       socket.emit('join_stream', { session_id: newSessionId });
-      
+
       // Listen for connection events
       socket.on('connect', () => {
         console.log('Connected to PostPrism real-time streaming');
         addToActionLog('Connected to live streaming server', 'info');
       });
-      
+
       socket.on('joined_stream', (data) => {
         console.log('Joined streaming session:', data.session_id);
         addToActionLog(`Joined streaming session ${data.session_id}`, 'info');
       });
-      
+
       // Listen for publishing events
       socket.on('publish_started', (data) => {
         console.log('Publishing started:', data);
         addToActionLog('AI content adaptation started...', 'info');
       });
-      
+
       socket.on('adaptation_complete', (data) => {
         console.log('Adaptation complete:', data);
         addToActionLog('AI content adaptation complete. Starting AgentS2 automation...', 'info');
       });
-      
+
       // Listen for platform events
       socket.on('platform_started', (data) => {
         console.log('Platform started:', data);
@@ -120,7 +120,7 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
         }));
         addToActionLog(`Started ${data.platform} automation`, 'info');
       });
-      
+
       socket.on('platform_completed', (data) => {
         console.log('Platform completed:', data);
         setStreamData(prev => ({
@@ -135,7 +135,7 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
         addToActionLog(`✅ ${data.platform} publishing completed`, 'success');
         updateOverallProgress();
       });
-      
+
       // Listen for video frames
       socket.on('video_frame', (data) => {
         console.log('Received video frame for:', data.platform);
@@ -147,7 +147,7 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
           }
         }));
       });
-      
+
       // Listen for agent actions
       socket.on('agent_action', (data) => {
         console.log('Agent action:', data);
@@ -160,17 +160,17 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
         }));
         addToActionLog(`${data.platform}: ${data.action}`, 'action');
       });
-      
+
       socket.on('agent_thinking', (data) => {
         console.log('Agent thinking:', data);
         addToActionLog(`${data.platform}: 💭 ${data.thinking}`, 'thinking');
       });
-      
+
       socket.on('agent_success', (data) => {
         console.log('Agent success:', data);
         addToActionLog(`✅ ${data.platform}: ${data.message}`, 'success');
       });
-      
+
       socket.on('agent_error', (data) => {
         console.log('Agent error:', data);
         setStreamData(prev => ({
@@ -183,25 +183,25 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
         }));
         addToActionLog(`❌ ${data.platform}: ${data.error}`, 'error');
       });
-      
+
       // Listen for completion
       socket.on('all_platforms_completed', (data) => {
         console.log('All platforms completed:', data);
         addToActionLog('🎉 All platforms completed successfully!', 'success');
         setOverallProgress(100);
       });
-      
+
       // Listen for errors
       socket.on('error_occurred', (data) => {
         console.log('Error occurred:', data);
         addToActionLog(`❌ Error: ${data.error}`, 'error');
       });
-      
+
       socket.on('disconnect', () => {
         console.log('Disconnected from streaming server');
         addToActionLog('Disconnected from streaming server', 'info');
       });
-      
+
       // Cleanup on unmount
       return () => {
         if (socketRef.current) {
@@ -212,7 +212,7 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
       };
     }
   }, [isActive, selectedPlatforms]);
-  
+
   const addToActionLog = (message: string, type: string) => {
     setActionLog(prev => [...prev, {
       id: Date.now().toString(),
@@ -221,13 +221,13 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
       timestamp: new Date().toLocaleTimeString()
     }]);
   };
-  
+
   const updateOverallProgress = () => {
     // Calculate overall progress based on completed platforms
     const platforms = Object.values(streamData);
     const completedCount = platforms.filter(p => p.status === 'completed').length;
     const totalCount = platforms.length;
-    
+
     if (totalCount > 0) {
       setOverallProgress((completedCount / totalCount) * 100);
     }
@@ -251,7 +251,7 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
               </p>
             </div>
           </div>
-          
+
           <div className="flex items-center space-x-3">
             <Badge variant="secondary" className="bg-green-500/20 text-green-400">
               <Zap className="w-3 h-3 mr-1" />
@@ -278,14 +278,14 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
         </div>
 
         {/* Platform Streams Grid */}
-        <div className={`grid gap-6 ${selectedPlatforms.length === 1 ? 'grid-cols-1' : 
-          selectedPlatforms.length === 2 ? 'grid-cols-1 lg:grid-cols-2' : 
+        <div className={`grid gap-6 ${selectedPlatforms.length === 1 ? 'grid-cols-1' :
+          selectedPlatforms.length === 2 ? 'grid-cols-1 lg:grid-cols-2' :
           'grid-cols-1 lg:grid-cols-3'}`}>
           {selectedPlatforms.map((platform) => {
             const data = streamData[platform];
             const PlatformIcon = platformIcons[platform as keyof typeof platformIcons];
             const colorClass = platformColors[platform as keyof typeof platformColors];
-            
+
             return (
               <div key={platform} className="space-y-4">
                 {/* Platform Header */}
@@ -309,8 +309,8 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
                 {/* Stream Window */}
                 <div className="stream-window aspect-video bg-black/50 flex items-center justify-center relative">
                   {data?.videoFrame ? (
-                    <img 
-                      src={`data:image/png;base64,${data.videoFrame}`} 
+                    <img
+                      src={`data:image/png;base64,${data.videoFrame}`}
                       alt={`${platform} stream`}
                       className="w-full h-full object-cover rounded"
                     />
@@ -322,16 +322,16 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
                       </p>
                     </div>
                   )}
-                  
+
                   {/* Status Overlay */}
                   <div className="absolute bottom-0 left-0 right-0 bg-black/70 p-3">
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-white">{data?.currentAction}</span>
                       <span className="text-accent">{Math.round(data?.progress || 0)}%</span>
                     </div>
-                    <Progress 
-                      value={data?.progress || 0} 
-                      className="h-1 mt-2" 
+                    <Progress
+                      value={data?.progress || 0}
+                      className="h-1 mt-2"
                     />
                   </div>
                 </div>
@@ -340,11 +340,11 @@ const LiveStreamViewer = ({ isActive, selectedPlatforms }: LiveStreamViewerProps
                 <div className="glass rounded-lg p-3">
                   <div className="flex items-center justify-between text-sm">
                     <span>Status:</span>
-                    <Badge 
+                    <Badge
                       variant={data?.status === 'completed' ? 'default' : 'secondary'}
                       className={
-                        data?.status === 'completed' 
-                          ? 'bg-green-500/20 text-green-400' 
+                        data?.status === 'completed'
+                          ? 'bg-green-500/20 text-green-400'
                           : 'bg-yellow-500/20 text-yellow-400'
                       }
                     >

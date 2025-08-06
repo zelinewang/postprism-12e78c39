@@ -1,6 +1,6 @@
 /**
  * CloudStatus Component
- * 
+ *
  * Displays cloud deployment status, provides sharing functionality,
  * and shows optimization tips for cloud users.
  */
@@ -33,23 +33,23 @@ const CloudStatus: React.FC<CloudStatusProps> = ({
 
     const checkServerStatus = async () => {
       const startTime = Date.now();
-      
+
       try {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 10000);
-        
+
         const response = await fetch(`${API_CONFIG.baseURL}/health`, {
           method: 'GET',
           signal: controller.signal
         });
-        
+
         clearTimeout(timeoutId);
-        
+
         const endTime = Date.now();
         const responseTimeMs = endTime - startTime;
-        
+
         setResponseTime(responseTimeMs);
-        
+
         if (response.ok) {
           setServerStatus(responseTimeMs > 5000 ? 'cold-start' : 'online');
         } else {
@@ -146,7 +146,7 @@ const CloudStatus: React.FC<CloudStatusProps> = ({
               </Badge>
             )}
           </div>
-          
+
           {showShareButton && (
             <Button
               variant="outline"
@@ -186,7 +186,7 @@ const CloudStatus: React.FC<CloudStatusProps> = ({
             <Github className="w-3 h-3 mr-1" />
             Source Code
           </Button>
-          
+
           <Button
             variant="outline"
             size="sm"
@@ -196,7 +196,7 @@ const CloudStatus: React.FC<CloudStatusProps> = ({
             <BookOpen className="w-3 h-3 mr-1" />
             Setup Guide
           </Button>
-          
+
           {DEMO_MODE && (
             <Button
               variant="outline"

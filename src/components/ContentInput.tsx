@@ -30,7 +30,7 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
       description: "Professional networking"
     },
     {
-      id: "twitter", 
+      id: "twitter",
       name: "Twitter",
       icon: Twitter,
       color: "twitter",
@@ -38,7 +38,7 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
     },
     {
       id: "instagram",
-      name: "Instagram", 
+      name: "Instagram",
       icon: Instagram,
       color: "instagram",
       description: "Visual storytelling"
@@ -46,8 +46,8 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
   ];
 
   const togglePlatform = useCallback((platformId: string) => {
-    setSelectedPlatforms(prev => 
-      prev.includes(platformId) 
+    setSelectedPlatforms(prev =>
+      prev.includes(platformId)
         ? prev.filter(id => id !== platformId)
         : [...prev, platformId]
     );
@@ -61,7 +61,7 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
     if (text.length > 2000) {
       return 'Content exceeds maximum length of 2000 characters';
     }
-    
+
     // Basic malicious content filtering
     const suspiciousPatterns = [
       /<script/i,
@@ -69,23 +69,23 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
       /data:text\/html/i,
       /vbscript:/i
     ];
-    
+
     if (suspiciousPatterns.some(pattern => pattern.test(text))) {
       return 'Content contains potentially malicious code';
     }
-    
+
     // Platform-specific validation
     if (selectedPlatforms.includes('twitter') && text.length > 280) {
       return 'Content is too long for Twitter (max 280 characters)';
     }
-    
+
     return null;
   };
 
   const checkRateLimit = (): string | null => {
     const now = new Date();
     const oneHour = 60 * 60 * 1000; // 1 hour in milliseconds
-    
+
     if (lastPublishTime && (now.getTime() - lastPublishTime.getTime()) < oneHour) {
       if (publishCount >= 10) {
         return 'Rate limit exceeded. You can publish up to 10 posts per hour.';
@@ -94,13 +94,13 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
       // Reset counter if more than an hour has passed
       setPublishCount(0);
     }
-    
+
     return null;
   };
 
   const logContentPublish = async (content: string, platforms: string[]) => {
     if (!user) return;
-    
+
     try {
       await supabase
         .from('content_logs')
@@ -117,24 +117,24 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
 
   const handlePublish = useCallback(async () => {
     setValidationError(null);
-    
+
     // Validate content
     const contentError = validateContent(content);
     if (contentError) {
       setValidationError(contentError);
       return;
     }
-    
+
     // Check rate limiting
     const rateLimitError = checkRateLimit();
     if (rateLimitError) {
       setValidationError(rateLimitError);
       return;
     }
-    
+
     // Log the publish attempt
     await logContentPublish(content, selectedPlatforms);
-    
+
     // Update rate limiting counters
     const now = new Date();
     if (!lastPublishTime || (now.getTime() - lastPublishTime.getTime()) >= 60 * 60 * 1000) {
@@ -143,11 +143,11 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
       setPublishCount(prev => prev + 1);
     }
     setLastPublishTime(now);
-    
+
     onPublish(content, selectedPlatforms);
   }, [content, selectedPlatforms, lastPublishTime, publishCount, user, onPublish]);
 
-  const canPublish = useMemo(() => 
+  const canPublish = useMemo(() =>
     content.trim().length > 0 && selectedPlatforms.length > 0 && !isProcessing,
     [content, selectedPlatforms.length, isProcessing]
   );
@@ -193,8 +193,8 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
                   onClick={() => !isProcessing && togglePlatform(platform.id)}
                   className={`
                     relative p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 hover-lift
-                    ${selectedPlatforms.includes(platform.id) 
-                      ? `platform-${platform.color} bg-white/5` 
+                    ${selectedPlatforms.includes(platform.id)
+                      ? `platform-${platform.color} bg-white/5`
                       : 'border-white/20 hover:border-white/40 glass'
                     }
                     ${isProcessing ? 'opacity-50 cursor-not-allowed' : ''}
@@ -249,7 +249,7 @@ const ContentInput = ({ onPublish, isProcessing }: ContentInputProps) => {
           {selectedPlatforms.length > 0 && (
             <div className="glass rounded-lg p-4 border border-accent/30">
               <p className="text-sm text-center text-accent">
-                Ready to refract your content across {selectedPlatforms.length} platform{selectedPlatforms.length > 1 ? 's' : ''}. 
+                Ready to refract your content across {selectedPlatforms.length} platform{selectedPlatforms.length > 1 ? 's' : ''}.
                 Watch the AI agent work in real-time!
               </p>
             </div>

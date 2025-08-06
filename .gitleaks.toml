@@ -1,0 +1,54 @@
+title = "Enhanced Security Configuration"
+
+[extend]
+useDefault = true
+
+# Custom rules for common patterns
+[[rules]]
+id = "custom-api-key"
+description = "Custom API key patterns"
+regex = '''(?i)(api[_-]?key|apikey|api[_-]?token)[=:\s]*[\"']?([a-zA-Z0-9_\-]{20,})[\"']?'''
+secretGroup = 2
+entropy = 3.0
+keywords = ["api", "key", "token"]
+
+[[rules]]
+id = "database-url"
+description = "Database connection strings"
+regex = '''(?i)(mongodb|mysql|postgres|redis)://[^\s\'"]+'''
+keywords = ["mongodb", "mysql", "postgres", "redis"]
+
+# Global allowlists for common false positives
+[[allowlists]]
+description = "Test and documentation files"
+paths = [
+  '''tests?/.*''',
+  '''docs?/.*\.md''',
+  '''README\.md''',
+  '''\.example$''',
+  '''\.template$''',
+]
+
+# Ignore secrets baseline file (contains hashed secrets)
+[[allowlists]]
+description = "Ignore secrets baseline file"
+paths = ['''\.secrets\.baseline$''']
+
+# Ignore secrets baseline file (contains hashed secrets)
+[[allowlists]]
+description = "Ignore secrets baseline file"
+paths = ['''\.secrets\.baseline$''']
+
+# Global allowlist for secrets baseline
+[[allowlists]]
+description = "Ignore secrets baseline file"
+paths = [
+  '''\.secrets\.baseline$''',
+]
+
+# Exclude secrets baseline from scanning
+[[allowlists]]
+description = "Ignore secrets baseline file"
+paths = [
+  '''\.secrets\.baseline''',
+]

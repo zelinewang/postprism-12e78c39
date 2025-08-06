@@ -19,41 +19,41 @@ const Index = () => {
   const handlePublish = async (content: string, platforms: string[]) => {
     setOriginalContent(content);
     setSelectedPlatforms(platforms);
-    
+
     // 生成session_id用于WebSocket连接
     const sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     setCurrentSessionId(sessionId);
-    
+
     // 立即跳转到直播界面（不等API响应）
     setAppState('streaming');
-    
+
     try {
       // Respect explicit VITE_DEMO_MODE=false setting
       if (import.meta.env.VITE_DEMO_MODE !== 'false' && (DEMO_MODE || isDemoModeRecommended())) {
         // Enhanced secure demo mode
         console.log('🎮 启动安全Demo模式...');
-        
+
         try {
           const { sessionId: demoSessionId } = await secureDemoService.startDemo(content, platforms);
           setCurrentSessionId(demoSessionId);
-          
+
           // Listen for demo results
           const unsubscribe = secureDemoService.onResults((demoResults: DemoPublishResult[]) => {
             console.log('📊 收到Demo结果:', demoResults);
             setPublishResults(demoResults);
           });
-          
+
           // Clean up subscription when component unmounts or demo completes
           setTimeout(() => {
             unsubscribe();
           }, 30000); // 30 second timeout
-          
+
           return;
         } catch (error) {
           console.error('Demo服务错误:', error);
           // Fallback to simple demo if service fails
           await new Promise(resolve => setTimeout(resolve, 2000));
-          
+
           const fallbackResults = platforms.map(platform => ({
             platform,
             adaptedContent: `${content} (Demo fallback: ${platform})`,
@@ -64,12 +64,12 @@ const Index = () => {
             stepsTaken: Math.floor(Math.random() * 10) + 5,
             errorCount: 0
           }));
-          
+
           setPublishResults(fallbackResults);
           return;
         }
       }
-      
+
       // Production mode - call real backend API
       const response = await fetch(`${API_CONFIG.baseURL}${ENDPOINTS.publishContent}`, {
         method: 'POST',
@@ -88,12 +88,12 @@ const Index = () => {
       }
 
       const result = await response.json();
-      
+
       if (result.success) {
         // Get session_id from backend response
         const sessionId = result.data?.stream_session_id || 'unknown';
         setCurrentSessionId(sessionId);
-        
+
         // Process results from backend
         const processedResults = Object.entries(result.data.publish_results).map(([platform, data]: [string, any]) => ({
           platform,
@@ -105,14 +105,14 @@ const Index = () => {
           stepsTaken: data.steps_taken || 0,
           errorCount: data.error_count || 0
         }));
-        
+
         setPublishResults(processedResults);
-        
+
         // Don't auto-transition - let SimplifiedLiveStreamViewer handle completion
       } else {
         throw new Error(result.error || 'Publishing failed');
       }
-      
+
     } catch (error) {
       console.error('Publishing error:', error);
       // Show error state or fallback
@@ -126,7 +126,7 @@ const Index = () => {
         stepsTaken: 0,
         errorCount: 1
       }));
-      
+
       setPublishResults(errorResults);
       setAppState('results');
     }
@@ -147,12 +147,12 @@ const Index = () => {
     console.log('📊 Current publishResults:', publishResults);
     console.log('📊 Results type:', typeof results);
     console.log('📊 Results keys:', results ? Object.keys(results) : 'No results');
-    
+
     // ENHANCED: Handle different result formats from enhanced agent manager
     if (results) {
       console.log('🔄 Processing enhanced WebSocket results...');
       let processedResults = [];
-      
+
       // Handle different result structures
       if (results.platforms) {
         // Standard structure - FIXED: Match OptimizedPublishResult format
@@ -181,13 +181,13 @@ const Index = () => {
           intelligenceScore: result.intelligence_score || 0
         }));
       }
-      
+
       if (processedResults.length > 0) {
         setPublishResults(processedResults);
         console.log('✅ Results processed and set:', processedResults);
       }
     }
-    
+
     // FIXED: Ensure immediate transition to avoid blank page
     console.log('🔄 Immediately setting appState to results');
     setAppState('results');
@@ -196,18 +196,18 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background prism-light-effect">
       <Header />
-      
+
       {/* Cloud Status - Show in cloud deployment or demo mode */}
       {(CLOUD_CONFIG.isCloudDeployment || DEMO_MODE) && (
         <div className="container mx-auto px-6 pt-4">
-          <CloudStatus 
+          <CloudStatus
             className="max-w-4xl mx-auto"
             showShareButton={true}
             showPerformanceInfo={true}
           />
         </div>
       )}
-      
+
       {/* Debug Status - Remove in production */}
       <div className="fixed top-20 right-4 z-50 bg-black/50 text-white p-2 rounded text-xs">
         <div>State: {appState}</div>
@@ -216,18 +216,18 @@ const Index = () => {
         <div>Cloud: {CLOUD_CONFIG.isCloudDeployment ? 'Yes' : 'No'}</div>
         <div>Demo: {DEMO_MODE ? 'Yes' : 'No'}</div>
       </div>
-      
+
       <main className="space-y-8 relative z-10">
         {/* Content Input Section */}
         {(appState === 'input' || appState === 'processing') && (
-          <ContentInput 
+          <ContentInput
             onPublish={handlePublish}
             isProcessing={appState === 'processing'}
           />
         )}
 
         {/* Live Stream Viewer */}
-        <SimplifiedLiveStreamViewer 
+        <SimplifiedLiveStreamViewer
           isActive={appState === 'streaming'}
           selectedPlatforms={selectedPlatforms}
           sessionId={currentSessionId}
@@ -259,9 +259,9 @@ const Index = () => {
               className="absolute w-0.5 h-full opacity-40 animate-light-ray"
               style={{
                 left: `${15 + i * 10}%`,
-                background: `linear-gradient(to bottom, 
-                  hsl(${i * 45} 80% 60%) 0%, 
-                  transparent 60%, 
+                background: `linear-gradient(to bottom,
+                  hsl(${i * 45} 80% 60%) 0%,
+                  transparent 60%,
                   hsl(${i * 45 + 180} 80% 60%) 100%)`,
                 transform: `rotate(${-20 + i * 5}deg)`,
                 animationDelay: `${i * 0.3}s`,
@@ -296,7 +296,7 @@ const Index = () => {
         {/* Light Particle Field */}
         <div className="absolute inset-0">
           {[...Array(20)].map((_, i) => (
-            <div 
+            <div
               key={i}
               className="absolute rounded-full animate-enhanced-glow"
               style={{

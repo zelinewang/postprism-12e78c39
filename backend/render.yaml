@@ -1,6 +1,6 @@
 # Render.com Free Tier Deployment Configuration
 # PostPrism Backend - Flask API + WebSocket Support
-# 
+#
 # Free Tier Includes:
 # - 750 hours/month of runtime (enough for most demo usage)
 # - Automatic builds from GitHub
@@ -11,12 +11,8 @@ services:
   - type: web
     name: postprism-backend
     env: python
-    
-    envVars:
-      - key: PYTHON_VERSION
-        value: "3.11.9"
     # Build Configuration
-    buildCommand: | 
+    buildCommand: |
       echo "🚀 Starting PostPrism backend build..." &&
       echo "🐍 Python version check:" &&
       python --version &&
@@ -24,7 +20,7 @@ services:
       echo "📦 Installing build dependencies..." &&
       pip install --upgrade pip setuptools wheel &&
       echo "📚 Installing requirements..." &&
-      pip install -r requirements.txt && 
+      pip install -r requirements.txt &&
       echo "🤖 Installing Agent S2.5..." &&
       pip install git+https://github.com/simular-ai/Agent-S.git@v0.2.5 &&
       echo "🖥️ Installing ORGO..." &&
@@ -32,57 +28,60 @@ services:
       echo "⚡ Installing production dependencies..." &&
       pip install gunicorn eventlet gevent psutil &&
       echo "✅ Build completed successfully!"
-    
-    # Start Command  
+
+    # Start Command
     startCommand: cd backend && gunicorn --worker-class eventlet -w 1 --bind 0.0.0.0:$PORT run_fixed:app
-    
+
     # Working directory
     rootDir: .
-    
+
     # Plan: Free tier (sufficient for demo usage)
     plan: free
-    
+
     # Region: US Oregon (closest to most users)
     region: oregon
-    
+
     # Branch to deploy from
     branch: cloud-deployment
-    
+
     # Environment Variables (set these in Render dashboard)
     envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"
+
       - key: FLASK_ENV
         value: production
-      
+
       - key: FLASK_HOST
         value: 0.0.0.0
-      
+
       - key: LOG_LEVEL
         value: INFO
-        
+
       # Users need to set these in Render dashboard:
       # OPENAI_API_KEY (required for production mode)
       # ORGO_API_KEY (required for production mode)
       # AGENTS2_5_MODEL (optional, defaults to gpt-4o-mini)
-      
-      # CORS Configuration for frontend  
+
+      # CORS Configuration for frontend
       - key: CORS_ORIGINS
         value: https://postprism.lovable.app,https://*.lovable.app,http://localhost:8080
-        
+
       # Demo mode enabled for free demo backend (no API keys required)
       - key: DEMO_MODE_BACKEND
         value: true
-        
+
       # Flask/Python configuration
       - key: PYTHONPATH
         value: /opt/render/project/src/backend
-        
+
       # Port configuration (Render sets this automatically, but good to be explicit)
       - key: PORT
         generateValue: true
-    
+
     # Health check endpoint
     healthCheckPath: /health
-    
+
     # Build settings
     buildFilter:
       paths:
@@ -92,16 +91,16 @@ services:
         - backend/__pycache__/**
         - backend/*.log
         - backend/postprism*.log
-        
+
     # Auto-deploy on git push
     autoDeploy: true
-    
+
     # Disk storage (for logs and temporary files)
     disk:
       name: postprism-storage
       mountPath: /opt/render/project/src/backend/storage
       sizeGB: 1  # Free tier includes 1GB
-      
+
     # Resource limits for free tier
     scaling:
       minInstances: 0  # Can scale to 0 (sleep mode)
@@ -115,14 +114,14 @@ services:
 
 # Additional Notes:
 # 1. Free tier sleeps after 15 minutes of inactivity
-# 2. Cold starts may take 10-30 seconds  
+# 2. Cold starts may take 10-30 seconds
 # 3. For heavy usage, upgrade to paid plan ($7/month starter)
 # 4. Environment variables must be set manually in Render dashboard
 # 5. Build time: ~5-10 minutes for first deployment
 # 6. Deploy from 'cloud-deployment' branch for best results
 #
 # Troubleshooting:
-# - If build fails: Check Python version compatibility 
+# - If build fails: Check Python version compatibility
 # - If Agent S2.5 install fails: Verify GitHub repository access
 # - If ORGO install fails: Check if orgo package is available
 # - If app won't start: Verify run_fixed:app path is correct
@@ -134,6 +133,6 @@ services:
 #
 # Expected Performance:
 # - Cold start: 10-30 seconds
-# - Warm response: <1 second  
+# - Warm response: <1 second
 # - Demo mode: Fully functional without API keys
 # - Real mode: Requires user-provided API keys

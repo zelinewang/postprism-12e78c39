@@ -5,9 +5,9 @@ import { ArrowRight, Sparkles, Check, Star, Zap } from 'lucide-react';
 
 const PrismLogo = () => (
   <div className="relative w-8 h-8 animate-prism-rotate">
-    <img 
-      src="/lovable-uploads/88784487-172c-4e13-87e3-3ecd85d7d29d.png" 
-      alt="PostPrism AI" 
+    <img
+      src="/lovable-uploads/88784487-172c-4e13-87e3-3ecd85d7d29d.png"
+      alt="PostPrism AI"
       className="w-full h-full object-contain filter drop-shadow-lg"
     />
     <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 via-teal-500/20 to-cyan-400/20 rounded-lg blur-md -z-10 animate-glow"></div>
@@ -16,7 +16,7 @@ const PrismLogo = () => (
 
 const Pricing = () => {
   const [scrollY, setScrollY] = useState(0);
-  
+
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener('scroll', handleScroll);
@@ -39,7 +39,7 @@ const Pricing = () => {
               <PrismLogo />
               <span className="text-2xl font-bold text-rainbow">PostPrism AI</span>
             </Link>
-            
+
             <div className="hidden md:flex items-center space-x-8">
               <Link to="/" className="text-muted-foreground hover:text-foreground transition-all duration-300 hover:scale-105">Home</Link>
               <Link to="/features" className="text-muted-foreground hover:text-foreground transition-all duration-300 hover:scale-105">Features</Link>
@@ -75,7 +75,7 @@ const Pricing = () => {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-3 gap-8">
-            
+
             {/* Free Plan */}
             <div className="glass-card p-8 rounded-2xl backdrop-blur-sm bg-white/60 dark:bg-gray-800/60 border border-white/20 hover:shadow-xl transition-all duration-300">
               <div className="text-center mb-8">
@@ -85,7 +85,7 @@ const Pricing = () => {
                 </div>
                 <p className="text-gray-600 dark:text-gray-300">Perfect for testing and small creators</p>
               </div>
-              
+
               <ul className="space-y-4 mb-8">
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
@@ -108,7 +108,7 @@ const Pricing = () => {
                   <span className="text-gray-700 dark:text-gray-300">Email support</span>
                 </li>
               </ul>
-              
+
               <Link to="/">
                 <Button className="w-full bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white">
                   Get Started Free
@@ -124,7 +124,7 @@ const Pricing = () => {
                   Most Popular
                 </div>
               </div>
-              
+
               <div className="text-center mb-8">
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Professional</h3>
                 <div className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
@@ -132,7 +132,7 @@ const Pricing = () => {
                 </div>
                 <p className="text-gray-600 dark:text-gray-300">For content creators and small businesses</p>
               </div>
-              
+
               <ul className="space-y-4 mb-8">
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
@@ -163,7 +163,7 @@ const Pricing = () => {
                   <span className="text-gray-700 dark:text-gray-300">Priority support</span>
                 </li>
               </ul>
-              
+
               <Link to="/">
                 <Button className="w-full bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white">
                   Start Free Trial
@@ -181,7 +181,7 @@ const Pricing = () => {
                 </div>
                 <p className="text-gray-600 dark:text-gray-300">For agencies and large organizations</p>
               </div>
-              
+
               <ul className="space-y-4 mb-8">
                 <li className="flex items-center space-x-3">
                   <Check className="h-5 w-5 text-primary flex-shrink-0" />
@@ -212,7 +212,7 @@ const Pricing = () => {
                   <span className="text-gray-700 dark:text-gray-300">24/7 phone support</span>
                 </li>
               </ul>
-              
+
               <Button className="w-full bg-gradient-to-r from-secondary to-accent hover:from-secondary/90 hover:to-accent/90 text-white">
                 Contact Sales
               </Button>

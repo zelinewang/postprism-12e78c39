@@ -23,11 +23,11 @@ check_item() {
     local description="$1"
     local check_command="$2"
     local required="$3"  # true/false
-    
+
     TOTAL_CHECKS=$((TOTAL_CHECKS + 1))
-    
+
     echo -n "🔸 $description... "
-    
+
     if eval "$check_command" >/dev/null 2>&1; then
         echo -e "${GREEN}✅ PASS${NC}"
         PASSED_CHECKS=$((PASSED_CHECKS + 1))
@@ -128,7 +128,7 @@ echo ""
 # Check Python backend
 if [ -d "backend/venv" ]; then
     check_item "Virtual environment exists" "[ -d 'backend/venv' ]" false
-    
+
     # Check if we can activate venv and check imports
     echo -n "🔸 Python imports work... "
     if (cd backend && source venv/bin/activate && python -c "import flask, flask_socketio; print('OK')" >/dev/null 2>&1); then

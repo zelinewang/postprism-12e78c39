@@ -2,7 +2,7 @@ import { DEMO_CONFIG, API_CONFIG, ENDPOINTS } from '@/config/api';
 
 /**
  * PostPrism Secure Demo Service
- * 
+ *
  * Enhanced security features:
  * 1. No API keys exposed in frontend
  * 2. Rate limiting simulation to prevent abuse
@@ -44,11 +44,11 @@ class SecureDemoService {
   private sessionId: string | null = null;
   private progressCallbacks: ((progress: DemoProgress) => void)[] = [];
   private resultCallbacks: ((results: DemoPublishResult[]) => void)[] = [];
-  
+
   // Rate limiting for demo abuse prevention
   private lastDemoRun = 0;
   private readonly minDemoInterval = 10000; // 10 seconds between demos
-  
+
   /**
    * Start secure demo publishing simulation - FRONTEND ONLY
    */
@@ -58,42 +58,42 @@ class SecureDemoService {
     if (now - this.lastDemoRun < this.minDemoInterval) {
       throw new Error(`Please wait ${Math.ceil((this.minDemoInterval - (now - this.lastDemoRun)) / 1000)} seconds before trying again`);
     }
-    
+
     this.lastDemoRun = now;
     this.isActive = true;
     this.sessionId = `demo_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    
+
     console.log(`🎮 Starting SECURE FRONTEND-ONLY demo mode: ${this.sessionId}`);
     console.log('🔒 NO API calls, NO backend connections, NO cost consumption');
-    
+
     // ALWAYS use frontend-only simulation for security
     this.simulateDemoPublishing(content, platforms);
-    
+
     return { sessionId: this.sessionId };
   }
-  
+
   /**
    * REMOVED: Backend demo endpoint removed for security
    * Demo is now 100% frontend-only to prevent API usage
    */
-  
+
   /**
    * Frontend-only demo simulation with realistic timing
    */
   private async simulateDemoPublishing(content: string, platforms: string[]) {
     const totalSteps = 12;
     const stepDuration = DEMO_CONFIG.mockPublishingTime / totalSteps;
-    
+
     console.log(`🤖 Starting frontend demo simulation for ${platforms.length} platforms`);
-    
+
     // Simulate parallel platform processing
-    const platformPromises = platforms.map((platform, index) => 
+    const platformPromises = platforms.map((platform, index) =>
       this.simulatePlatformPublishing(platform, content, index * 1000) // Stagger start times
     );
-    
+
     // Wait for all platforms to "complete"
     const results = await Promise.all(platformPromises);
-    
+
     // Emit final results
     this.resultCallbacks.forEach(callback => {
       try {
@@ -102,17 +102,17 @@ class SecureDemoService {
         console.error('Demo result callback error:', error);
       }
     });
-    
+
     this.isActive = false;
     console.log('🎉 Demo simulation completed');
   }
-  
+
   /**
    * Simulate individual platform publishing with realistic steps
    */
   private async simulatePlatformPublishing(platform: string, content: string, delay: number): Promise<DemoPublishResult> {
     await this.sleep(delay); // Stagger platform starts
-    
+
     const steps = [
       '🔍 AI analyzing platform characteristics...',
       '💭 Optimizing content style...',
@@ -127,7 +127,7 @@ class SecureDemoService {
       '🚀 Executing publish operation...',
       '🎉 Confirming successful publication!'
     ];
-    
+
     // Simulate step-by-step progress
     for (let i = 0; i < steps.length; i++) {
       const progress: DemoProgress = {
@@ -138,7 +138,7 @@ class SecureDemoService {
         thinking: i % 3 === 0 ? DEMO_CONFIG.demoMessages.aiThinking[i % DEMO_CONFIG.demoMessages.aiThinking.length] : undefined,
         timestamp: Date.now()
       };
-      
+
       this.progressCallbacks.forEach(callback => {
         try {
           callback(progress);
@@ -146,16 +146,16 @@ class SecureDemoService {
           console.error('Demo progress callback error:', error);
         }
       });
-      
+
       await this.sleep(1200 + Math.random() * 800); // Realistic step timing
     }
-    
+
     // Generate platform-specific result
     const mockResult = DEMO_CONFIG.mockResults[platform as keyof typeof DEMO_CONFIG.mockResults];
     if (!mockResult) {
       throw new Error(`No mock data for platform: ${platform}`);
     }
-    
+
     return {
       platform,
       adaptedContent: this.adaptContentForPlatform(content, platform),
@@ -170,22 +170,22 @@ class SecureDemoService {
       intelligenceScore: 95 + Math.random() * 5 // 95-100%
     };
   }
-  
+
   /**
    * Generate platform-optimized content
    */
   private adaptContentForPlatform(content: string, platform: string): string {
     const adaptations = {
       linkedin: `🚀 ${content}\n\nThis is a revolutionary demo of PostPrism AI! Through the powerful combination of Agent S2.5 + ORGO, we've achieved true multi-platform parallel publishing.\n\n#ArtificialIntelligence #SocialMediaAutomation #PostPrism #TechInnovation`,
-      
+
       twitter: `🤖 ${content}\n\n✨ Just experienced @PostPrism's AI publishing magic:\n→ 3 platforms simultaneously\n→ Watch AI work in real-time\n→ 45 seconds for everything\n\nThis is the future! 🚀\n\n#PostPrism #AIAutomation #ProductivityTool`,
-      
+
       instagram: `🌈 ${content}\n\nJust witnessed PostPrism's magical moment! ✨\n\nAI working simultaneously on LinkedIn, Twitter and Instagram while I watch the entire process like a movie 🎬\n\nThis transparent AI automation experience is unprecedented!\n\n#PostPrism #ArtificialIntelligence #TechAesthetics #Automation #EfficiencyRevolution #FutureTech #Innovation #DigitalTransformation #AITools #SocialMedia`
     };
-    
+
     return adaptations[platform as keyof typeof adaptations] || content;
   }
-  
+
   /**
    * Generate platform-appropriate hashtags
    */
@@ -195,10 +195,10 @@ class SecureDemoService {
       twitter: ['PostPrism', 'AIAutomation', 'ProductivityTool', 'Tech', 'Innovation'],
       instagram: ['PostPrism', 'ArtificialIntelligence', 'TechAesthetics', 'Automation', 'EfficiencyRevolution', 'FutureTech', 'AITools']
     };
-    
+
     return platformTags[platform as keyof typeof platformTags] || ['PostPrism', 'Demo'];
   }
-  
+
   /**
    * Subscribe to demo progress updates
    */
@@ -211,7 +211,7 @@ class SecureDemoService {
       }
     };
   }
-  
+
   /**
    * Subscribe to demo results
    */
@@ -224,7 +224,7 @@ class SecureDemoService {
       }
     };
   }
-  
+
   /**
    * Get current demo status
    */
@@ -235,7 +235,7 @@ class SecureDemoService {
       canStartDemo: Date.now() - this.lastDemoRun >= this.minDemoInterval
     };
   }
-  
+
   /**
    * Stop current demo
    */
@@ -244,7 +244,7 @@ class SecureDemoService {
     this.sessionId = null;
     console.log('⏹️ Demo stopped');
   }
-  
+
   /**
    * Utility: Sleep function
    */
@@ -272,6 +272,6 @@ export const getDemoFeatures = () => ({
 
 export const isDemoModeRecommended = () => {
   // Recommend demo mode for Lovable deployments and first-time users
-  return window.location.hostname.includes('lovable.app') || 
+  return window.location.hostname.includes('lovable.app') ||
          localStorage.getItem('postprism_demo_completed') !== 'true';
 };

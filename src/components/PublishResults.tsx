@@ -1,14 +1,14 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  CheckCircle, 
-  ExternalLink, 
-  Sparkles, 
-  Copy, 
+import {
+  CheckCircle,
+  ExternalLink,
+  Sparkles,
+  Copy,
   RotateCcw,
-  Linkedin, 
-  Twitter, 
+  Linkedin,
+  Twitter,
   Instagram,
   TrendingUp,
   Clock,
@@ -35,12 +35,12 @@ interface PublishResultsProps {
   onNewPublish: () => void;
 }
 
-const PublishResults = ({ 
-  isVisible, 
-  originalContent, 
-  results, 
-  totalTime, 
-  onNewPublish 
+const PublishResults = ({
+  isVisible,
+  originalContent,
+  results,
+  totalTime,
+  onNewPublish
 }: PublishResultsProps) => {
   const [copiedPlatform, setCopiedPlatform] = useState<string | null>(null);
 
@@ -62,13 +62,13 @@ const PublishResults = ({
     setTimeout(() => setCopiedPlatform(null), 2000);
   }, []);
 
-  const successCount = useMemo(() => 
-    results.filter(r => r.publishStatus === 'success').length, 
+  const successCount = useMemo(() =>
+    results.filter(r => r.publishStatus === 'success').length,
     [results]
   );
 
-  const totalSteps = useMemo(() => 
-    results.reduce((sum, r) => sum + r.stepsTaken, 0), 
+  const totalSteps = useMemo(() =>
+    results.reduce((sum, r) => sum + r.stepsTaken, 0),
     [results]
   );
 
@@ -125,11 +125,11 @@ const PublishResults = ({
           {/* Platform Results */}
           <div className="space-y-6">
             <h3 className="text-xl font-semibold">Platform-Optimized Results</h3>
-            
+
             {results.map((result) => {
               const PlatformIcon = platformIcons[result.platform as keyof typeof platformIcons];
               const colorClass = platformColors[result.platform as keyof typeof platformColors];
-              
+
               return (
                 <Card key={result.platform} className={`glass-card border-2 ${colorClass}`}>
                   <div className="p-6">
@@ -141,7 +141,7 @@ const PublishResults = ({
                         </div>
                         <div>
                           <h4 className="font-semibold capitalize text-lg">{result.platform}</h4>
-                          <Badge 
+                          <Badge
                             variant={result.publishStatus === 'success' ? 'default' : 'destructive'}
                             className={result.publishStatus === 'success' ? 'bg-green-500/20 text-green-400' : ''}
                           >
@@ -149,7 +149,7 @@ const PublishResults = ({
                           </Badge>
                         </div>
                       </div>
-                      
+
                       <div className="flex items-center space-x-2">
                         <Button
                           variant="ghost"

@@ -1,6 +1,6 @@
 /**
  * API Configuration for PostPrism
- * 
+ *
  * Supports both local development and production deployment.
  * Automatically switches between local backend and cloud backend.
  */
@@ -54,11 +54,11 @@ export const CLOUD_CONFIG = {
   coldStartWarning: isCloudDeployment,
   shareableDemo: true,
   analyticsEnabled: isCloudDeployment,
-  
+
   // Free tier optimizations
   retryAttempts: isCloudDeployment ? 3 : 1,
   retryDelay: isCloudDeployment ? 2000 : 1000,
-  
+
   // Cloud-specific features
   features: {
     shareButton: isCloudDeployment,
@@ -66,7 +66,7 @@ export const CLOUD_CONFIG = {
     userFeedback: isCloudDeployment,
     socialShare: isCloudDeployment
   },
-  
+
   // URLs for sharing
   demoURL: 'https://postprism.lovable.app',
   githubURL: 'https://github.com/zelinewang/postprism-12e78c39',
@@ -81,7 +81,7 @@ export const DEMO_CONFIG = {
   mockPublishingTime: 18000, // 18 seconds for more realistic simulation
   mockPlatforms: ['linkedin', 'twitter', 'instagram'],
   demoMessages: {
-    welcome: isCloudDeployment 
+    welcome: isCloudDeployment
       ? "🌟 Welcome to PostPrism Cloud Demo! Running live on free infrastructure - watch 3 AI agents work simultaneously!"
       : "🎮 Welcome to PostPrism Demo! Watch AI agents work simultaneously across 3 platforms.",
     startPublishing: isCloudDeployment
@@ -92,7 +92,7 @@ export const DEMO_CONFIG = {
     upgradePrompt: "💡 Want real publishing? Deploy locally with your API keys!",
     aiThinking: [
       "💭 Analyzing LinkedIn's professional tone requirements...",
-      "💭 Optimizing Twitter content for engagement algorithms...", 
+      "💭 Optimizing Twitter content for engagement algorithms...",
       "💭 Adapting visual elements for Instagram aesthetic...",
       "💭 Calculating optimal posting times for each platform...",
       "💭 Ensuring consistent brand voice across all channels..."

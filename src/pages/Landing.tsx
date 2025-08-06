@@ -5,9 +5,9 @@ import { ArrowRight, Sparkles, Zap, Target, Users, Play, Eye, Bot, Layers, Chevr
 
 const PrismLogo = () => (
   <div className="relative w-12 h-12 animate-prism-rotate">
-    <img 
-      src="/lovable-uploads/88784487-172c-4e13-87e3-3ecd85d7d29d.png" 
-      alt="PostPrism AI" 
+    <img
+      src="/lovable-uploads/88784487-172c-4e13-87e3-3ecd85d7d29d.png"
+      alt="PostPrism AI"
       className="w-full h-full object-contain filter drop-shadow-lg"
     />
     <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-purple-500/20 to-pink-400/20 rounded-lg blur-md -z-10 animate-glow"></div>
@@ -16,7 +16,7 @@ const PrismLogo = () => (
 
 const InteractiveDots = () => {
   const [dots, setDots] = useState<Array<{id: number, x: number, y: number, delay: number}>>([]);
-  
+
   useEffect(() => {
     const newDots = Array.from({ length: 30 }, (_, i) => ({
       id: i,
@@ -52,9 +52,9 @@ const FeatureCard = ({ icon: Icon, title, description, gradient, delay }: {
   gradient: string;
   delay: number;
 }) => (
-  <div 
+  <div
     className={`p-8 hover-lift prism-light-effect animate-slide-up scroll-reveal magnetic-hover relative overflow-hidden`}
-    style={{ 
+    style={{
       animationDelay: `${delay}ms`,
       background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(6, 182, 212, 0.08) 50%, rgba(147, 51, 234, 0.1) 100%)',
       backdropFilter: 'blur(20px)',
@@ -87,7 +87,7 @@ const StepCard = ({ number, title, description, delay }: {
   description: string;
   delay: number;
 }) => (
-  <div 
+  <div
     className="text-center animate-slide-up"
     style={{ animationDelay: `${delay}ms` }}
   >
@@ -107,9 +107,9 @@ const MetricCard = ({ label, value, suffix = "", delay }: {
   suffix?: string;
   delay: number;
 }) => (
-  <div 
+  <div
     className="p-6 text-center hover-lift animate-slide-up scroll-reveal magnetic-hover relative overflow-hidden"
-    style={{ 
+    style={{
       animationDelay: `${delay}ms`,
       background: 'linear-gradient(135deg, rgba(20, 184, 166, 0.12) 0%, rgba(14, 165, 233, 0.12) 100%)',
       backdropFilter: 'blur(20px)',
@@ -131,21 +131,21 @@ const Landing = () => {
   const [scrollY, setScrollY] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const heroRef = useRef<HTMLElement>(null);
-  
+
   useEffect(() => {
     setIsVisible(true);
-    
+
     // Handle scroll animations
     const handleScroll = () => {
       const newScrollY = window.scrollY;
       setScrollY(newScrollY);
-      
+
       // Reveal elements on scroll
       const elements = document.querySelectorAll('.scroll-reveal');
       elements.forEach((element) => {
         const elementTop = element.getBoundingClientRect().top;
         const elementVisible = 150;
-        
+
         if (elementTop < window.innerHeight - elementVisible) {
           element.classList.add('revealed');
         }
@@ -155,7 +155,7 @@ const Landing = () => {
     // Handle mouse movement for magnetic effects
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
-      
+
       // Update CSS custom properties for parallax
       document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
       document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
@@ -165,7 +165,7 @@ const Landing = () => {
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('mousemove', handleMouseMove);
     handleScroll(); // Initial check
-    
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleMouseMove);
@@ -175,7 +175,7 @@ const Landing = () => {
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
       <InteractiveDots />
-      
+
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 glass border-b border-border/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -186,7 +186,7 @@ const Landing = () => {
                 PostPrism AI
               </span>
             </div>
-            
+
             <div className="hidden md:flex items-center space-x-8">
               <Link to="/features" className="text-muted-foreground hover:text-foreground transition-all duration-300 hover:scale-105">
                 Features
@@ -215,7 +215,7 @@ const Landing = () => {
           <div className="absolute top-1/2 right-1/4 w-80 h-80 bg-gradient-to-r from-violet-500/20 via-purple-500/20 to-fuchsia-500/20 rounded-full blur-3xl animate-float-delayed" style={{ "--delay": "2s" } as any}></div>
           <div className="absolute bottom-1/4 left-1/2 w-72 h-72 bg-gradient-to-r from-blue-500/20 via-indigo-500/20 to-purple-500/20 rounded-full blur-3xl animate-float-delayed" style={{ "--delay": "4s" } as any}></div>
         </div>
-        
+
         <div className="max-w-7xl mx-auto text-center relative z-10">
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <div className="mb-8">
@@ -233,7 +233,7 @@ const Landing = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer"></div>
               </div>
             </div>
-            
+
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground mb-8 leading-tight">
               Watch AI
               <br />
@@ -241,12 +241,12 @@ const Landing = () => {
                 Automate Your Life
               </span>
             </h1>
-            
+
             <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-4xl mx-auto leading-relaxed">
-              Transform one piece of content into perfectly optimized posts for LinkedIn, Twitter, and Instagram. 
+              Transform one piece of content into perfectly optimized posts for LinkedIn, Twitter, and Instagram.
               <span className="text-accent font-semibold"> Watch AI agents work in real-time</span> as they publish across all platforms simultaneously.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
               <Link to="/app">
                 <Button size="lg" className="btn-prism text-xl px-12 py-6">
@@ -254,9 +254,9 @@ const Landing = () => {
                   Watch AI in Action
                 </Button>
               </Link>
-              <Button 
-                variant="outline" 
-                size="lg" 
+              <Button
+                variant="outline"
+                size="lg"
                 className="glass border-primary/30 text-xl px-12 py-6 hover:border-primary/60 hover:bg-primary/10 transition-all duration-500"
                 onClick={() => window.open('https://drive.google.com/file/d/1VQ-ryiUvUobjEwkwRCKIvOA-i2ifnabP/view?usp=sharing', '_blank')}
               >
@@ -423,7 +423,7 @@ const Landing = () => {
                 Revolutionary AI transparency platform powered by cutting-edge automation technology.
               </p>
             </div>
-            
+
             <div>
               <h4 className="font-bold mb-4 text-foreground">Product</h4>
               <ul className="space-y-2 text-muted-foreground">
@@ -454,7 +454,7 @@ const Landing = () => {
               </ul>
             </div>
           </div>
-          
+
           <div className="border-t border-border mt-8 pt-8 text-center text-muted-foreground">
             <p>&copy; 2025 PostPrism AI. All rights reserved. Powered by ORGO AI & Agent S2.5</p>
           </div>

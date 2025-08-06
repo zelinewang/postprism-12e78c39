@@ -38,11 +38,11 @@ const Auth = () => {
     const password = formData.get('password') as string;
 
     const { error } = await signIn(email, password);
-    
+
     if (error) {
       setError(error.message);
     }
-    
+
     setIsSubmitting(false);
   };
 
@@ -64,7 +64,7 @@ const Auth = () => {
     }
 
     const { error } = await signUp(email, password, displayName);
-    
+
     if (error) {
       if (error.message.includes('already registered')) {
         setError('This email is already registered. Please sign in instead.');
@@ -74,7 +74,7 @@ const Auth = () => {
     } else {
       setSuccess('Account created successfully! Please check your email to verify your account.');
     }
-    
+
     setIsSubmitting(false);
   };
 
@@ -103,7 +103,7 @@ const Auth = () => {
                 <TabsTrigger value="signin">Sign In</TabsTrigger>
                 <TabsTrigger value="signup">Sign Up</TabsTrigger>
               </TabsList>
-              
+
               <TabsContent value="signin" className="space-y-4">
                 <form onSubmit={handleSignIn} className="space-y-4">
                   <div className="space-y-2">
@@ -140,7 +140,7 @@ const Auth = () => {
                   </Button>
                 </form>
               </TabsContent>
-              
+
               <TabsContent value="signup" className="space-y-4">
                 <form onSubmit={handleSignUp} className="space-y-4">
                   <div className="space-y-2">

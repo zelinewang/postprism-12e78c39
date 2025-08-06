@@ -38,26 +38,26 @@ cd backend
 # Install Python dependencies if requirements.txt exists
 if [ -f "requirements.txt" ]; then
     echo "📚 Installing Python dependencies..."
-    
+
     # Create virtual environment if it doesn't exist
     if [ ! -d "venv" ]; then
         python3 -m venv venv
         echo "📦 Virtual environment created"
     fi
-    
+
     # Activate virtual environment
     source venv/bin/activate
-    
+
     # Upgrade pip
     pip install --upgrade pip
-    
+
     # Install dependencies
     pip install -r requirements.txt
-    
+
     # Install cloud-specific optimizations
     echo "⚡ Installing cloud performance packages..."
     pip install gunicorn eventlet gevent redis
-    
+
     echo "✅ Backend dependencies installed"
 else
     echo "❌ requirements.txt not found in backend/"
@@ -136,7 +136,7 @@ read -p "🤔 Start local development server for testing? (y/n): " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     echo "🚀 Starting local development servers..."
-    
+
     # Start backend in background
     echo "🔧 Starting backend..."
     cd backend
@@ -144,22 +144,22 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     python run_fixed.py &
     BACKEND_PID=$!
     cd ..
-    
+
     # Wait a moment for backend to start
     sleep 3
-    
+
     # Start frontend
     echo "🎨 Starting frontend..."
     npm run dev &
     FRONTEND_PID=$!
-    
+
     echo ""
     echo "✅ Local servers started!"
     echo "🔗 Frontend: http://localhost:8080"
     echo "🔗 Backend: http://localhost:8000"
     echo ""
     echo "Press Ctrl+C to stop servers"
-    
+
     # Wait for user to stop
     trap "echo ''; echo '🛑 Stopping servers...'; kill $BACKEND_PID $FRONTEND_PID; exit" INT
     wait

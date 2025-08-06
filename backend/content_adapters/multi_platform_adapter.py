@@ -50,7 +50,7 @@ logger = logging.getLogger(__name__)
 class AdaptedContent:
     """
     Structured container for platform-adapted content
-    
+
     This class standardizes the output format for all platform adapters,
     ensuring consistent data structure across the system.
     """
@@ -64,20 +64,20 @@ class AdaptedContent:
 class BasePlatformAdapter(ABC):
     """
     Abstract base class for platform-specific content adapters
-    
+
     This class defines the interface that all platform adapters must implement,
     ensuring consistent behavior across different social media platforms.
     """
-    
+
     def __init__(self, ai_config: AIModelConfig):
         self.ai_config = ai_config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
-    
+
     @abstractmethod
     async def adapt_content(self, original_content: str) -> AdaptedContent:
         """Adapt content for specific platform"""
         pass
-    
+
     @abstractmethod
     def get_platform_constraints(self) -> Dict[str, Any]:
         """Get platform-specific constraints (character limits, etc.)"""
@@ -86,16 +86,16 @@ class BasePlatformAdapter(ABC):
 class LinkedInAdapter(BasePlatformAdapter):
     """
     LinkedIn Content Adapter using Anthropic Claude
-    
+
     LinkedIn requires professional, business-focused content with:
     - Industry insights and professional language
     - Networking-oriented messaging
     - Professional hashtags and terminology
     - Longer-form content capability (up to 3000 characters)
-    
+
     This adapter uses Claude's strength in professional writing and analysis.
     """
-    
+
     def __init__(self, ai_config: AIModelConfig):
         super().__init__(ai_config)
         # Initialize Anthropic client with explicit parameters to avoid version compatibility issues
@@ -104,11 +104,11 @@ class LinkedInAdapter(BasePlatformAdapter):
             max_retries=2
         )
         self.platform_name = "LinkedIn"
-    
+
     async def adapt_content(self, original_content: str) -> AdaptedContent:
         """
         Adapt content for LinkedIn professional audience
-        
+
         Process:
         1. Analyze original content for business relevance
         2. Enhance with professional language and industry insights
@@ -117,24 +117,24 @@ class LinkedInAdapter(BasePlatformAdapter):
         """
         try:
             self.logger.info("Starting LinkedIn content adaptation with Claude")
-            
+
             # Construct professional adaptation prompt
             prompt = self._build_linkedin_prompt(original_content)
-            
+
             # Call Claude API
             response = await self._call_claude_api(prompt)
-            
+
             # Parse response and extract components
             adapted_content = self._parse_claude_response(response)
-            
+
             self.logger.info("LinkedIn content adaptation completed successfully")
             return adapted_content
-            
+
         except Exception as e:
             self.logger.error(f"LinkedIn adaptation failed: {str(e)}")
             # Return fallback content
             return self._create_fallback_content(original_content)
-    
+
     def _build_linkedin_prompt(self, content: str) -> str:
         """Build LinkedIn-specific adaptation prompt for Claude"""
         return f"""
@@ -161,7 +161,7 @@ class LinkedInAdapter(BasePlatformAdapter):
             "optimization_score": 0.85
         }}
         """
-    
+
     async def _call_claude_api(self, prompt: str) -> Dict[str, Any]:
         """Call Anthropic Claude API with error handling and retries"""
         try:
@@ -177,28 +177,28 @@ class LinkedInAdapter(BasePlatformAdapter):
                     }
                 ]
             )
-            
+
             return {"content": message.content[0].text}
-            
+
         except Exception as e:
             self.logger.error(f"Claude API call failed: {str(e)}")
             raise
-    
+
     def _parse_claude_response(self, response: Dict[str, Any]) -> AdaptedContent:
         """Parse Claude response and extract structured content"""
         import json
-        
+
         try:
             # Extract JSON from Claude response
             content_text = response["content"]
-            
+
             # Find JSON in response (Claude sometimes adds explanation)
             json_start = content_text.find('{')
             json_end = content_text.rfind('}') + 1
             json_str = content_text[json_start:json_end]
-            
+
             parsed = json.loads(json_str)
-            
+
             return AdaptedContent(
                 content=parsed["adapted_content"],
                 hashtags=parsed["hashtags"],
@@ -210,11 +210,11 @@ class LinkedInAdapter(BasePlatformAdapter):
                 ai_insights=parsed.get("professional_insights", ""),
                 optimization_score=parsed.get("optimization_score", 0.8)
             )
-            
+
         except (json.JSONDecodeError, KeyError) as e:
             self.logger.warning(f"Failed to parse Claude response: {str(e)}")
             return self._create_fallback_content(response.get("content", ""))
-    
+
     def _create_fallback_content(self, original_content: str) -> AdaptedContent:
         """Create fallback content when AI adaptation fails"""
         return AdaptedContent(
@@ -225,7 +225,7 @@ class LinkedInAdapter(BasePlatformAdapter):
             ai_insights="Fallback content generated due to API limitation",
             optimization_score=0.6
         )
-    
+
     def get_platform_constraints(self) -> Dict[str, Any]:
         """Get LinkedIn platform constraints"""
         return {
@@ -239,16 +239,16 @@ class LinkedInAdapter(BasePlatformAdapter):
 class TwitterAdapter(BasePlatformAdapter):
     """
     Twitter Content Adapter using OpenAI GPT-4
-    
+
     Twitter requires concise, engaging content with:
     - 280 character limit
     - Trending and viral content optimization
     - Quick, punchy messaging
     - Strategic hashtag usage (2-3 hashtags max)
-    
+
     This adapter uses GPT-4's strength in creating viral, engaging content.
     """
-    
+
     def __init__(self, ai_config: AIModelConfig):
         super().__init__(ai_config)
         # Initialize OpenAI client with explicit parameters to avoid version compatibility issues
@@ -257,11 +257,11 @@ class TwitterAdapter(BasePlatformAdapter):
             max_retries=2
         )
         self.platform_name = "Twitter"
-    
+
     async def adapt_content(self, original_content: str) -> AdaptedContent:
         """
         Adapt content for Twitter's fast-paced, engaging environment
-        
+
         Process:
         1. Compress content to fit 280 character limit
         2. Add trending elements and viral potential
@@ -270,23 +270,23 @@ class TwitterAdapter(BasePlatformAdapter):
         """
         try:
             self.logger.info("Starting Twitter content adaptation with GPT-4")
-            
+
             # Build Twitter-specific prompt
             prompt = self._build_twitter_prompt(original_content)
-            
+
             # Call OpenAI API
             response = await self._call_openai_api(prompt)
-            
+
             # Parse and structure response
             adapted_content = self._parse_openai_response(response)
-            
+
             self.logger.info("Twitter content adaptation completed successfully")
             return adapted_content
-            
+
         except Exception as e:
             self.logger.error(f"Twitter adaptation failed: {str(e)}")
             return self._create_fallback_content(original_content)
-    
+
     def _build_twitter_prompt(self, content: str) -> str:
         """Build Twitter-specific adaptation prompt for GPT-4"""
         return f"""
@@ -314,13 +314,13 @@ class TwitterAdapter(BasePlatformAdapter):
             "optimization_score": 0.9
         }}
         """
-    
+
     async def _call_openai_api(self, prompt: str) -> Dict[str, Any]:
         """Call OpenAI GPT-4 API with error handling"""
         try:
             # Handle o3 model temperature restriction
             temperature = 1.0 if self.ai_config.default_model.startswith("o3") else self.ai_config.temperature
-            
+
             response = await asyncio.to_thread(
                 self.client.chat.completions.create,
                 model=self.ai_config.default_model,
@@ -337,27 +337,27 @@ class TwitterAdapter(BasePlatformAdapter):
                     }
                 ]
             )
-            
+
             return {"content": response.choices[0].message.content}
-            
+
         except Exception as e:
             self.logger.error(f"OpenAI API call failed: {str(e)}")
             raise
-    
+
     def _parse_openai_response(self, response: Dict[str, Any]) -> AdaptedContent:
         """Parse OpenAI response and extract structured content"""
         import json
-        
+
         try:
             content_text = response["content"]
-            
+
             # Extract JSON from response
             json_start = content_text.find('{')
             json_end = content_text.rfind('}') + 1
             json_str = content_text[json_start:json_end]
-            
+
             parsed = json.loads(json_str)
-            
+
             return AdaptedContent(
                 content=parsed["adapted_content"],
                 hashtags=parsed["hashtags"],
@@ -370,11 +370,11 @@ class TwitterAdapter(BasePlatformAdapter):
                 ai_insights=parsed.get("viral_elements", ""),
                 optimization_score=parsed.get("optimization_score", 0.8)
             )
-            
+
         except (json.JSONDecodeError, KeyError) as e:
             self.logger.warning(f"Failed to parse OpenAI response: {str(e)}")
             return self._create_fallback_content(response.get("content", ""))
-    
+
     def _create_fallback_content(self, original_content: str) -> AdaptedContent:
         """Create fallback Twitter content when AI adaptation fails"""
         # Truncate content to fit Twitter's limit
@@ -387,7 +387,7 @@ class TwitterAdapter(BasePlatformAdapter):
             ai_insights="Fallback content with character limit optimization",
             optimization_score=0.6
         )
-    
+
     def get_platform_constraints(self) -> Dict[str, Any]:
         """Get Twitter platform constraints"""
         return {
@@ -401,16 +401,16 @@ class TwitterAdapter(BasePlatformAdapter):
 class InstagramAdapter(BasePlatformAdapter):
     """
     Instagram Content Adapter using Anthropic Claude
-    
+
     Instagram requires visual, emotional content with:
     - Storytelling and aesthetic appeal
     - Emotional connection and inspiration
     - Visual-first thinking (though we focus on captions)
     - Lifestyle and aspirational messaging
-    
+
     This adapter uses Claude's strength in creative, emotional writing.
     """
-    
+
     def __init__(self, ai_config: AIModelConfig):
         super().__init__(ai_config)
         # Initialize Anthropic client with explicit parameters to avoid version compatibility issues
@@ -419,11 +419,11 @@ class InstagramAdapter(BasePlatformAdapter):
             max_retries=2
         )
         self.platform_name = "Instagram"
-    
+
     async def adapt_content(self, original_content: str) -> AdaptedContent:
         """
         Adapt content for Instagram's visual and emotional environment
-        
+
         Process:
         1. Transform into visual, story-driven content
         2. Add emotional hooks and inspirational elements
@@ -432,18 +432,18 @@ class InstagramAdapter(BasePlatformAdapter):
         """
         try:
             self.logger.info("Starting Instagram content adaptation with Claude")
-            
+
             prompt = self._build_instagram_prompt(original_content)
             response = await self._call_claude_api(prompt)
             adapted_content = self._parse_claude_response(response)
-            
+
             self.logger.info("Instagram content adaptation completed successfully")
             return adapted_content
-            
+
         except Exception as e:
             self.logger.error(f"Instagram adaptation failed: {str(e)}")
             return self._create_fallback_content(original_content)
-    
+
     def _build_instagram_prompt(self, content: str) -> str:
         """Build Instagram-specific adaptation prompt for Claude"""
         return f"""
@@ -472,7 +472,7 @@ class InstagramAdapter(BasePlatformAdapter):
             "optimization_score": 0.85
         }}
         """
-    
+
     async def _call_claude_api(self, prompt: str) -> Dict[str, Any]:
         """Call Anthropic Claude API (same as LinkedIn but different prompt)"""
         try:
@@ -488,25 +488,25 @@ class InstagramAdapter(BasePlatformAdapter):
                     }
                 ]
             )
-            
+
             return {"content": message.content[0].text}
-            
+
         except Exception as e:
             self.logger.error(f"Claude API call failed: {str(e)}")
             raise
-    
+
     def _parse_claude_response(self, response: Dict[str, Any]) -> AdaptedContent:
         """Parse Claude response for Instagram content"""
         import json
-        
+
         try:
             content_text = response["content"]
             json_start = content_text.find('{')
             json_end = content_text.rfind('}') + 1
             json_str = content_text[json_start:json_end]
-            
+
             parsed = json.loads(json_str)
-            
+
             return AdaptedContent(
                 content=parsed["adapted_content"],
                 hashtags=parsed["hashtags"],
@@ -519,11 +519,11 @@ class InstagramAdapter(BasePlatformAdapter):
                 ai_insights=parsed.get("emotional_hooks", ""),
                 optimization_score=parsed.get("optimization_score", 0.8)
             )
-            
+
         except (json.JSONDecodeError, KeyError) as e:
             self.logger.warning(f"Failed to parse Claude response: {str(e)}")
             return self._create_fallback_content(response.get("content", ""))
-    
+
     def _create_fallback_content(self, original_content: str) -> AdaptedContent:
         """Create fallback Instagram content when AI adaptation fails"""
         return AdaptedContent(
@@ -534,7 +534,7 @@ class InstagramAdapter(BasePlatformAdapter):
             ai_insights="Fallback content with visual and emotional enhancement",
             optimization_score=0.6
         )
-    
+
     def get_platform_constraints(self) -> Dict[str, Any]:
         """Get Instagram platform constraints"""
         return {
@@ -549,72 +549,72 @@ class InstagramAdapter(BasePlatformAdapter):
 class MultiPlatformAdapter:
     """
     Central orchestrator for multi-platform content adaptation
-    
+
     This class coordinates the different platform adapters to transform
     original content into optimized versions for each selected platform.
-    
+
     Process Flow:
     1. Receive original content and platform list
     2. Initialize appropriate platform adapters
     3. Execute parallel content adaptation
     4. Aggregate and return results
-    
+
     Performance Optimization:
     - Parallel execution of AI API calls
     - Caching of recent adaptations
     - Fallback content generation
     - Error handling and retry logic
     """
-    
+
     def __init__(self, ai_config: AIModelConfig):
         self.ai_config = ai_config
         self.logger = logging.getLogger(__name__)
-        
+
         # Initialize platform adapters
         self.adapters = {
             'linkedin': LinkedInAdapter(ai_config),
             'twitter': TwitterAdapter(ai_config),
             'instagram': InstagramAdapter(ai_config)
         }
-        
+
         self.logger.info("MultiPlatformAdapter initialized with all platform adapters")
-    
+
     def adapt_for_platforms(self, original_content: str, platforms: List[str]) -> Dict[str, Dict[str, Any]]:
         """
         Adapt content for multiple platforms simultaneously
-        
+
         Args:
             original_content: The original content to adapt
             platforms: List of platform names ['linkedin', 'twitter', 'instagram']
-        
+
         Returns:
             Dictionary mapping platform names to adapted content data
         """
         try:
             self.logger.info(f"Starting multi-platform adaptation for: {platforms}")
-            
+
             # Run adaptations in parallel for better performance
             results = asyncio.run(self._adapt_platforms_parallel(original_content, platforms))
-            
+
             self.logger.info("Multi-platform adaptation completed successfully")
             return results
-            
+
         except Exception as e:
             self.logger.error(f"Multi-platform adaptation failed: {str(e)}")
             # Return fallback results for all platforms
             return self._create_fallback_results(original_content, platforms)
-    
+
     async def _adapt_platforms_parallel(self, original_content: str, platforms: List[str]) -> Dict[str, Dict[str, Any]]:
         """Execute platform adaptations in parallel for optimal performance"""
         tasks = []
-        
+
         for platform in platforms:
             if platform in self.adapters:
                 task = self._adapt_single_platform(platform, original_content)
                 tasks.append((platform, task))
             else:
                 self.logger.warning(f"Unknown platform: {platform}")
-        
+
         # Execute all adaptations in parallel
         results = {}
         for platform, task in tasks:
@@ -624,14 +624,14 @@ class MultiPlatformAdapter:
             except Exception as e:
                 self.logger.error(f"Adaptation failed for {platform}: {str(e)}")
                 results[platform] = self._create_platform_fallback(platform, original_content)
-        
+
         return results
-    
+
     async def _adapt_single_platform(self, platform: str, content: str) -> AdaptedContent:
         """Adapt content for a single platform"""
         adapter = self.adapters[platform]
         return await adapter.adapt_content(content)
-    
+
     def _format_platform_result(self, adapted_content: AdaptedContent) -> Dict[str, Any]:
         """Format AdaptedContent object into API response format"""
         return {
@@ -642,7 +642,7 @@ class MultiPlatformAdapter:
             'optimization_score': adapted_content.optimization_score,
             'platform_data': adapted_content.platform_specific_data
         }
-    
+
     def _create_platform_fallback(self, platform: str, original_content: str) -> Dict[str, Any]:
         """Create fallback content for a specific platform"""
         fallback_content = {
@@ -650,13 +650,13 @@ class MultiPlatformAdapter:
             'twitter': f"🔥 {original_content[:240]}... #trending",
             'instagram': f"✨ {original_content} ✨\n\nWhat inspires you? 💫"
         }
-        
+
         fallback_hashtags = {
             'linkedin': ['professional', 'business', 'networking'],
             'twitter': ['trending', 'tech'],
             'instagram': ['inspiration', 'aesthetic', 'lifestyle']
         }
-        
+
         return {
             'content': fallback_content.get(platform, original_content),
             'hashtags': fallback_hashtags.get(platform, ['general']),
@@ -665,18 +665,18 @@ class MultiPlatformAdapter:
             'optimization_score': 0.5,
             'platform_data': {}
         }
-    
+
     def _create_fallback_results(self, original_content: str, platforms: List[str]) -> Dict[str, Dict[str, Any]]:
         """Create fallback results for all platforms when system fails"""
         results = {}
         for platform in platforms:
             results[platform] = self._create_platform_fallback(platform, original_content)
         return results
-    
+
     def get_supported_platforms(self) -> List[str]:
         """Get list of supported platforms"""
         return list(self.adapters.keys())
-    
+
     def get_platform_constraints(self, platform: str) -> Optional[Dict[str, Any]]:
         """Get constraints for a specific platform"""
         if platform in self.adapters:

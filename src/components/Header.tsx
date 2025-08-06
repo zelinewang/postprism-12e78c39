@@ -62,7 +62,7 @@ const Header = () => {
                     {user?.email?.split('@')[0] || 'User'}
                   </span>
                 </div>
-                
+
                 <Button
                   variant="outline"
                   size="sm"

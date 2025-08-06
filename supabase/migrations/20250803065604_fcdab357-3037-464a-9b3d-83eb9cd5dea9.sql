@@ -12,19 +12,19 @@ CREATE TABLE public.profiles (
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 
 -- Create policies for profiles
-CREATE POLICY "Users can view their own profile" 
-ON public.profiles 
-FOR SELECT 
+CREATE POLICY "Users can view their own profile"
+ON public.profiles
+FOR SELECT
 USING (auth.uid() = user_id);
 
-CREATE POLICY "Users can update their own profile" 
-ON public.profiles 
-FOR UPDATE 
+CREATE POLICY "Users can update their own profile"
+ON public.profiles
+FOR UPDATE
 USING (auth.uid() = user_id);
 
-CREATE POLICY "Users can insert their own profile" 
-ON public.profiles 
-FOR INSERT 
+CREATE POLICY "Users can insert their own profile"
+ON public.profiles
+FOR INSERT
 WITH CHECK (auth.uid() = user_id);
 
 -- Create content publishing logs table
@@ -42,14 +42,14 @@ CREATE TABLE public.content_logs (
 ALTER TABLE public.content_logs ENABLE ROW LEVEL SECURITY;
 
 -- Create policies for content logs
-CREATE POLICY "Users can view their own content logs" 
-ON public.content_logs 
-FOR SELECT 
+CREATE POLICY "Users can view their own content logs"
+ON public.content_logs
+FOR SELECT
 USING (auth.uid() = user_id);
 
-CREATE POLICY "Users can insert their own content logs" 
-ON public.content_logs 
-FOR INSERT 
+CREATE POLICY "Users can insert their own content logs"
+ON public.content_logs
+FOR INSERT
 WITH CHECK (auth.uid() = user_id);
 
 -- Create function to update timestamps

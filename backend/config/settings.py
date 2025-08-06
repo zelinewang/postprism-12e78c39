@@ -56,7 +56,7 @@ class AgentS2_5Config:
     model_type: str = "openai"
     model_url: str = ""  # Optional custom API URL
     model_api_key: str = ""  # Optional separate API key
-    
+
     # Grounding model parameters (required for S2.5)
     grounding_model: str = "ui-tars-1.5-7b"  # Official recommendation
     grounding_type: str = "huggingface"
@@ -64,14 +64,14 @@ class AgentS2_5Config:
     grounding_api_key: str = ""  # Optional grounding API key
     grounding_width: int = 1920  # Output coordinate resolution width
     grounding_height: int = 1080  # Output coordinate resolution height
-    
+
     # Agent behavior parameters
     max_trajectory_length: int = 8  # Official default
     enable_reflection: bool = True  # Official default
     max_steps: int = 15
     step_delay: float = 1.0
     platform: str = "linux"
-    
+
     # Legacy parameters (maintained for compatibility)
     action_space: str = "pyautogui"
     observation_type: str = "screenshot"
@@ -99,30 +99,30 @@ class FlaskConfig:
 class Settings:
     """
     Central configuration management class for PostPrism backend.
-    
+
     This class initializes and validates all configuration parameters from environment
     variables, providing a single source of truth for application settings.
-    
+
     Usage:
         settings = Settings()
         ai_config = settings.ai_model
         orgo_config = settings.orgo
     """
-    
+
     def __init__(self):
         """Initialize all configuration sections with environment variable validation"""
         self._validate_required_env_vars()
-        
+
         # Initialize configuration sections
         self.ai_model = self._init_ai_model_config()
         self.orgo = self._init_orgo_config()
         self.agents2_5 = self._init_agents2_5_config()
         self.websocket = self._init_websocket_config()
         self.flask = self._init_flask_config()
-        
+
         # Setup logging
         self._setup_logging()
-    
+
     def _validate_required_env_vars(self) -> None:
         """Validate that all required environment variables are present"""
         required_vars = [
@@ -130,15 +130,15 @@ class Settings:
             'OPENAI_API_KEY',
             'ORGO_API_KEY'
         ]
-        
+
         missing_vars = []
         for var in required_vars:
             if not os.getenv(var):
                 missing_vars.append(var)
-        
+
         if missing_vars:
             raise ValueError(f"Missing required environment variables: {', '.join(missing_vars)}")
-    
+
     def _init_ai_model_config(self) -> AIModelConfig:
         """Initialize AI model configuration from environment variables"""
         return AIModelConfig(
@@ -149,7 +149,7 @@ class Settings:
             max_tokens=int(os.getenv('AI_MAX_TOKENS', '2000')),
             temperature=float(os.getenv('AI_TEMPERATURE', '0.7'))
         )
-    
+
     def _init_orgo_config(self) -> ORGOConfig:
         """Initialize ORGO configuration from environment variables"""
         return ORGOConfig(
@@ -159,7 +159,7 @@ class Settings:
             retry_attempts=int(os.getenv('ORGO_RETRY_ATTEMPTS', '3')),
             screenshot_quality=int(os.getenv('ORGO_SCREENSHOT_QUALITY', '85'))
         )
-    
+
     def _init_agents2_5_config(self) -> AgentS2_5Config:
         """Initialize AgentS2.5 configuration from environment variables (latest version)"""
         return AgentS2_5Config(
@@ -168,7 +168,7 @@ class Settings:
             model_type=os.getenv('AGENTS2_5_MODEL_TYPE', 'openai'),
             model_url=os.getenv('AGENTS2_5_MODEL_URL', ''),
             model_api_key=os.getenv('AGENTS2_5_MODEL_API_KEY', ''),
-            
+
             # Grounding model parameters (required for S2.5)
             grounding_model=os.getenv('AGENTS2_5_GROUNDING_MODEL', 'ui-tars-1.5-7b'),
             grounding_type=os.getenv('AGENTS2_5_GROUNDING_TYPE', 'huggingface'),
@@ -176,20 +176,20 @@ class Settings:
             grounding_api_key=os.getenv('AGENTS2_5_GROUNDING_API_KEY', ''),
             grounding_width=int(os.getenv('AGENTS2_5_GROUNDING_WIDTH', '1920')),
             grounding_height=int(os.getenv('AGENTS2_5_GROUNDING_HEIGHT', '1080')),
-            
+
             # Agent behavior parameters
             max_trajectory_length=int(os.getenv('AGENTS2_5_MAX_TRAJECTORY_LENGTH', '8')),
             enable_reflection=os.getenv('AGENTS2_5_ENABLE_REFLECTION', 'true').lower() == 'true',
             max_steps=int(os.getenv('AGENTS2_5_MAX_STEPS', '15')),
             step_delay=float(os.getenv('AGENTS2_5_STEP_DELAY', '1.0')),
             platform=os.getenv('AGENTS2_5_PLATFORM', 'linux'),
-            
+
             # Legacy parameters (maintained for compatibility)
             action_space=os.getenv('AGENTS2_5_ACTION_SPACE', 'pyautogui'),
             observation_type=os.getenv('AGENTS2_5_OBSERVATION_TYPE', 'screenshot'),
             remote=os.getenv('AGENTS2_5_REMOTE', 'true').lower() == 'true'
         )
-    
+
     def _init_websocket_config(self) -> WebSocketConfig:
         """Initialize WebSocket configuration from environment variables"""
         return WebSocketConfig(
@@ -200,7 +200,7 @@ class Settings:
             ping_interval=int(os.getenv('WEBSOCKET_PING_INTERVAL', '25')),
             max_frame_size=int(os.getenv('WEBSOCKET_MAX_FRAME_SIZE', str(1024 * 1024)))
         )
-    
+
     def _init_flask_config(self) -> FlaskConfig:
         """Initialize Flask configuration from environment variables"""
         cors_origins = os.getenv('FLASK_CORS_ORIGINS')
@@ -211,12 +211,12 @@ class Settings:
             secret_key=os.getenv('FLASK_SECRET_KEY', 'postprism-secret-key-change-in-production'),
             cors_origins=cors_origins.split(',') if cors_origins else ['http://localhost:8080']
         )
-    
+
     def _setup_logging(self) -> None:
         """Setup application logging configuration"""
         log_level = os.getenv('LOG_LEVEL', 'INFO').upper()
         log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-        
+
         logging.basicConfig(
             level=getattr(logging, log_level),
             format=log_format,
@@ -225,7 +225,7 @@ class Settings:
                 logging.FileHandler(os.getenv('LOG_FILE', 'postprism.log'))
             ]
         )
-    
+
     def get_config_dict(self) -> Dict[str, Any]:
         """Return configuration as dictionary for debugging purposes"""
         return {

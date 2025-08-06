@@ -118,13 +118,13 @@ def create_example_env():
         'ORGO_INSTAGRAM_PROJECT_ID': '',
     }
     env_content = DEFAULT_ENV_CONFIG_TEMPLATE.format(**placeholder_vars)
-    
+
     # Create .env.example in project root directory
     project_root = Path(__file__).parent.parent  # Go up from backend/ to project root
     env_path = project_root / '.env.example'
     with open(env_path, 'w') as f:
         f.write(env_content)
-    
+
     print(f"\n✅ Created .env.example file with the latest configuration at {env_path}")
     print("Please rename it to .env and fill in your actual API keys and endpoint URL.")
 
@@ -210,14 +210,14 @@ def check_environment_and_connections():
         grounding_url = config['AGENTS2_5_GROUNDING_URL']
         if not grounding_url or not grounding_url.startswith('http'):
              raise ValueError("Grounding URL is not a valid http/https url")
-        
+
         # Test with actual API endpoint (not /health which doesn't exist)
         api_url = grounding_url.rstrip('/') + '/chat/completions'
         headers = {
             "Authorization": f"Bearer {config['AGENTS2_5_GROUNDING_API_KEY']}",
             "Content-Type": "application/json"
         }
-        
+
         # Simple test request to verify endpoint is working
         test_payload = {
             "model": "tgi",
@@ -234,7 +234,7 @@ def check_environment_and_connections():
             ],
             "max_tokens": 5
         }
-        
+
         response = requests.post(api_url, headers=headers, json=test_payload, timeout=15)
         response.raise_for_status()
         print("  ✅ Grounding Model endpoint connection successful.")
@@ -258,13 +258,13 @@ def interactive_setup():
     """Interactive environment setup"""
     print("🚀 PostPrism Backend Interactive Setup")
     print("=" * 40)
-    
+
     # Create .env in project root directory (not backend directory)
     project_root = Path(__file__).parent.parent  # Go up from backend/ to project root
     env_path = project_root / '.env'
     if env_path.exists():
         print("Found existing .env file in project root. We will now check and update it.")
-    
+
     from dotenv import load_dotenv
     load_dotenv()
 
@@ -292,11 +292,11 @@ def interactive_setup():
 
     # Format the template with the gathered variables
     final_content = DEFAULT_ENV_CONFIG_TEMPLATE.format(**env_vars)
-    
+
     # Write to project root .env file
     with open(env_path, 'w') as f:
         f.write(final_content)
-    
+
     print(f"\n✅ Environment configuration saved to {env_path}")
     print("\nRunning validation...")
     check_environment_and_connections()
@@ -306,9 +306,9 @@ def main():
     parser = argparse.ArgumentParser(description="PostPrism Environment Setup & Validation")
     parser.add_argument('--example', action='store_true', help='Create an example .env file for manual editing.')
     parser.add_argument('--check', action='store_true', help='Validate the current .env configuration and test service connections.')
-    
+
     args = parser.parse_args()
-    
+
     if args.example:
         create_example_env()
     elif args.check:

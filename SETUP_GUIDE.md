@@ -57,7 +57,7 @@ cp .env.example .env
 # Terminal 1 - Backend
 cd backend && python run_fixed.py
 
-# Terminal 2 - Frontend  
+# Terminal 2 - Frontend
 npm run dev
 ```
 
@@ -106,7 +106,7 @@ For power users who want to customize Agent S2.5 behavior:
 ```bash
 # Model Selection (balance cost vs performance)
 AGENTS2_5_MODEL=gpt-4o-mini          # Fast, cheap
-AGENTS2_5_MODEL=gpt-4o               # Balanced  
+AGENTS2_5_MODEL=gpt-4o               # Balanced
 AGENTS2_5_MODEL=o3-2025-04-16        # Best performance
 
 # Performance Tuning

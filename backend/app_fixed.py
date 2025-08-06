@@ -44,7 +44,7 @@ logger = logging.getLogger(__name__)
 class PostPrismApp:
     """
     Fixed PostPrism Flask application with official Agent S2.5 integration
-    
+
     Key improvements:
     1. Simplified architecture
     2. Official Agent S2.5 patterns
@@ -52,36 +52,36 @@ class PostPrismApp:
     4. Cleaner WebSocket integration
     5. Proper async handling
     """
-    
+
     def __init__(self):
         """Initialize the fixed PostPrism application"""
         self.app = self._create_flask_app()
         self.socketio = self._setup_websocket()
-        
+
         # Initialize core components with OPTIMIZED agent manager
         self.content_adapter = MultiPlatformAdapter(settings.ai_model)
         self.optimized_agent_manager = OptimizedAgentManager(settings)  # OPTIMIZED: Simple, efficient, proven agent manager
         self.video_streamer = VideoStreamer(self.socketio)
         self.progress_tracker = ProgressTracker()
-        
+
         # Register routes and event handlers
         self._register_routes()
         self._register_websocket_events()
-        
+
         logger.info("✅ PostPrism backend initialized with official Agent S2.5")
-    
+
     def _create_flask_app(self) -> Flask:
         """Create and configure Flask application"""
         app = Flask(__name__)
         app.config['SECRET_KEY'] = settings.flask.secret_key
         app.config['DEBUG'] = settings.flask.debug
-        
+
         # Setup CORS for frontend communication
         CORS(app, origins=settings.flask.cors_origins)
-        
+
         logger.info(f"Flask app created with debug={settings.flask.debug}")
         return app
-    
+
     def _setup_websocket(self) -> SocketIO:
         """Setup WebSocket server for real-time communication"""
         socketio = SocketIO(
@@ -97,13 +97,13 @@ class PostPrismApp:
             # Force polling to avoid WebSocket upgrade issues
             transports=['polling']
         )
-        
+
         logger.info("WebSocket server configured (polling-only)")
         return socketio
-    
+
     def _register_routes(self) -> None:
         """Register all Flask HTTP routes"""
-        
+
         @self.app.route('/health', methods=['GET'])
         def health_check():
             """Health check endpoint with parallel execution support"""
@@ -111,7 +111,7 @@ class PostPrismApp:
             platform_status = {}
             for platform, project_id in self.optimized_agent_manager.platform_projects.items():
                 platform_status[platform] = 'configured' if project_id else 'missing_project_id'
-            
+
             return jsonify({
                 'status': 'healthy',
                 'timestamp': datetime.utcnow().isoformat(),
@@ -135,12 +135,12 @@ class PostPrismApp:
                 },
                 'platform_support': platform_status
             })
-        
+
         @self.app.route('/api/config', methods=['GET'])
         def get_config():
             """Get current system configuration"""
             return jsonify(settings.get_config_dict())
-        
+
         @self.app.route('/api/preview-content', methods=['POST'])
         def preview_content():
             """Preview AI-adapted content without publishing"""
@@ -148,18 +148,18 @@ class PostPrismApp:
                 data = request.get_json()
                 content = data.get('content', '').strip()
                 platforms = data.get('platforms', ['linkedin', 'twitter', 'instagram'])
-                
+
                 if not content:
                     return jsonify({
                         'success': False,
                         'error': 'Content cannot be empty'
                     }), 400
-                
+
                 logger.info(f"Previewing content for platforms: {platforms}")
-                
+
                 # Use AI adapter to generate previews
                 adapted_content = self.content_adapter.adapt_for_platforms(content, platforms)
-                
+
                 return jsonify({
                     'success': True,
                     'data': {
@@ -168,19 +168,19 @@ class PostPrismApp:
                         'preview_mode': True
                     }
                 })
-                
+
             except Exception as e:
                 logger.error(f"Error in preview_content: {str(e)}")
                 return jsonify({
                     'success': False,
                     'error': f'Preview failed: {str(e)}'
                 }), 500
-        
+
         @self.app.route('/api/publish-content', methods=['POST'])
         def publish_content():
             """
             FIXED: Core publishing endpoint with official Agent S2.5
-            
+
             Key improvements:
             1. Uses official Agent S2.5 patterns
             2. Simple, natural instructions
@@ -193,30 +193,30 @@ class PostPrismApp:
                 content = data.get('content', '').strip()
                 platforms = data.get('platforms', ['linkedin', 'twitter', 'instagram'])
                 session_id = data.get('session_id', str(uuid.uuid4()))  # 使用前端传递的session_id
-                
+
                 # Input validation
                 if not content:
                     return jsonify({
                         'success': False,
                         'error': 'Content cannot be empty'
                     }), 400
-                
+
                 if not platforms:
                     return jsonify({
                         'success': False,
                         'error': 'At least one platform must be selected'
                     }), 400
-                
+
                 logger.info(f"🚀 Starting FIXED publish process for session {session_id}")
                 logger.info(f"Content: {content[:100]}... | Platforms: {platforms}")
-                
+
                 # Start real-time streaming session
                 self.video_streamer.start_streaming(session_id)
-                
+
                 # Initialize progress tracking
                 self.progress_tracker.initialize_session(session_id, platforms)
-                
-                # Emit publishing started event 
+
+                # Emit publishing started event
                 self.socketio.emit('publish_started', {
                     'session_id': session_id,
                     'total_platforms': len(platforms),
@@ -224,33 +224,33 @@ class PostPrismApp:
                     'message': 'Starting AI content adaptation...',
                     'system': 'official-agent-s2.5'
                 }, room=session_id)
-                
+
                 start_time = time.time()
-                
+
                 # Step 1: AI Content Adaptation
                 logger.info("Step 1: AI content adaptation")
                 adapted_content = self.content_adapter.adapt_for_platforms(content, platforms)
-                
+
                 # Emit adaptation complete
                 self.socketio.emit('adaptation_complete', {
                     'session_id': session_id,
                     'adapted_content': adapted_content,
                     'message': 'AI adaptation complete. Starting official Agent S2.5 automation...'
                 }, room=session_id)
-                
+
                 # Step 2: FIXED - Official Agent S2.5 Automation
                 logger.info("Step 2: Official Agent S2.5 automation with live streaming")
-                
+
                 # Run official Agent S2.5 automation
                 publish_results = asyncio.run(
                     self._execute_official_publishing(
                         adapted_content, platforms, session_id
                     )
                 )
-                
+
                 # Calculate total execution time
                 total_time = time.time() - start_time
-                
+
                 # FIXED: Emit final completion with consistent data format
                 # This ensures frontend receives the event before connection closes
                 self.socketio.emit('all_platforms_completed', {
@@ -260,15 +260,15 @@ class PostPrismApp:
                     'message': 'Publishing completed with enhanced Agent S2.5!',
                     'system': 'enhanced-agent-s2.5'
                 }, room=session_id)
-                
+
                 # Give frontend time to process completion event before stopping streaming
                 time.sleep(2.0)
-                
+
                 # Now stop streaming
                 self.video_streamer.stop_streaming(session_id)
-                
+
                 logger.info(f"✅ Publish process completed for session {session_id} in {total_time:.1f}s")
-                
+
                 return jsonify({
                     'success': True,
                     'data': {
@@ -280,10 +280,10 @@ class PostPrismApp:
                         'agent_performance': self._calculate_performance_metrics(publish_results)
                     }
                 })
-                
+
             except Exception as e:
                 logger.error(f"❌ Error in publish_content: {str(e)}")
-                
+
                 # Stop streaming on error
                 if 'session_id' in locals():
                     self.video_streamer.stop_streaming(session_id)
@@ -292,12 +292,12 @@ class PostPrismApp:
                         'error': str(e),
                         'message': 'Publishing failed - using fixed official Agent S2.5'
                     }, room=session_id)
-                
+
                 return jsonify({
                     'success': False,
                     'error': f'Publishing failed: {str(e)}'
                 }), 500
-        
+
         @self.app.route('/api/test-official-agent', methods=['POST'])
         def test_official_agent():
             """Test endpoint for official Agent S2.5 - single platform"""
@@ -305,11 +305,11 @@ class PostPrismApp:
                 data = request.get_json()
                 platform = data.get('platform', 'linkedin')
                 content = data.get('content', 'Testing PostPrism with official Agent S2.5 patterns!')
-                
+
                 logger.info(f"🧪 Testing official Agent S2.5 for {platform}")
-                
+
                 session_id = str(uuid.uuid4())
-                
+
                 # Run single platform test with optimized manager
                 result = asyncio.run(
                     self.optimized_agent_manager.publish_content_optimized(
@@ -320,7 +320,7 @@ class PostPrismApp:
                         socketio=self.socketio
                     )
                 )
-                
+
                 return jsonify({
                     'success': result.success,
                     'platform': platform,
@@ -337,19 +337,19 @@ class PostPrismApp:
                     'session_id': session_id,
                     'system': 'optimized-agent-s2.5'
                 })
-                
+
             except Exception as e:
                 logger.error(f"❌ Official Agent S2.5 test failed: {e}")
                 return jsonify({
                     'success': False,
                     'error': str(e)
                 }), 500
-        
+
         @self.app.route('/api/test-parallel-execution', methods=['POST'])
         def test_parallel_execution():
             """
             NEW: Test endpoint for parallel multi-platform execution
-            
+
             This endpoint tests the new parallel execution system with
             multiple platforms running simultaneously for maximum efficiency.
             """
@@ -357,11 +357,11 @@ class PostPrismApp:
                 data = request.get_json()
                 platforms = data.get('platforms', ['linkedin', 'twitter'])  # Default test with 2 platforms
                 content = data.get('content', 'Testing PostPrism PARALLEL execution with Agent S2.5! 🚀⚡')
-                
+
                 # Validate platforms
                 available_platforms = [p for p, pid in self.optimized_agent_manager.platform_projects.items() if pid]
                 test_platforms = [p for p in platforms if p in available_platforms]
-                
+
                 if not test_platforms:
                     return jsonify({
                         'success': False,
@@ -369,11 +369,11 @@ class PostPrismApp:
                         'available_platforms': available_platforms,
                         'requested_platforms': platforms
                     }), 400
-                
+
                 logger.info(f"🧪 Testing PARALLEL execution for platforms: {test_platforms}")
-                
+
                 session_id = str(uuid.uuid4())
-                
+
                 # Create adapted content for testing
                 adapted_content = {}
                 for platform in test_platforms:
@@ -381,12 +381,12 @@ class PostPrismApp:
                         'content': f"{content} (via {platform})",
                         'hashtags': ['PostPrismTest', 'ParallelExecution', 'AgentS25', f'{platform.title()}Test']
                     }
-                
+
                 # Start video streaming for test
                 self.video_streamer.start_streaming(session_id)
-                
+
                 start_time = time.time()
-                
+
                 # Run parallel execution test
                 results = asyncio.run(
                     self._execute_official_publishing(
@@ -395,12 +395,12 @@ class PostPrismApp:
                         session_id=session_id
                     )
                 )
-                
+
                 total_time = time.time() - start_time
-                
+
                 # Stop streaming
                 self.video_streamer.stop_streaming(session_id)
-                
+
                 return jsonify({
                     'success': results['overall_success'],
                     'test_type': 'parallel_execution',
@@ -416,7 +416,7 @@ class PostPrismApp:
                         'efficiency_improvement': results.get('efficiency_improvement', 'N/A')
                     }
                 })
-                
+
             except Exception as e:
                 logger.error(f"❌ Parallel execution test failed: {e}")
                 return jsonify({
@@ -424,7 +424,7 @@ class PostPrismApp:
                     'error': str(e),
                     'test_type': 'parallel_execution'
                 }), 500
-    
+
     async def _execute_official_publishing(
         self,
         adapted_content: Dict[str, Any],
@@ -433,24 +433,24 @@ class PostPrismApp:
     ) -> Dict[str, Any]:
         """
         Execute publishing using official Agent S2.5 patterns - PARALLEL EXECUTION
-        
+
         Key improvements:
         1. Parallel execution using asyncio.gather() for efficiency
-        2. Proper WebSocket streaming for concurrent operations  
+        2. Proper WebSocket streaming for concurrent operations
         3. Enhanced error handling for parallel scenarios
         4. Real-time progress tracking for multiple platforms
-        
+
         Args:
             adapted_content: AI-adapted content for each platform
             platforms: List of platforms to publish to
             session_id: Session ID for WebSocket streaming
-            
+
         Returns:
             Dict containing publish results for all platforms
         """
         logger.info(f"🚀 Starting PARALLEL official Agent S2.5 publishing for {len(platforms)} platforms")
         logger.info(f"📱 Platforms: {platforms}")
-        
+
         # Emit standard publishing start event (frontend compatibility)
         self.socketio.emit('publish_started', {
             'session_id': session_id,
@@ -459,7 +459,7 @@ class PostPrismApp:
             'message': 'Starting parallel Agent S2.5 automation for maximum efficiency...',
             'system': 'official-agent-s2.5-parallel'
         }, room=session_id)
-        
+
         # Also emit the new parallel event for enhanced clients
         self.socketio.emit('parallel_publishing_started', {
             'session_id': session_id,
@@ -468,15 +468,15 @@ class PostPrismApp:
             'message': 'Starting parallel Agent S2.5 automation for maximum efficiency...',
             'system': 'official-agent-s2.5-parallel'
         }, room=session_id)
-        
+
         # Create tasks for parallel execution
         publishing_tasks = []
-        
+
         for platform in platforms:
             platform_content = adapted_content.get(platform, {})
             content = platform_content.get('content', '')
             hashtags = platform_content.get('hashtags', [])
-            
+
             # Create individual publishing task
             task = self._publish_single_platform_parallel(
                 platform=platform,
@@ -485,28 +485,28 @@ class PostPrismApp:
                 session_id=session_id
             )
             publishing_tasks.append(task)
-            
+
             logger.info(f"📋 Created task for {platform}")
-        
+
         # Execute all platforms in parallel
         logger.info(f"⚡ Executing {len(publishing_tasks)} platforms in parallel...")
         start_time = time.time()
-        
+
         try:
             # Run all tasks concurrently with proper error handling
             platform_results = await asyncio.gather(*publishing_tasks, return_exceptions=True)
-            
+
             parallel_execution_time = time.time() - start_time
             logger.info(f"⚡ Parallel execution completed in {parallel_execution_time:.1f}s")
-            
+
         except Exception as e:
             logger.error(f"❌ Parallel execution failed: {e}")
             platform_results = [Exception(f"Parallel execution failed: {e}") for _ in platforms]
-        
-        # Process results from parallel execution 
+
+        # Process results from parallel execution
         results = {}
         successful_platforms = 0
-        
+
         for i, (platform, result) in enumerate(zip(platforms, platform_results)):
             try:
                 if isinstance(result, Exception):
@@ -528,10 +528,10 @@ class PostPrismApp:
                         'error_message': result.error_message,
                         'system': 'official-agent-s2.5-parallel'
                     }
-                    
+
                     if result.success:
                         successful_platforms += 1
-                
+
                 # Emit individual platform completion
                 self.socketio.emit('platform_completed', {
                     'session_id': session_id,
@@ -541,9 +541,9 @@ class PostPrismApp:
                     'post_url': results[platform].get('post_url'),
                     'system': 'official-agent-s2.5-parallel'
                 }, room=session_id)
-                
+
                 logger.info(f"{'✅' if results[platform]['success'] else '❌'} {platform} result processed")
-                
+
             except Exception as e:
                 logger.error(f"❌ Error processing {platform} result: {e}")
                 results[platform] = {
@@ -551,14 +551,14 @@ class PostPrismApp:
                     'error_message': f"Result processing failed: {str(e)}",
                     'system': 'official-agent-s2.5-parallel'
                 }
-        
+
         # Calculate performance metrics
         success_rate = (successful_platforms / len(platforms)) * 100 if platforms else 0
         efficiency_improvement = self._calculate_efficiency_improvement(platforms, parallel_execution_time)
-        
+
         logger.info(f"🎉 PARALLEL publishing completed: {successful_platforms}/{len(platforms)} platforms successful ({success_rate:.1f}%)")
         logger.info(f"⚡ Efficiency improvement: {efficiency_improvement}")
-        
+
         # FIXED: Emit standard completion event with consistent data format
         self.socketio.emit('all_platforms_completed', {
             'session_id': session_id,
@@ -570,8 +570,8 @@ class PostPrismApp:
             'message': f'🎉 Enhanced parallel publishing completed: {successful_platforms}/{len(platforms)} platforms successful',
             'system': 'enhanced-agent-s2.5-parallel'
         }, room=session_id)
-        
-        # Also emit enhanced parallel completion event  
+
+        # Also emit enhanced parallel completion event
         self.socketio.emit('parallel_publishing_completed', {
             'session_id': session_id,
             'successful_platforms': successful_platforms,
@@ -581,7 +581,7 @@ class PostPrismApp:
             'efficiency_improvement': efficiency_improvement,
             'system': 'official-agent-s2.5-parallel'
         }, room=session_id)
-        
+
         return {
             'platforms': results,
             'overall_success': successful_platforms > 0,
@@ -592,7 +592,7 @@ class PostPrismApp:
             'efficiency_improvement': efficiency_improvement,
             'system': 'official-agent-s2.5-parallel'
         }
-    
+
     async def _publish_single_platform_parallel(
         self,
         platform: str,
@@ -602,22 +602,22 @@ class PostPrismApp:
     ) -> Any:
         """
         Publish content to a single platform - designed for parallel execution
-        
+
         This method wraps the official agent manager call with proper error handling
         and WebSocket notifications for parallel execution scenarios.
-        
+
         Args:
             platform: Target platform (linkedin, twitter, instagram)
             content: Content to publish
             hashtags: List of hashtags
             session_id: Session ID for WebSocket streaming
-            
+
         Returns:
             PublishResult: Result from official agent manager
         """
         try:
             logger.info(f"🚀 [PARALLEL] Starting {platform} publishing...")
-            
+
             # Emit platform start for this specific platform
             self.socketio.emit('platform_started', {
                 'session_id': session_id,
@@ -626,7 +626,7 @@ class PostPrismApp:
                 'execution_mode': 'parallel',
                 'system': 'official-agent-s2.5-parallel'
             }, room=session_id)
-            
+
             # Use Optimized Agent S2.5 manager with efficient execution
             # Keep the same session_id for frontend compatibility - WebSocket events go to main room
             result = await self.optimized_agent_manager.publish_content_optimized(
@@ -636,11 +636,11 @@ class PostPrismApp:
                 session_id=session_id,  # Use MAIN session_id for frontend compatibility
                 socketio=self.socketio
             )
-            
+
             logger.info(f"{'✅' if result.success else '❌'} [PARALLEL] {platform} completed: {result.success}")
-            
+
             return result
-            
+
         except Exception as e:
             logger.error(f"❌ [PARALLEL] {platform} publishing failed: {e}")
             # Return a mock OptimizedPublishResult for consistency
@@ -654,47 +654,47 @@ class PostPrismApp:
                 rate_limit_hits=0,
                 completion_reason="exception_occurred"
             )
-    
+
     def _calculate_efficiency_improvement(self, platforms: List[str], parallel_time: float) -> str:
         """
         Calculate efficiency improvement from parallel execution
-        
+
         Args:
             platforms: List of platforms processed
             parallel_time: Time taken for parallel execution
-            
+
         Returns:
             str: Human-readable efficiency improvement description
         """
         # Estimate sequential time (average 45-60 seconds per platform based on LinkedIn performance)
         estimated_sequential_time_per_platform = 52.5  # seconds (average)
         estimated_sequential_total = len(platforms) * estimated_sequential_time_per_platform
-        
+
         if parallel_time > 0:
             time_saved = estimated_sequential_total - parallel_time
             efficiency_ratio = estimated_sequential_total / parallel_time
-            
+
             if time_saved > 0:
                 return f"{time_saved:.1f}s saved ({efficiency_ratio:.1f}x faster than sequential)"
             else:
                 return f"Parallel execution completed in {parallel_time:.1f}s"
         else:
             return "Efficiency calculation unavailable"
-    
+
     def _calculate_performance_metrics(self, publish_results: Dict[str, Any]) -> Dict[str, Any]:
         """Calculate performance metrics from publish results"""
         platforms = publish_results.get('platforms', {})
-        
+
         total_time = sum(
-            platform.get('execution_time', 0) 
+            platform.get('execution_time', 0)
             for platform in platforms.values()
         )
-        
+
         total_steps = sum(
-            platform.get('steps_taken', 0) 
+            platform.get('steps_taken', 0)
             for platform in platforms.values()
         )
-        
+
         return {
             'total_execution_time': total_time,
             'total_steps_taken': total_steps,
@@ -702,20 +702,20 @@ class PostPrismApp:
             'average_time_per_platform': total_time / len(platforms) if platforms else 0,
             'system': 'official-agent-s2.5'
         }
-    
+
     def _register_websocket_events(self) -> None:
         """Register WebSocket event handlers"""
-        
+
         @self.socketio.on('connect')
         def handle_connect():
             """Handle new WebSocket connections with parallel execution support"""
             logger.info(f"🔌 New WebSocket connection: {request.sid}")
-            
+
             # Check available platforms
             available_platforms = [
                 p for p, pid in self.optimized_agent_manager.platform_projects.items() if pid
             ]
-            
+
             emit('connected', {
                                     'message': 'Connected to PostPrism with Optimized Agent S2.5 execution (proven efficiency)',
                 'timestamp': datetime.utcnow().isoformat(),
@@ -740,12 +740,12 @@ class PostPrismApp:
                     'Anti-perfectionism measures prevent endless editing cycles'
                 ]
             })
-        
+
         @self.socketio.on('disconnect')
         def handle_disconnect():
             """Handle WebSocket disconnections"""
             logger.info(f"🔌 WebSocket disconnected: {request.sid}")
-        
+
         @self.socketio.on('join_stream')
         def handle_join_stream(data):
             """Handle client joining a streaming session with parallel execution support"""
@@ -753,12 +753,12 @@ class PostPrismApp:
             if session_id:
                 join_room(session_id)
                 logger.info(f"👥 Client {request.sid} joined PARALLEL stream session {session_id}")
-                
+
                 # Get current platform status
                 available_platforms = [
                     p for p, pid in self.optimized_agent_manager.platform_projects.items() if pid
                 ]
-                
+
                 emit('joined_stream', {
                     'session_id': session_id,
                     'message': f'Joined Optimized streaming session {session_id}',
@@ -786,7 +786,7 @@ class PostPrismApp:
                 })
             else:
                 emit('error', {'message': 'session_id is required to join stream'})
-        
+
         @self.socketio.on('leave_stream')
         def handle_leave_stream(data):
             """Handle client leaving a streaming session"""
@@ -798,18 +798,18 @@ class PostPrismApp:
                     'session_id': session_id,
                     'message': f'Left streaming session {session_id}'
                 })
-    
+
     def run(self, host: Optional[str] = None, port: Optional[int] = None, debug: Optional[bool] = None):
         """Run the fixed PostPrism backend application"""
         host = host or settings.flask.host
         port = port or settings.flask.port
         debug = debug if debug is not None else settings.flask.debug
-        
+
         # Check platform availability for startup log
         available_platforms = [
             p for p, pid in self.optimized_agent_manager.platform_projects.items() if pid
         ]
-        
+
         logger.info(f"🚀 Starting PostPrism OPTIMIZED backend v7.0.0 on {host}:{port} (debug={debug})")
         logger.info("🎉 OPTIMIZED: EFFICIENT AGENT S2.5 - Proven, Simple, Reliable")
         logger.info("Optimized system - based on official cli_app.py patterns:")
@@ -824,7 +824,7 @@ class PostPrismApp:
         logger.info(f"⚡ Performance: Optimized = Simple + Efficient + Reliable")
         logger.info(f"🧠 Intelligence: Natural Agent S2.5 decision making")
         logger.info(f"📡 Streaming: Real-time progress with optimized WebSocket events")
-        
+
         # Disable reloading for stable parallel execution
         self.socketio.run(
             self.app,

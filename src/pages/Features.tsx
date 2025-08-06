@@ -5,9 +5,9 @@ import { ArrowRight, Sparkles, Zap, Target, Users, Eye, Brain, Rocket, Shield } 
 
 const PrismLogo = () => (
   <div className="relative w-8 h-8 animate-prism-rotate">
-    <img 
-      src="/lovable-uploads/88784487-172c-4e13-87e3-3ecd85d7d29d.png" 
-      alt="PostPrism AI" 
+    <img
+      src="/lovable-uploads/88784487-172c-4e13-87e3-3ecd85d7d29d.png"
+      alt="PostPrism AI"
       className="w-full h-full object-contain filter drop-shadow-lg"
     />
     <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 via-teal-500/20 to-cyan-400/20 rounded-lg blur-md -z-10 animate-glow"></div>
@@ -16,7 +16,7 @@ const PrismLogo = () => (
 
 const Features = () => {
   const [scrollY, setScrollY] = useState(0);
-  
+
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener('scroll', handleScroll);
@@ -39,7 +39,7 @@ const Features = () => {
               <PrismLogo />
               <span className="text-2xl font-bold text-rainbow">PostPrism AI</span>
             </Link>
-            
+
             <div className="hidden md:flex items-center space-x-8">
               <Link to="/" className="text-muted-foreground hover:text-foreground transition-all duration-300 hover:scale-105">Home</Link>
               <Link to="/features" className="text-emerald-400 font-semibold">Features</Link>
@@ -75,7 +75,7 @@ const Features = () => {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
+
             {/* AI Content Adaptation */}
             <div className="glass-card p-8 rounded-2xl backdrop-blur-sm bg-white/60 dark:bg-gray-800/60 border border-white/20 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
               <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center mb-6">

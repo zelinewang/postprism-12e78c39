@@ -103,7 +103,7 @@ export const API_CONFIG = {
 VITE_DEMO_MODE=true
 VITE_API_URL=https://postprism-backend.onrender.com
 
-# 混合模式 (Demo + 可选真实功能)  
+# 混合模式 (Demo + 可选真实功能)
 VITE_DEMO_MODE=false
 VITE_API_URL=https://postprism-backend.onrender.com
 ```
@@ -157,7 +157,7 @@ VITE_DEMO_MODE=true
 
 **用户体验**: 用户点击链接 → 立即看到完整Demo → 无需任何设置
 
-### 🆓 方法2: 免费云端后端 + Demo前端 
+### 🆓 方法2: 免费云端后端 + Demo前端
 
 #### 后端：Render.com免费部署
 ```bash
@@ -168,7 +168,7 @@ VITE_DEMO_MODE=true
 
 # 2. 配置服务 (自动检测 backend/render.yaml)
 Name: postprism-backend
-Environment: Python 
+Environment: Python
 Plan: Free ($0/月)
 
 # 3. 设置环境变量 (Render dashboard)
@@ -256,7 +256,7 @@ npm install && npm run dev
 
 #### ✅ 步骤2: 部署后端 (可选)
 - [ ] 注册Render.com (免费)
-- [ ] 连接GitHub仓库  
+- [ ] 连接GitHub仓库
 - [ ] 配置环境变量：`DEMO_MODE_BACKEND=true`
 - [ ] 等待构建完成
 
@@ -285,7 +285,7 @@ npm install && npm run dev
 
 ## 🌟 最终目标
 
-**让PostPrism成为最容易体验的AI社媒工具** 
+**让PostPrism成为最容易体验的AI社媒工具**
 
 → 用户点击链接 → 2分钟震撼体验 → 主动寻求更多功能 → 自然转化为客户
 

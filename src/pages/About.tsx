@@ -5,9 +5,9 @@ import { ArrowRight, Sparkles, Users, Target, Award, Globe, Zap } from 'lucide-r
 
 const PrismLogo = () => (
   <div className="relative w-8 h-8 animate-prism-rotate">
-    <img 
-      src="/lovable-uploads/88784487-172c-4e13-87e3-3ecd85d7d29d.png" 
-      alt="PostPrism AI" 
+    <img
+      src="/lovable-uploads/88784487-172c-4e13-87e3-3ecd85d7d29d.png"
+      alt="PostPrism AI"
       className="w-full h-full object-contain filter drop-shadow-lg"
     />
     <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 via-teal-500/20 to-cyan-400/20 rounded-lg blur-md -z-10 animate-glow"></div>
@@ -16,7 +16,7 @@ const PrismLogo = () => (
 
 const About = () => {
   const [scrollY, setScrollY] = useState(0);
-  
+
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener('scroll', handleScroll);
@@ -39,7 +39,7 @@ const About = () => {
               <PrismLogo />
               <span className="text-2xl font-bold text-rainbow">PostPrism AI</span>
             </Link>
-            
+
             <div className="hidden md:flex items-center space-x-8">
               <Link to="/" className="text-muted-foreground hover:text-foreground transition-all duration-300 hover:scale-105">Home</Link>
               <Link to="/features" className="text-muted-foreground hover:text-foreground transition-all duration-300 hover:scale-105">Features</Link>
@@ -66,7 +66,7 @@ const About = () => {
             </span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-4xl mx-auto animate-slide-up">
-            We're building the future of content creation where artificial intelligence meets human creativity 
+            We're building the future of content creation where artificial intelligence meets human creativity
             to amplify your voice across every platform.
           </p>
         </div>
@@ -81,12 +81,12 @@ const About = () => {
                 Our Mission
               </h2>
               <p className="text-xl text-gray-600 dark:text-gray-300 mb-6">
-                To democratize social media success by making advanced AI automation accessible to creators, 
+                To democratize social media success by making advanced AI automation accessible to creators,
                 businesses, and individuals worldwide.
               </p>
               <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
-                Like a prism that splits white light into a beautiful spectrum, PostPrism AI takes your single 
-                piece of content and refracts it into perfectly optimized versions for each social platform, 
+                Like a prism that splits white light into a beautiful spectrum, PostPrism AI takes your single
+                piece of content and refracts it into perfectly optimized versions for each social platform,
                 each with its own unique characteristics and appeal.
               </p>
               <Link to="/">
@@ -142,7 +142,7 @@ const About = () => {
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Innovation First</h3>
               <p className="text-gray-600 dark:text-gray-300">
-                We push the boundaries of what's possible with AI, always staying ahead of the curve 
+                We push the boundaries of what's possible with AI, always staying ahead of the curve
                 in social media automation technology.
               </p>
             </div>
@@ -153,7 +153,7 @@ const About = () => {
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">User-Centric</h3>
               <p className="text-gray-600 dark:text-gray-300">
-                Every feature we build starts with understanding our users' needs and creating 
+                Every feature we build starts with understanding our users' needs and creating
                 solutions that truly make their lives easier.
               </p>
             </div>
@@ -164,7 +164,7 @@ const About = () => {
               </div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Global Impact</h3>
               <p className="text-gray-600 dark:text-gray-300">
-                We believe in democratizing access to powerful tools, helping creators worldwide 
+                We believe in democratizing access to powerful tools, helping creators worldwide
                 amplify their voices and reach their audiences.
               </p>
             </div>
@@ -193,21 +193,21 @@ const About = () => {
                 <div>
                   <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">AI Content Adaptation</h4>
                   <p className="text-gray-600 dark:text-gray-300">
-                    Our multi-model AI system combines Anthropic's Claude for professional content and 
+                    Our multi-model AI system combines Anthropic's Claude for professional content and
                     OpenAI's GPT-4 for creative optimization, ensuring perfect platform adaptation.
                   </p>
                 </div>
                 <div>
                   <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">AgentS2 Automation</h4>
                   <p className="text-gray-600 dark:text-gray-300">
-                    Powered by state-of-the-art computer vision and UI automation, our AgentS2 technology 
+                    Powered by state-of-the-art computer vision and UI automation, our AgentS2 technology
                     achieves 98% accuracy in complex web interactions.
                   </p>
                 </div>
                 <div>
                   <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Real-time Streaming</h4>
                   <p className="text-gray-600 dark:text-gray-300">
-                    Watch AI agents work in real-time through our advanced WebSocket streaming technology, 
+                    Watch AI agents work in real-time through our advanced WebSocket streaming technology,
                     providing complete transparency in the automation process.
                   </p>
                 </div>
@@ -258,10 +258,10 @@ const About = () => {
             Built by Innovators
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-12 max-w-3xl mx-auto">
-            Our team combines expertise in AI research, software engineering, and social media marketing 
+            Our team combines expertise in AI research, software engineering, and social media marketing
             to create the ultimate content automation platform.
           </p>
-          
+
           <div className="glass-card p-12 rounded-2xl backdrop-blur-sm bg-white/60 dark:bg-gray-800/60 border border-white/20 max-w-4xl mx-auto">
             <div className="grid md:grid-cols-3 gap-8 text-center">
               <div>

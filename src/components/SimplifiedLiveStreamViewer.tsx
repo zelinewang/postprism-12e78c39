@@ -3,9 +3,9 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { 
-  Monitor, 
-  Maximize2, 
+import {
+  Monitor,
+  Maximize2,
   Minimize2,
   CheckCircle,
   Clock,
@@ -51,7 +51,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
 
   const platformColors = useMemo(() => ({
     linkedin: "text-blue-400",
-    twitter: "text-sky-400", 
+    twitter: "text-sky-400",
     instagram: "text-pink-400"
   }), []);
 
@@ -65,7 +65,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
   // Initialize WebSocket connection
   useEffect(() => {
     if (isActive && selectedPlatforms.length > 0 && sessionId) {
-      
+
       // Initialize stream data
       const initialData: Record<string, SimplifiedStreamData> = {};
       selectedPlatforms.forEach(platform => {
@@ -77,7 +77,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
         };
       });
       setStreamData(initialData);
-      
+
       // Respect explicit VITE_DEMO_MODE=false setting
       if (import.meta.env.VITE_DEMO_MODE !== 'false' && (DEMO_MODE || isDemoModeRecommended())) {
         // SECURE frontend-only demo mode - NO backend connections
@@ -85,7 +85,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
         console.log('🔒 NO API calls, NO backend, NO cost consumption');
         setConnectionStatus('connected');
         addToActionLog('🎮 Secure Demo Mode: Frontend-only simulation (no API usage)', 'info');
-        
+
         // Set up demo service listeners
         const progressUnsubscribe = secureDemoService.onProgress((progress: DemoProgress) => {
           setStreamData(prev => ({
@@ -97,21 +97,21 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
               status: 'active'
             }
           }));
-          
+
           addToActionLog(`${progress.platform}: ${progress.action}`, 'action');
-          
+
           if (progress.thinking) {
             addToActionLog(`${progress.platform}: ${progress.thinking}`, 'thinking');
           }
-          
+
           updateOverallProgress();
         });
-        
+
         const resultsUnsubscribe = secureDemoService.onResults((results) => {
           console.log('📊 Secure demo results:', results);
           addToActionLog('🎉 All demo platforms completed successfully!', 'success');
           setOverallProgress(100);
-          
+
           // Mark all platforms as completed
           results.forEach(result => {
             setStreamData(prev => ({
@@ -124,7 +124,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
               }
             }));
           });
-          
+
           // Convert demo results to expected format for PublishResults component
           const formattedResults = results.map(result => ({
             platform: result.platform,
@@ -139,7 +139,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
             engagement: result.engagement,
             intelligenceScore: result.intelligenceScore
           }));
-          
+
           // Trigger completion callback with properly formatted results
           setTimeout(() => {
             if (onWorkflowCompleted) {
@@ -148,23 +148,23 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
             }
           }, 1500);
         });
-        
+
         // Cleanup function for demo subscriptions
         const cleanup = () => {
           progressUnsubscribe();
           resultsUnsubscribe();
         };
-        
+
         // Store cleanup in ref for later use
         socketRef.current = { disconnect: cleanup } as any;
-        
+
         return cleanup;
       }
-      
+
       // Production mode - Connect to real WebSocket server
       console.log('🔌 Connecting to WebSocket server...');
       setConnectionStatus('connecting');
-      
+
       const socket = io(API_CONFIG.websocketURL, {
         transports: ['websocket', 'polling'],  // Try WebSocket first, fallback to polling
         autoConnect: true,
@@ -173,42 +173,42 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
         reconnectionAttempts: 3,
         forceNew: true
       });
-      
+
       socketRef.current = socket;
-      
+
       // Connection events
       socket.on('connect', () => {
         console.log('✅ Connected to PostPrism WebSocket server');
         setConnectionStatus('connected');
         addToActionLog('Connected to live streaming server', 'info');
-        
+
         // Join the streaming session
         socket.emit('join_stream', { session_id: sessionId });
       });
-      
+
       socket.on('connect_error', (error) => {
         console.error('❌ WebSocket connection error:', error);
         setConnectionStatus('disconnected');
         addToActionLog('Failed to connect to streaming server', 'error');
       });
-      
+
       socket.on('disconnect', (reason) => {
         console.log('🔌 Disconnected from streaming server:', reason);
         setConnectionStatus('disconnected');
         addToActionLog('Disconnected from streaming server', 'info');
       });
-      
+
       socket.on('joined_stream', (data) => {
         console.log('👥 Joined streaming session:', data.session_id);
         addToActionLog(`Joined streaming session ${data.session_id}`, 'info');
       });
-      
+
       // Publishing events
       socket.on('publish_started', (data) => {
         console.log('🚀 Publishing started:', data);
         addToActionLog('Publishing started...', 'info');
       });
-      
+
       // Platform events
       socket.on('platform_started', (data) => {
         console.log('📱 Platform started:', data);
@@ -222,7 +222,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
         }));
         addToActionLog(`Started ${data.platform} automation`, 'info');
       });
-      
+
       socket.on('platform_completed', (data) => {
         console.log('✅ Platform completed:', data);
         setStreamData(prev => ({
@@ -237,7 +237,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
         addToActionLog(`✅ ${data.platform} completed`, 'success');
         updateOverallProgress();
       });
-      
+
       // Video frames
       socket.on('video_frame', (data) => {
         console.log('📹 Received video frame for:', data.platform);
@@ -250,7 +250,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
           }
         }));
       });
-      
+
       // Enhanced agent actions with more frequent updates
       socket.on('agent_action', (data) => {
         console.log('🤖 Agent action:', data);
@@ -264,7 +264,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
         }));
         addToActionLog(`${data.platform}: ${data.action}`, 'action');
       });
-      
+
       // Working Step-by-Step agent step events
       socket.on('agent_step', (data) => {
         console.log('📋 Agent step:', data);
@@ -279,7 +279,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
         }));
         addToActionLog(`${data.platform}: 📋 Step ${data.step}/${data.total_steps}: ${data.description}`, 'step');
       });
-      
+
       // Agent started event for working step-by-step
       socket.on('agent_started', (data) => {
         console.log('🚀 Agent started:', data);
@@ -294,7 +294,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
         }));
         addToActionLog(`${data.platform}: 🚀 ${data.message || 'Agent started'}`, 'info');
       });
-      
+
       // Agent completed event for working step-by-step
       socket.on('agent_completed', (data) => {
         console.log('✅ Agent completed:', data);
@@ -310,7 +310,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
         addToActionLog(`${data.platform}: ${data.success ? '✅' : '❌'} Completed (${data.steps_count} steps in ${data.total_time?.toFixed(1)}s)`, data.success ? 'success' : 'error');
         updateOverallProgress();
       });
-      
+
       // Enhanced platform progress updates
       socket.on('platform_progress', (data) => {
         console.log('📊 Platform progress:', data);
@@ -325,7 +325,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
         }));
         updateOverallProgress();
       });
-      
+
       // Enhanced agent thinking with intelligence metrics
       socket.on('agent_thinking', (data) => {
         console.log('💭 Agent thinking:', data);
@@ -337,20 +337,20 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
             status: 'active'
           }
         }));
-        
+
         // Enhanced thinking log with intelligence score if available
         const thinkingText = data.thinking || data.analysis || 'Agent thinking...';
         const scoreText = data.intelligence_score ? ` (Intelligence: ${data.intelligence_score})` : '';
         const timeText = data.decision_time ? ` [${data.decision_time}]` : '';
-        
+
         addToActionLog(`${data.platform}: 💭 ${thinkingText}${scoreText}${timeText}`, 'thinking');
       });
-      
+
       socket.on('agent_success', (data) => {
         console.log('🎉 Agent success:', data);
         addToActionLog(`✅ ${data.platform}: ${data.message}`, 'success');
       });
-      
+
       socket.on('agent_error', (data) => {
         console.log('❌ Agent error:', data);
         setStreamData(prev => ({
@@ -363,13 +363,13 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
         }));
         addToActionLog(`❌ ${data.platform}: ${data.error}`, 'error');
       });
-      
+
       // Enhanced completion handling - fix blank page issue
       socket.on('all_platforms_completed', (data) => {
         console.log('🎉 All platforms completed:', data);
         addToActionLog('🎉 All platforms completed successfully!', 'success');
         setOverallProgress(100);
-        
+
         // Mark all platforms as completed
         setStreamData(prev => {
           const updated = { ...prev };
@@ -383,17 +383,17 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
           });
           return updated;
         });
-        
+
         // Delay transition to ensure WebSocket events are processed
         setTimeout(() => {
           console.log('🎯 Triggering workflow completion callback with results...');
           console.log('📊 Results data:', data.results);
-          
+
           // FIXED: Ensure results data is properly formatted
           if (onWorkflowCompleted) {
             onWorkflowCompleted(data.results || data);
           }
-          
+
           // Clean up WebSocket connection AFTER callback
           setTimeout(() => {
             console.log('🧹 Cleaning up WebSocket after completion...');
@@ -406,7 +406,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
           }, 1000); // Longer delay to ensure state transition
         }, 1500); // Allow UI to update before transition
       });
-      
+
       // Cleanup on unmount
       return () => {
         if (socketRef.current) {
@@ -418,7 +418,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
       };
     }
   }, [isActive, selectedPlatforms, sessionId]);
-  
+
   const addToActionLog = useCallback((message: string, type: string) => {
     setActionLog(prev => [...prev, {
       id: `${Date.now()}-${Math.random()}`,
@@ -427,12 +427,12 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
       timestamp: new Date().toLocaleTimeString()
     }]);
   }, []);
-  
+
   const updateOverallProgress = useCallback(() => {
     const platforms = Object.values(streamData);
     const completedCount = platforms.filter(p => p.status === 'completed').length;
     const totalCount = platforms.length;
-    
+
     if (totalCount > 0) {
       setOverallProgress((completedCount / totalCount) * 100);
     }
@@ -441,20 +441,20 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
   const simulateDemoPublishing = async () => {
     console.log('🎮 Starting enhanced demo publishing simulation...');
     addToActionLog(DEMO_CONFIG.demoMessages.welcome, 'info');
-    
+
     // Initial AI analysis phase
     addToActionLog('🧠 AI initializing parallel publishing strategy...', 'info');
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
     // Show some initial AI thinking
     for (let i = 0; i < 2; i++) {
       const thinkingMsg = DEMO_CONFIG.demoMessages.aiThinking[Math.floor(Math.random() * DEMO_CONFIG.demoMessages.aiThinking.length)];
       addToActionLog(thinkingMsg, 'thinking');
       await new Promise(resolve => setTimeout(resolve, 800));
     }
-    
+
     addToActionLog(DEMO_CONFIG.demoMessages.startPublishing, 'info');
-    
+
     // Simulate parallel publishing (show all platforms starting simultaneously)
     selectedPlatforms.forEach(platform => {
       setStreamData(prev => ({
@@ -466,7 +466,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
         }
       }));
     });
-    
+
     // Enhanced simulation with realistic steps for each platform
     const platformSteps = {
       linkedin: [
@@ -500,7 +500,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
         'Verifying post publication...'
       ]
     };
-    
+
     // Run platforms in parallel simulation
     const platformPromises = selectedPlatforms.map(async (platform, index) => {
       const steps = platformSteps[platform as keyof typeof platformSteps] || [
@@ -509,13 +509,13 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
         'Composing content...',
         'Publishing content...'
       ];
-      
+
       // Add small stagger between platforms
       await new Promise(resolve => setTimeout(resolve, index * 300));
-      
+
       for (let step = 0; step < steps.length; step++) {
         await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 800));
-        
+
         const progress = ((step + 1) / steps.length) * 100;
         setStreamData(prev => ({
           ...prev,
@@ -525,21 +525,21 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
             currentAction: steps[step]
           }
         }));
-        
+
         addToActionLog(`${platform}: ${steps[step]}`, 'action');
-        
+
         // Add AI thinking messages at strategic points
         if (step === 2) {
           const thinkingMsg = DEMO_CONFIG.demoMessages.aiThinking[Math.floor(Math.random() * DEMO_CONFIG.demoMessages.aiThinking.length)];
           addToActionLog(`${platform}: ${thinkingMsg}`, 'thinking');
         }
-        
+
         if (step === 4) {
           const actionMsg = DEMO_CONFIG.demoMessages.agentActions[Math.floor(Math.random() * DEMO_CONFIG.demoMessages.agentActions.length)];
           addToActionLog(`${platform}: ${actionMsg}`, 'action');
         }
       }
-      
+
       // Mark as completed
       setStreamData(prev => ({
         ...prev,
@@ -550,30 +550,30 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
           currentAction: 'Publishing completed!'
         }
       }));
-      
+
       const result = DEMO_CONFIG.mockResults[platform as keyof typeof DEMO_CONFIG.mockResults];
       addToActionLog(`✅ ${platform}: Published successfully! Execution time: ${result.executionTime}s`, 'success');
-      
+
       // Show AI insights
       setTimeout(() => {
         addToActionLog(`💡 ${platform}: ${result.aiInsights}`, 'info');
       }, 500);
-      
+
       updateOverallProgress();
     });
-    
+
     // Wait for all platforms to complete
     await Promise.all(platformPromises);
-    
+
     // All platforms completed - show performance metrics
     addToActionLog('🎉 All demo platforms completed successfully!', 'success');
     addToActionLog(`📊 Performance Summary: ${DEMO_CONFIG.performanceMetrics.successRate} success rate`, 'info');
     addToActionLog(`⚡ Time Saved: ${DEMO_CONFIG.performanceMetrics.totalTimeSaved}`, 'info');
     addToActionLog(`📈 Total Reach: ${DEMO_CONFIG.performanceMetrics.platformReach}`, 'info');
     addToActionLog(`🚀 Engagement Boost: ${DEMO_CONFIG.performanceMetrics.engagementBoost}`, 'success');
-    
+
     setOverallProgress(100);
-    
+
     // Trigger completion callback after a short delay
     setTimeout(() => {
       if (onWorkflowCompleted) {
@@ -584,7 +584,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
           };
           return acc;
         }, {} as any);
-        
+
         onWorkflowCompleted({ platforms: demoResults });
       }
     }, 2000);
@@ -608,13 +608,13 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
               </p>
             </div>
           </div>
-          
+
           <div className="flex items-center space-x-3">
-            <Badge 
-              variant="secondary" 
+            <Badge
+              variant="secondary"
               className={`${
-                connectionStatus === 'connected' 
-                  ? 'bg-green-500/20 text-green-400' 
+                connectionStatus === 'connected'
+                  ? 'bg-green-500/20 text-green-400'
                   : connectionStatus === 'connecting'
                   ? 'bg-yellow-500/20 text-yellow-400'
                   : 'bg-red-500/20 text-red-400'
@@ -640,23 +640,23 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
             <span>Overall Progress</span>
             <span>{Math.round(overallProgress)}%</span>
           </div>
-          <Progress 
-            value={overallProgress} 
-            className="h-2 bg-white/10" 
+          <Progress
+            value={overallProgress}
+            className="h-2 bg-white/10"
           />
         </div>
 
         {/* Platform Streams */}
         <div className={`grid gap-6 p-6 ${
-          selectedPlatforms.length === 1 ? 'grid-cols-1' : 
-          selectedPlatforms.length === 2 ? 'grid-cols-1 lg:grid-cols-2' : 
+          selectedPlatforms.length === 1 ? 'grid-cols-1' :
+          selectedPlatforms.length === 2 ? 'grid-cols-1 lg:grid-cols-2' :
           'grid-cols-1 lg:grid-cols-3'
         }`}>
           {selectedPlatforms.map((platform) => {
             const data = streamData[platform];
             const PlatformIcon = platformIcons[platform as keyof typeof platformIcons];
             const colorClass = platformColors[platform as keyof typeof platformColors];
-            
+
             return (
               <div key={platform} className="space-y-4">
                 {/* Platform Header */}
@@ -681,8 +681,8 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
                 <div className="aspect-video bg-black/50 rounded-lg flex items-center justify-center relative overflow-hidden border border-white/10">
                   {data?.videoFrame ? (
                     <>
-                      <img 
-                        src={`data:image/png;base64,${data.videoFrame}`} 
+                      <img
+                        src={`data:image/png;base64,${data.videoFrame}`}
                         alt={`${platform} stream`}
                         className="w-full h-full object-cover"
                       />
@@ -711,7 +711,7 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
                       </div>
                     </div>
                   )}
-                  
+
                   {/* Status Overlay */}
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
                     <div className="flex items-center justify-between mb-2">
@@ -722,8 +722,8 @@ const SimplifiedLiveStreamViewer = ({ isActive, selectedPlatforms, sessionId: ex
                         {Math.round(data?.progress || 0)}%
                       </div>
                     </div>
-                    <Progress 
-                      value={data?.progress || 0} 
+                    <Progress
+                      value={data?.progress || 0}
                       className="h-1.5 bg-white/20"
                     />
                   </div>
